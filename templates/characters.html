@@ -1,11 +1,6 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Character Gallery</title>
-</head>
-<body>
+{% extends "base.html" %}
+{% block content%}
+
     {% for character in characters %}
         {{ character.character_name }}<br>
         {{ character.class_name }}<br>
@@ -20,5 +15,5 @@
         {{ character.background_prof }}<br>
         {{ character.background_equipment }}<br>
     {% endfor %}
-</body>
-</html>
+
+{% endblock %}
