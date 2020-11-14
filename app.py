@@ -18,8 +18,8 @@ mongo = PyMongo(app)
 
 
 @app.route("/")
-@app.route("/get_characters")
-def get_characters():
+@app.route("/characters")
+def characters():
     characters = mongo.db.characters.find()
     return render_template("characters.html", characters=characters)
 
