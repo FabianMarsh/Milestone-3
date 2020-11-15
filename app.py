@@ -25,6 +25,11 @@ def characters():
     return render_template("characters.html", characters=characters)
 
 
+@app.route("/new_character")
+def new_character():
+    return render_template("new_character.html")
+
+
 @app.route("/register", methods=["GET", "POST"])
 def register():
     if request.method == "POST":
