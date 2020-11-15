@@ -4,9 +4,19 @@
     <h3 class="center">Choose Your Class</h3>
 
     <ul class="collapsible">
+        {% for class in classes %}
         <li>
-            <div class="collapsible-header"><i class="fas fa-caret-down"></i></div>
-            <div class="collapsible-body"><span>Lorem ipsum dolor sit amet.</span></div>
+            <div class="collapsible-header"><i class="fas fa-caret-down"></i><strong>{{ class.class_name }}</strong></div>
+            <div class="collapsible-body">
+                <p>Class Description: {{ class.class_description }}</p>
+                <p>Hit Dice: {{ class.class_hit_die }}</p>
+                <p>Primary Ability: {{ class.class_primary_ability }}</p>
+                <p>Saving Throw Proficiences: {{ class.class_saving_throw_prof }}</p>
+                <p>Class Skill Proficiences: {{ class.class_skill_prof }}</p>
+                <p>Weapon and Armor Proficiences: {{ class.class_weapon_armor_prof }}</p>
+                <p>Spellcasting Ability: {{ class.class_spellcasting_ability }}</p>
+            </div>
         </li>
+        {% endfor %}
     </ul>
 {% endblock %}
