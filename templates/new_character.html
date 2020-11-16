@@ -80,14 +80,29 @@
                                 <div class="collapsible-header"><i class="fas fa-caret-down"></i><strong>{{ background.background_name }}</strong></div>
                                 <div class="collapsible-body">
                                     <p>{{ background.background_description}}</p>
-                                    <p>Proficiences: {{ background.background_prof }}</p>
-                                    <p>Languages {{ background.background_languages }}</p>
-                                    <p>Equipment {{ background.background_equipment }}</p>
+                                    <p>Skill Proficiences: {{ background.background_skill_prof }}</p>
+                                    {% if background.background_tool_prof %}
+                                        <p>Tool Proficiences: {{ background.background_tool_prof }}</p>
+                                    {% endif %}
+                                    {% if background.background_languages %}
+                                        <p>Languages: {{ background.background_languages }}</p>
+                                    {% endif %}
+                                    <p>Equipment: {{ background.background_equipment }}</p>
+                                    <h6>Background Feature: {{ background.background_feature_name }}</h6>
+                                    <p>{{ background.background_feature_description }}</p>
 
-                                    <input type="hidden" name="background_languages" value="test" >
                                     <input type="hidden" name="background_name" value="{{ background.background_name }}" >
-                                    <input type="hidden" name="background_prof" value="{{ background.background_prof }}" >
+                                    <input type="hidden" name="background_prof" value="{{ background.background_skill_prof }}" >
+                                    {% if background.background_tool_prof %}
+                                        <input type="hidden" name="background_tool_prof" value="{{ background.background_tool_prof }}">
+                                    {% endif %}
                                     <input type="hidden" name="background_equipment" value="{{ background.background_equipment }}" >
+                                    {% if background.background_languages %}
+                                        <input type="hidden" name="background_languages" value="{{ background.background_languages }}">
+                                    {% endif %}
+                                    <input type="hidden" name="background_feature_name" value="{{ background.background_feature_name }}">
+                                    <input type="hidden" name="background_feature_description" value="{{ background.background_feature_description }}">
+
 
                                     <button class="btn waves-effect waves-light" type="submit" id="chosen_background" name="chosen_background">Choose background</button>
                                 </div>
