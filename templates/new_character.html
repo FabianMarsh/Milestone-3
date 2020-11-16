@@ -28,7 +28,12 @@
                                 <p>Hit Dice: {{ class.class_hit_die }}</p>
                                 <p>Primary Ability: {{ class.class_primary_ability }}</p>
                                 <p>Saving Throw Proficiences: {{ class.class_saving_throw_prof }}</p>
-                                <p>Class Skill Proficiences: {{ class.class_skill_prof }}</p>
+                                <p>
+                                    Skill Proficiences: 
+                                    {% for skill in class.class_skill_prof %}
+                                        {{ skill }}, 
+                                    {% endfor %}
+                                </p>
                                 <p>Weapon and Armor Proficiences: {{ class.class_weapon_armor_prof }}</p>
                                 <p>Spellcasting Ability: {{ class.class_spellcasting_ability }}</p>
 
@@ -58,6 +63,23 @@
                                     <p>Size: {{ race.race_size }}</p>
                                     <p>Speed: {{ race.race_speed }}</p>
                                     <p>Languages: {{ race.race_languages }}</p>
+                                    
+                                    <!-- Loops through too many times making massive block of names and descriptions -->
+
+                                    <!-- {% if race.race_subrace %}
+                                        {% for subrace in race.race_subrace_name %}
+                                            <h5>{{ subrace }}</h5>
+                                            {% for feature_description in race.race_subrace_feature_description %}
+                                                <p>{{ feature_description }}</p>
+                                                {% for feature_name in race.race_subrace_feature_name %}
+                                                    <h6>{{ feature_name }}</h6>
+                                                    {% for feature_description in race.race_subrace_feature_description %}
+                                                        <p>{{ feature_description }}</p>
+                                                    {% endfor %} 
+                                                {% endfor %}
+                                            {% endfor %}    
+                                        {% endfor %}
+                                    {% endif %} -->
 
                                     <input type="hidden" name="race_name" value="{{ race.race_name }}" >
                                     <input type="hidden" name="race_size" value="{{ race.race_size }}" >
