@@ -28,7 +28,10 @@ def characters():
 @app.route("/new_character")
 def new_character():
     classes = mongo.db.classes.find()
-    return render_template("new_character.html", classes=classes)
+    races = mongo.db.races.find()
+    backgrounds = mongo.db.backgrounds.find()
+    return render_template("new_character.html",
+        classes=classes, races=races, backgrounds=backgrounds)
 
 
 @app.route("/register", methods=["GET", "POST"])
