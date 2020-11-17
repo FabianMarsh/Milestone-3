@@ -28,40 +28,33 @@ def characters():
 @app.route("/new_character", methods=["GET", "POST"])
 def new_character():
 
+    elements = request.form.get("class")
+
+    class_name = elements[1]
+    class_hit_die = elements[2]
+    class_skill_prof = elements[3]
+
     if request.method == "POST":
 
-        if "chosen_class" in request.form:
-            chosen_class = {
-                "class_name": request.form.get("class_name"),
-                "class_hit_die": request.form.get("class_hit_die"),
-                "class_skill_prof": request.form.get("class_skill_prof")
-            }
-        elif "chosen_race" in request.form:
-            chosen_race = {
-                "race_name": request.form.get("race_name"),
-                "race_size": request.form.get("race_size"),
-                "race_speed": request.form.get("race_speed"),
-                "race_languages": request.form.get("race_languages")
-            }
-        elif "chosen_background" in request.form:
-            chosen_background = {
-                "background_languages": request.form.get(
-                    "background_languages"),
-                "background_name": request.form.get("background_name"),
-                "background_prof": request.form.get("background_prof"),
-                "background_equipment": request.form.get(
-                    "background_equipment")
-            }
-        else:
-            character = {
-                **chosen_class,
-                **chosen_race,
-                **chosen_background
-            }
+        character = {
+            "class_name": class_name,
+            "class_hit_die": class_hit_die,
+            "class_skill_prof": class_skill_prof,
+            "race_name": request.form.get("race_name"),
+            "race_size": request.form.get("race_size"),
+            "race_speed": request.form.get("race_speed"),
+            "race_languages": request.form.get("race_languages"),
+            "background_languages": request.form.get(
+                "background_languages"),
+            "background_name": request.form.get("background_name"),
+            "background_prof": request.form.get("background_prof"),
+            "background_equipment": request.form.get(
+                "background_equipment")
+        }
 
-            mongo.db.characters.insert_one(character)
+        mongo.db.characters.insert_one(character)
 
-    classes = list(mongo.db.classes.find())
+    classes = mongo.db.classes.find()
     races = mongo.db.races.find()
     backgrounds = mongo.db.backgrounds.find()
     return render_template("new_character.html",

@@ -1,10 +1,9 @@
 {% extends "base.html" %}
 {% block content %}
-    
-    
 
     <div class="row">
         <!-- Materialise Tabs -->
+        <form method="POST" action="{{ url_for('new_character') }}">
         <div class="col s12">
             <ul class="tabs">
                 <li class="tab col s3"><a class="active" href="#class">Class</a></li>
@@ -13,11 +12,8 @@
                 <li class="tab col s3"><a href="#submit">Submit</a></li>
             </ul>
         </div>
-
-        
             <div id="class" class="col s12">
                 <h3 class="center">Choose Your Class</h3>
-                <form method="POST" action="{{ url_for('new_character') }}">
                 <!-- Materialise Callapisble -->
                 <ul class="collapsible">
                     {% for class in classes %}
@@ -44,22 +40,22 @@
                                     {% endfor %}
                                 </p>
                                 <p><strong>Weapon and Armor:</strong> {{ class.class_weapon_armor_prof }}</p>
-
-                                <input type="hidden" name="class_name" value="{{ class.class_name }}" >
-                                <input type="hidden" name="class_hit_die" value="{{ class.class_hit_die }}" >
-                                <input type="hidden" name="class_skill_prof" value="{{ class.class_skill_prof }}" >
-
-                                <button class="btn waves-effect waves-light" type="submit" id="chosen_class" name="chosen_class">Choose Class</button>
+                                
+                                <!-- Materialise Radio Button -->
+                                <p>
+                                    <label>
+                                        <input name="class" type="radio" id="{{ class._id }}" value="{{ class.class_name }}, {{ class.class_hit_die }}, {{ class.class_skill_prof }}"/>
+                                        <span >Choose Class</span>
+                                    </label>
+                                </p>
+                                <!-- Materialise Radio Button End -->
                             </div>
                         </li>
                     {% endfor %}
                 </ul>
-                </form>
             </div>
             <div id="race" class="col s12">
                 <h3 class="center">Choose Your Race</h3>
-
-                <form method="POST" action="{{ url_for('new_character') }}">
                     <ul class="collapsible">
                         {% for race in races %}
                             <li>
@@ -71,39 +67,25 @@
                                     <p><strong>Size:</strong> {{ race.race_size }}</p>
                                     <p><strong>Speed:</strong> {{ race.race_speed }}</p>
                                     <p><strong>Languages:</strong> {{ race.race_languages }}</p>
-                                    
-                                    <!-- Loops through too many times making massive block of names and descriptions -->
-
-                                    <!-- {% if race.race_subrace %}
-                                        {% for subrace in race.race_subrace_name %}
-                                            <h5>{{ subrace }}</h5>
-                                            {% for feature_description in race.race_subrace_feature_description %}
-                                                <p>{{ feature_description }}</p>
-                                                {% for feature_name in race.race_subrace_feature_name %}
-                                                    <h6>{{ feature_name }}</h6>
-                                                    {% for feature_description in race.race_subrace_feature_description %}
-                                                        <p>{{ feature_description }}</p>
-                                                    {% endfor %} 
-                                                {% endfor %}
-                                            {% endfor %}
-                                        {% endfor %}
-                                    {% endif %} -->
 
                                     <input type="hidden" name="race_name" value="{{ race.race_name }}" >
                                     <input type="hidden" name="race_size" value="{{ race.race_size }}" >
                                     <input type="hidden" name="race_speed" value="{{ race.race_speed }}" >
-                                    <input type="hidden" name="race_languages" value="test" >
+                                    <input type="hidden" name="race_languages" value="{{ race.race_languages }}" >
 
-                                    <button class="btn waves-effect waves-light" type="submit" id="chosen_race" name="chosen_race">Choose Race</button>
+                                    <p>
+                                        <label for="{{ race.race_name }}">
+                                            <input name="race" type="radio" id="{{ race.race_name }}"/>
+                                            <span >Choose Race</span>
+                                        </label>
+                                    </p>
                                 </div>
                             </li>
                         {% endfor %}
                     </ul>
-                </form>
             </div>    
             <div id="background" class="col s12">
                 <h3 class="center">Choose Your Background</h3>
-                <form method="POST" action="{{ url_for('new_character') }}">
                     <ul class="collapsible">
                         {% for background in backgrounds %}
                             <li>
@@ -133,27 +115,22 @@
                                     <input type="hidden" name="background_feature_name" value="{{ background.background_feature_name }}">
                                     <input type="hidden" name="background_feature_description" value="{{ background.background_feature_description }}">
 
-                                    <button class="btn waves-effect waves-light" type="submit" id="chosen_background" name="chosen_background">Choose background</button>
+                                    <p>
+                                        <label>
+                                            <input name="background" type="radio" id="{{ background.background_name }}"/>
+                                            <span >Choose Background</span>
+                                        </label>
+                                    </p>
                                 </div>
                             </li>
                         {% endfor %}
                     </ul>
-                </form>
             </div>
             <div id="submit" class="col s12">
                 <h3 class="center">Submit</h3>
-
-                <form method="POST" action="{{ url_for('new_character') }}">
-                    <ul class="collapsible">
-                            <li>
-                                <div class="collapsible-header"><i class="fas fa-caret-down"></i><strong>Submit</strong></div>
-                                <div class="collapsible-body">
-                                    <button class="btn waves-effect waves-light" type="submit" >Done!</button>
-                                </div>
-                            </li>
-                    </ul>
-                </form>
+                <button class="btn waves-effect waves-light" type="submit" >Submit</button> 
             </div> 
+        </form>
     </div>
     <!-- Materialise Collapsible End-->
     <!-- Materialise Tabs End-->
