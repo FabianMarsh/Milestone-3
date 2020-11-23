@@ -11,7 +11,7 @@
                 <li class="tab col s3"><a href="#submit">Submit</a></li>
             </ul>
         </div>
-        <form method="POST" action="{{ url_for('new_character') }}">
+        <form method="POST" name="class" action="{{ url_for('new_character') }}">
             <div id="class" class="col s12">
                 <h3 class="center">Choose Your Class</h3>
                 <!-- Materialise Callapisble -->
@@ -39,23 +39,24 @@
                                         {{ skill }}, 
                                     {% endfor %}
                                 </p>
-                                <p><strong>Weapon and Armor:</strong> {{ class.class_weapon_armor_prof }}</p>
+                                <p><strong>Armor:</strong> {{ class.class_armor_prof }}</p>
+                                <p><strong>Weapons:</strong> {{ class.class_weapon_prof }}</p>
                                 
-                                <!-- Materialise Radio Button -->
-                                <button class="btn waves-effect waves-light" type="submit" name="choose_class">
+                                <!-- Materialise Button -->
+                                <button class="btn waves-effect waves-light" type="submit" name="class" value="{{ class.class_index }}">
                                     Choose Class
-                                    <input type="hidden" name="class_name" value="{{ class.class_name }}">
-                                    <input type="hidden" name="class_hit_die" value="{{ class.class_hit_die }}">
-                                    <input type="hidden" name="class_skill_prof" value="{{ class.class_skill_prof }}">
+                                    <input type="hidden" name="class_name_{{ class.class_index }}" value="{{ class.class_name }}">
+                                    <input type="hidden" name="class_hit_die_{{ class.class_index }}" value="{{ class.class_hit_die }}">
+                                    <input type="hidden" name="class_skill_prof_{{ class.class_index }}" value="{{ class.class_skill_prof }}">
                                 </button>
-                                <!-- Materialise Radio Button End -->
+                                <!-- Materialise Button End -->
                             </div>
                         </li>
                     {% endfor %}
                 </ul>
             </div>
         </form >
-        <form method="POST" action="{{ url_for('new_character') }}">
+        <form method="POST" name="race" action="{{ url_for('new_character') }}">
             <div id="race" class="col s12">
                 <h3 class="center">Choose Your Race</h3>
                     <ul class="collapsible">
@@ -70,56 +71,65 @@
                                     <p><strong>Speed:</strong> {{ race.race_speed }}</p>
                                     <p><strong>Languages:</strong> {{ race.race_languages }}</p>
 
-                                    
-
-                                    <button class="btn waves-effect waves-light" type="submit" name="choose_race">
+                                    <button class="btn waves-effect waves-light" type="submit" name="race" value="{{ race.race_index }}">
                                         Choose Race
-                                        <input type="hidden" name="race_name" value="{{ race.race_name }}" >
-                                        <input type="hidden" name="race_size" value="{{ race.race_size }}" >
-                                        <input type="hidden" name="race_speed" value="{{ race.race_speed }}" >
-                                        <input type="hidden" name="race_languages" value="{{ race.race_languages }}" >
+                                        <input type="hidden" name="race_name_{{ race.race_index }}" value="{{ race.race_name }}">
+                                        <input type="hidden" name="race_size_{{ race.race_index }}" value="{{ race.race_size }}">
+                                        <input type="hidden" name="race_speed_{{ race.race_index }}" value="{{ race.race_speed }}">
+                                        <input type="hidden" name="race_languages_{{ race.race_index }}" value="{{ race.race_languages }}">
                                     </button>
                                 </div>
                             </li>
                            {% endfor %}
                     </ul>
                 </div>
-            </form>    
-            <div id="background" class="col s12">
-                <h3 class="center">Choose Your Background</h3>
-                    <ul class="collapsible">
-                        {% for background in backgrounds %}
-                            <li>
-                                <div class="collapsible-header"><i class="fas fa-caret-down"></i><strong>{{ background.background_name }}</strong></div>
-                                <div class="collapsible-body">
-                                    <p>{{ background.background_description}}</p>
-                                    <p><strong>Skill Proficiences:</strong> {{ background.background_skill_prof }}</p>
-                                    {% if background.background_tool_prof %}
-                                        <p><strong>Tool Proficiences:</strong> {{ background.background_tool_prof }}</p>
-                                    {% endif %}
-                                    {% if background.background_languages %}
-                                        <p><strong>Languages:</strong> {{ background.background_languages }}</p>
-                                    {% endif %}
-                                    <p><strong>Equipment:</strong> {{ background.background_equipment }}</p>
-                                    <h6>Background Feature: {{ background.background_feature_name }}</h6>
-                                    <p>{{ background.background_feature_description }}</p>
+            </form>
+            <form method="POST" name="background" action="{{ url_for('new_character') }}">
+                <div id="background" class="col s12">
+                    <h3 class="center">Choose Your Background</h3>
+                        <ul class="collapsible">
+                            {% for background in backgrounds %}
+                                <li>
+                                    <div class="collapsible-header"><i class="fas fa-caret-down"></i><strong>{{ background.background_name }}</strong></div>
+                                    <div class="collapsible-body">
+                                        <p>{{ background.background_description}}</p>
+                                        <p><strong>Skill Proficiences:</strong> {{ background.background_skill_prof }}</p>
+                                        {% if background.background_tool_prof %}
+                                            <p><strong>Tool Proficiences:</strong> {{ background.background_tool_prof }}</p>
+                                        {% endif %}
+                                        {% if background.background_languages %}
+                                            <p><strong>Languages:</strong> {{ background.background_languages }}</p>
+                                        {% endif %}
+                                        <p><strong>Equipment:</strong> {{ background.background_equipment }}</p>
+                                        <h6>Background Feature: {{ background.background_feature_name }}</h6>
+                                        <p>{{ background.background_feature_description }}</p>
 
-                                    <input type="hidden" name="background_name" value="{{ background.background_name }}" >
-                                    <input type="hidden" name="background_prof" value="{{ background.background_skill_prof }}" >
-                                    {% if background.background_tool_prof %}
-                                        <input type="hidden" name="background_tool_prof" value="{{ background.background_tool_prof }}">
-                                    {% endif %}
-                                    <input type="hidden" name="background_equipment" value="{{ background.background_equipment }}" >
-                                    {% if background.background_languages %}
-                                        <input type="hidden" name="background_languages" value="{{ background.background_languages }}">
-                                    {% endif %}
-                                    <input type="hidden" name="background_feature_name" value="{{ background.background_feature_name }}">
-                                    <input type="hidden" name="background_feature_description" value="{{ background.background_feature_description }}">
-                                </div>
-                            </li>
-                        {% endfor %}
-                    </ul>
-            </div>
+                                        <input type="hidden" name="background_name" value="{{ background.background_name }}" >
+                                        <input type="hidden" name="background_prof" value="{{ background.background_skill_prof }}" >
+                                        {% if background.background_tool_prof %}
+                                            <input type="hidden" name="background_tool_prof" value="{{ background.background_tool_prof }}">
+                                        {% endif %}
+                                        <input type="hidden" name="background_equipment" value="{{ background.background_equipment }}" >
+                                        {% if background.background_languages %}
+                                            <input type="hidden" name="background_languages" value="{{ background.background_languages }}">
+                                        {% endif %}
+                                        <input type="hidden" name="background_feature_name" value="{{ background.background_feature_name }}">
+                                        <input type="hidden" name="background_feature_description" value="{{ background.background_feature_description }}">
+                                    
+                                        <button class="btn waves-effect waves-light" type="submit" name="background" value="{{ background.background_index }}">
+                                            Choose Background
+                                            <input type="hidden" name="background_name_{{ background.background_index }}" value="{{ background.background_name }}" >
+                                            <input type="hidden" name="background_skill_prof_{{ background.background_index }}" value="{{ background.background_skill_prof }}" >
+                                            <input type="hidden" name="background_equipment_{{ background.background_index }}" value="{{ background.background_equipment }}" >
+                                            <input type="hidden" name="background_languages_{{ background.background_index }}" value="{{ background.background_languages }}" >
+                                        </button>
+                                    </div>
+                                </li>
+
+                            {% endfor %}
+                        </ul>
+                </div>
+            </form>
         <form method="POST" action="{{ url_for('new_character') }}">  
             <div class="col s12" id="submit">
                 <h3 class="center">Submit</h3>

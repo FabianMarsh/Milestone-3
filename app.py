@@ -30,21 +30,53 @@ def new_character():
 
     if request.method == "POST":
 
-        character_class = {
-            "class_name": request.form.get("class_name"),
-            "class_hit_die": request.form.get("class_hit_die"),
-            "class_skill_prof": request.form.get("class_skill_prof")
-        }
+        if "class" in request.form:
 
-        character_race = {
-            "race_name": request.form.get("race_name")
-        }
+            index = request.form.get("class")
+
+            session["class"] = {
+                "class_name": request.form.get("class_name_" + index),
+                "class_hit_die": request.form.get("class_hit_die_" + index),
+                "class_skill_prof": request.form.get(
+                    "class_skill_prof_" + index)
+            }
+
+        if "race" in request.form:
+
+            index = request.form.get("race")
+
+            session["race"] = {
+                "race_name": request.form.get("race_name_" + index),
+                "race_size": request.form.get("race_size_" + index),
+                "race_speed": request.form.get("race_speed_" + index),
+                "race_languages": request.form.get("race_languages_" + index)
+            }
+
+        if "background" in request.form:
+
+            index = request.form.get("background")
+
+            session["background"] = {
+                "background_name": request.form.get(
+                    "background_name_" + index),
+                "background_languages": request.form.get(
+                    "background_languages_" + index),
+                "background_skill_prof": request.form.get(
+                    "background_skill_prof_" + index),
+                "background_equipment": request.form.get(
+                    "background_equipment_" + index)
+            }
 
         if "submit" in request.form:
 
+            chosen_class = session.get("class")
+            chosen_race = session.get("race")
+            chosen_background = session.get("background")
+
             character = {
-                **character_class,
-                **character_race
+                **chosen_class,
+                **chosen_race,
+                **chosen_background
             }
 
             mongo.db.characters.insert_one(character)
