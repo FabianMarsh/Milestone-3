@@ -67,19 +67,32 @@ def new_character():
                     "background_equipment_" + index)
             }
 
-        if "submit" in request.form:
-
-            chosen_class = session.get("class")
-            chosen_race = session.get("race")
-            chosen_background = session.get("background")
-
-            character = {
-                **chosen_class,
-                **chosen_race,
-                **chosen_background
+        if "ability_scores" in request.form:
+            session["ability"] = {
+                "strength": request.form.get("strength"),
+                "dexterity": request.form.get("dexterity"),
+                "constitution": request.form.get("constitution"),
+                "intelligence": request.form.get("intelligence"),
+                "wisdom": request.form.get("wisdom"),
+                "charisma": request.form.get("charisma"),
             }
 
-            mongo.db.characters.insert_one(character)
+        if "submit" in request.form:
+
+                character = {
+                    **session.get("class"),
+                    **session.get("race"),
+                    **session.get("background"),
+                    **session.get("ability")
+                }
+
+                session.pop("class")
+                session.pop("race")
+                session.pop("background")
+                session.pop("ability")
+
+                mongo.db.characters.insert_one(character)
+            
 
     classes = mongo.db.classes.find()
     races = mongo.db.races.find()
