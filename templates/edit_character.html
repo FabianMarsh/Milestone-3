@@ -1,13 +1,40 @@
 {% extends "base.html" %}
 {% block content%}
-
-    <form method="POST" action="{{ url_for('edit_character', character_id=character._id) }}">
-
-
-        <div class="col s12" id="submit">
-            <h3 class="center">Submit</h3>
-            <button class="btn waves-effect waves-light"  name="submit" type="submit" >Submit</button> 
-        </div> 
-    </form>
+    <div class="row">
+        <form method="POST" action="{{ url_for('edit_character', character_id=character._id) }}">
+            <div>
+                <input value="{{ character.character_name }}" type="text">
+            </div>
+            <div class="input-field col s12">
+                <select>
+                    <option value="" disabled selected>Choose your option</option>
+                    {% for class in classes %}
+                        {% if class.class_name == character.class_name %}
+                            <option value="{{ class.class_name }}" selected>{{ class.class_name }}</option>
+                        {% else %}
+                            <option value="{{ class.class_name }}">{{ class.class_name }}</option>
+                        {% endif %}
+                    {% endfor %}
+                </select>
+                <label>Class</label>
+            </div>
+            <div class="input-field col s12">
+                <select>
+                    <option value="" disabled selected>Choose your option</option>
+                    {% for race in races %}
+                        {% if race.race_name == character.race_name %}
+                            <option value="{{ race.race_name }}" selected>{{ race.race_name }}</option>
+                        {% else %}
+                            <option value="{{ race.race_name }}">{{ race.race_name }}</option>
+                        {% endif %}
+                    {% endfor %}
+                </select>
+                <label>Class</label>
+            </div>
+            <div class="col s12" id="submit">
+                <button class="btn waves-effect waves-light" name="submit" type="submit" >Submit</button> 
+            </div> 
+        </form>
+    </div>
     
 {% endblock %}
