@@ -72,11 +72,7 @@
                                     <p><strong>Speed:</strong> {{ race.race_speed }}</p>
                                     <p><strong>Languages:</strong> {{ race.race_languages }}</p>
 
-                                    {% if race.race_subrace %}
-                                        {% for subrace_name in race.race_subrace_name %}
-                                            <h6><strong>{{ subrace_name }}</strong></h6>
-                                        {% endfor %}
-                                    {% endif %}
+                                    <!-- possible separate subrace collection have them relate somehow -->
 
                                     <button class="btn waves-effect waves-light" type="submit" name="race" value="{{ race.race_index }}">
                                         Choose Race

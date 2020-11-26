@@ -79,20 +79,19 @@ def new_character():
 
         if "submit" in request.form:
 
-                character = {
-                    **session.get("class"),
-                    **session.get("race"),
-                    **session.get("background"),
-                    **session.get("ability")
-                }
+            character = {
+                **session.get("class"),
+                **session.get("race"),
+                **session.get("background"),
+                **session.get("ability")
+            }
 
-                session.pop("class")
-                session.pop("race")
-                session.pop("background")
-                session.pop("ability")
+            session.pop("class")
+            session.pop("race")
+            session.pop("background")
+            session.pop("ability")
 
-                mongo.db.characters.insert_one(character)
-            
+            mongo.db.characters.insert_one(character)
 
     classes = mongo.db.classes.find()
     races = mongo.db.races.find()
@@ -100,6 +99,12 @@ def new_character():
 
     return render_template("new_character.html",
         classes=classes, races=races, backgrounds=backgrounds)
+
+
+@app.route("/my_characters")
+def my_characters():
+    characters = mongo.db.characters.find()
+    return render_template("my_characters.html", characters=characters)
 
 
 @app.route("/register", methods=["GET", "POST"])
