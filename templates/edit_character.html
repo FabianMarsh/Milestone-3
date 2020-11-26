@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+{% block content%}
+
+    <form method="POST" action="{{ url_for('edit_character', character_id=character._id) }}">
+
+
+        <div class="col s12" id="submit">
+            <h3 class="center">Submit</h3>
+            <button class="btn waves-effect waves-light"  name="submit" type="submit" >Submit</button> 
+        </div> 
+    </form>
+    
+{% endblock %}

@@ -106,6 +106,15 @@ def my_characters():
     characters = mongo.db.characters.find()
     return render_template("my_characters.html", characters=characters)
 
+@app.route("/edit_character/<character_id>", methods=["GET", "POST"])
+def edit_character(character_id):
+    character = mongo.db.characters.find_one(
+        {"_id": ObjectId(character_id)})
+
+    characters = mongo.db.characters.find()
+    return render_template("edit_character.html",
+        character=character, characters=characters)
+
 
 @app.route("/register", methods=["GET", "POST"])
 def register():
