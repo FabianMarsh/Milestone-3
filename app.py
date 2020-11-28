@@ -92,6 +92,7 @@ def new_character():
             session.pop("ability")
 
             mongo.db.characters.insert_one(character)
+            flash("Character Successully Created")
 
     classes = mongo.db.classes.find()
     races = mongo.db.races.find()
@@ -109,6 +110,72 @@ def my_characters():
 
 @app.route("/edit_character/<character_id>", methods=["GET", "POST"])
 def edit_character(character_id):
+    if request.method == "POST":
+
+        if "class" in request.form:
+
+            index = request.form.get("class")
+
+            session["class_edit"] = {
+                "class_name": request.form.get("class_name_" + index),
+                "class_hit_die": request.form.get("class_hit_die_" + index),
+                "class_skill_prof": request.form.get(
+                    "class_skill_prof_" + index)
+            }
+
+        if "race" in request.form:
+
+            index = request.form.get("race")
+
+            session["race_edit"] = {
+                "race_name": request.form.get("race_name_" + index),
+                "race_size": request.form.get("race_size_" + index),
+                "race_speed": request.form.get("race_speed_" + index),
+                "race_languages": request.form.get("race_languages_" + index)
+            }
+
+        if "background" in request.form:
+
+            index = request.form.get("background")
+
+            session["background_edit"] = {
+                "background_name": request.form.get(
+                    "background_name_" + index),
+                "background_languages": request.form.get(
+                    "background_languages_" + index),
+                "background_skill_prof": request.form.get(
+                    "background_skill_prof_" + index),
+                "background_equipment": request.form.get(
+                    "background_equipment_" + index)
+            }
+
+        if "ability_scores" in request.form:
+            session["ability_edit"] = {
+                "strength": request.form.get("strength"),
+                "dexterity": request.form.get("dexterity"),
+                "constitution": request.form.get("constitution"),
+                "intelligence": request.form.get("intelligence"),
+                "wisdom": request.form.get("wisdom"),
+                "charisma": request.form.get("charisma"),
+            }
+
+        if "submit" in request.form:
+
+            submit = {
+                **session.get("class_edit"),
+                **session.get("race_edit"),
+                **session.get("background_edit"),
+                **session.get("ability_edit")
+            }
+
+            session.pop("class_edit")
+            session.pop("race_edit")
+            session.pop("background_edit")
+            session.pop("ability_edit")
+
+            mongo.db.characters.update({"_id": ObjectId(character_id)}, submit)
+            flash("Character Successully Updated")
+
     character = mongo.db.characters.find_one(
         {"_id": ObjectId(character_id)})
 
