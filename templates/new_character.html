@@ -125,37 +125,38 @@
                 <h3 class="center">Choose Your Ability Scores</h3>
                 <div class="col s2">
                     <label for="strength">Strength</label>
-                    <input type="text" name="strength" minlength="1" maxlength="2" pattern="[0-9]" class="validate">
+                    <input type="number" name="strength" minlength="1" maxlength="2" min="3" max="30" class="validate">
                 </div>
                 <div class="col s2">
                     <label for="dexterity">Dexterity</label>
-                    <input type="text" name="dexterity" minlength="1" maxlength="2" pattern="[0-9]" class="validate">
+                    <input type="number" name="dexterity" minlength="1" maxlength="2" min="3" max="30" class="validate">
                 </div>
                 <div class="col s2">
                     <label for="constitution">Constitution</label>
-                    <input type="text" name="constitution" minlength="1" maxlength="2" pattern="[0-9]" class="validate">
+                    <input type="number" name="constitution" minlength="1" maxlength="2" min="3" max="30" class="validate">
                 </div>
                 <div class="col s2">
                     <label for="intelligence">Intelligence</label>
-                    <input type="text" name="intelligence" minlength="1" maxlength="2" pattern="[0-9]" class="validate">
+                    <input type="number" name="intelligence" minlength="1" maxlength="2" min="3" max="30" class="validate">
                 </div>
                 <div class="col s2">
                     <label for="wisdom">Wisdom</label>
-                    <input type="text" name="wisdom" minlength="1" maxlength="2" pattern="[0-9]" class="validate">
+                    <input type="number" name="wisdom" minlength="1" maxlength="2" min="3" max="30" class="validate">
                 </div>
                 <div class="col s2">
                     <label for="charisma">Charisma</label>
-                    <input type="text" name="charisma" minlength="1" maxlength="2" pattern="[0-9]" class="validate">
+                    <input type="number" name="charisma" minlength="1" maxlength="2" min="3" max="30" class="validate">
                 </div>
                 <div class="center">
-                    <button class="btn waves-effect waves-light"  name="ability_scores" type="submit" >Submit</button>
+                    <button class="btn waves-effect waves-light"  name="ability_scores" type="submit" >Done</button>
                 </div>
             </div>
         </form>
         <form method="POST" action="{{ url_for('new_character') }}">  
-            <div class="col s12" id="submit">
-                <h3 class="center">Submit</h3>
-                <button class="btn waves-effect waves-light"  name="submit" type="submit" >Submit</button> 
+            <div class="col s12 center" id="submit">
+                <h3>Finshed?</h3>
+                <a class="btn waves-effect waves-light" href="{{ url_for('characters') }}">Cancel</a>
+                <button class="btn waves-effect waves-light"  name="submit" type="submit" >Create Character</button> 
             </div> 
         </form>
     </div>

@@ -115,10 +115,11 @@ def edit_character(character_id):
     characters = mongo.db.characters.find()
     classes = mongo.db.classes.find()
     races = mongo.db.races.find()
+    backgrounds = mongo.db.backgrounds.find()
 
     return render_template("edit_character.html",
         character=character, characters=characters,
-            classes=classes, races=races)
+            classes=classes, races=races, backgrounds=backgrounds)
 
 
 @app.route("/register", methods=["GET", "POST"])
