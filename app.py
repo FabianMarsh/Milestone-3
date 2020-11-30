@@ -2,6 +2,7 @@ import os
 from flask import (
     Flask, flash, render_template, 
     redirect, request, session, url_for)
+import math
 from flask_pymongo import PyMongo
 from bson.objectid import ObjectId
 from werkzeug.security import generate_password_hash, check_password_hash
@@ -23,6 +24,16 @@ mongo = PyMongo(app)
 def characters():
     characters = mongo.db.characters.find()
     return render_template("characters.html", characters=characters)
+
+
+@app.route("/get_modifier")
+def get_modifier(stat):
+    int(stat)
+
+    modifier = (stat - 10) / 2
+    modifier = math.floor(modifier)
+
+    return modifier
 
 
 @app.route("/new_character", methods=["GET", "POST"])
@@ -56,7 +67,7 @@ def new_character():
 
             index = request.form.get("background")
 
-            session["background"] = {
+            session["details"] = {
                 "background_name": request.form.get(
                     "background_name_" + index),
                 "background_languages": request.form.get(
@@ -64,17 +75,30 @@ def new_character():
                 "background_skill_prof": request.form.get(
                     "background_skill_prof_" + index),
                 "background_equipment": request.form.get(
-                    "background_equipment_" + index)
-            }
+                    "background_equipment_" + index),
+                "character_name": request.form.get("character_name")
+                }
 
         if "ability_scores" in request.form:
             session["ability"] = {
-                "strength": request.form.get("strength"),
-                "dexterity": request.form.get("dexterity"),
-                "constitution": request.form.get("constitution"),
-                "intelligence": request.form.get("intelligence"),
-                "wisdom": request.form.get("wisdom"),
-                "charisma": request.form.get("charisma"),
+                "strength": int(request.form.get("strength")),
+                "strength_modifier": get_modifier(
+                    int(request.form.get("strength"))),
+                "dexterity": int(request.form.get("dexterity")),
+                "dexterity_modifier": get_modifier(
+                    int(request.form.get("dexterity"))),
+                "constitution": int(request.form.get("constitution")),
+                "constitution_modifier": get_modifier(
+                    int(request.form.get("constitution"))),
+                "intelligence": int(request.form.get("intelligence")),
+                "intelligence_modifier": get_modifier(
+                    int(request.form.get("intelligence"))),
+                "wisdom": int(request.form.get("wisdom")),
+                "wisdom_modifier": get_modifier(
+                    int(request.form.get("strength"))),
+                "charisma": int(request.form.get("charisma")),
+                "charisma_modifier": get_modifier(
+                    int(request.form.get("charisma"))),
             }
 
         if "submit" in request.form:
@@ -82,17 +106,18 @@ def new_character():
             character = {
                 **session.get("class"),
                 **session.get("race"),
-                **session.get("background"),
+                **session.get("details"),
                 **session.get("ability")
             }
 
             session.pop("class")
             session.pop("race")
-            session.pop("background")
+            session.pop("details")
             session.pop("ability")
 
             mongo.db.characters.insert_one(character)
             flash("Character Successully Created")
+            return redirect(url_for("my_characters"))
 
     classes = mongo.db.classes.find()
     races = mongo.db.races.find()
@@ -161,12 +186,18 @@ def edit_character(character_id):
 
         if "submit" in request.form:
 
-            submit = {
-                **session.get("class_edit"),
-                **session.get("race_edit"),
-                **session.get("background_edit"),
-                **session.get("ability_edit")
-            }
+            #possibly use a loop odds = key, evens = variables?
+            # submit = mongo.db.characters.find_one(
+            #     {"_id": ObjectId(character_id)})
+
+            # if session["class_edit"]:
+            #     submit.update(session.get("class_edit"))
+            # elif session["race_edit"]:
+            #     submit.update(session.get("race_edit"))
+            # elif session["background_edit"]:
+            #     submit.update(session.get("background_edit"))
+            # elif session["ability_edit"]:
+            #     submit.update(session.get("ability_edit"))
 
             session.pop("class_edit")
             session.pop("race_edit")
