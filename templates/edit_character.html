@@ -1,170 +1,168 @@
 {% extends "base.html" %}
 {% block content %}
-
-    <div class="row">
-        <!-- Materialise Tabs -->
-        <div class="col s12">
-            <ul class="tabs">
-                <li class="tab col s2 offset-s1"><a class="active" href="#class">Class</a></li>
-                <li class="tab col s2"><a href="#race">Race</a></li>
-                <li class="tab col s2"><a href="#background">Background</a></li>
-                <li class="tab col s2"><a href="#ability_scores">Ability Scores</a></li>
-                <li class="tab col s2"><a href="#submit">Submit</a></li>
-            </ul>
+    <form class="col s12">
+        <div class="row">
+            <div class="input-field col s3">
+                <input id="character_name" type="text" class="validate" value="{{ character.character_name }}">
+                <label for="character_name">Character Name</label>
+            </div>
+            <div class="input-field col s3">
+                <input id="class_name" type="text" class="validate" value="{{ character.class_name }}">
+                <label for="class_name">Class</label>
+                <input id="race_name" type="text" class="validate" value="{{ character.race_name }}">
+                <label for="race_name">Race</label>
+            </div>
+            <div class="input-field col s3">
+                <input id="background_name" type="text" class="validate" value="{{ character.background_name }}">
+                <label for="background_name">Background</label>
+                <input id="alignment" type="text" class="validate" value="{{ character.alignment }}">
+                <label for="alignment">Alignment</label>
+            </div>
+            <div class="input-field col s3">
+                <input id="user_name" type="text" class="validate" value="{{ character.user }}">
+                <label for="class_name">Player Name</label>
+                <input id="experience" type="text" class="validate" value="{{ character.experience }}">
+                <label for="experience">Experience</label>
+            </div>
         </div>
-        <form method="POST" name="class" action="{{ url_for('edit_character', character_id=character._id) }}">
-            <div id="class" class="col s12">
-                <h3 class="center">Choose Your Class</h3>
-                <h4>Current Class: {{ character.class_name }}</h4>
-                <!-- Materialise Callapisble -->
-                <ul class="collapsible">
-                    {% for class in classes %}
-                        <li>
-                            <div class="collapsible-header"><i class="fas fa-caret-down"></i><strong>{{ class.class_name }}</strong></div>
-                            <div class="collapsible-body">
-                                <p>{{ class.class_description }}</p>
-                                <p><strong>Hit Dice:</strong> {{ class.class_hit_die }}</p>
-                                <p><strong>Primary Ability:</strong> {{ class.class_primary_ability }}</p>
-                                <h6>Proficiences</h6>
-                                <p><strong>Saving Throw:</strong> {{ class.class_saving_throw_prof }}</p>
-                                {% if class.class_tool_prof %}
-                                    <p>
-                                        <strong>Tools:</strong>
-                                        {% for tool_prof in class.class_tool_prof %}
-                                            {{ tool_prof }}
-                                        {% endfor %}
-                                    </p>
-                                {% endif %}
-                                <p>
-                                    <strong>Skills:</strong> 
-                                    {% for skill in class.class_skill_prof %}
-                                        {{ skill }}, 
-                                    {% endfor %}
-                                </p>
-                                <p><strong>Armor:</strong> {{ class.class_armor_prof }}</p>
-                                <p><strong>Weapons:</strong> {{ class.class_weapon_prof }}</p>
-                                
-                                <!-- Materialise Button -->
-                                <button class="btn waves-effect waves-light" type="submit" name="class" value="{{ class.class_index }}">
-                                    Choose Class
-                                    <input type="hidden" name="class_name_{{ class.class_index }}" value="{{ class.class_name }}">
-                                    <input type="hidden" name="class_hit_die_{{ class.class_index }}" value="{{ class.class_hit_die }}">
-                                    <input type="hidden" name="class_skill_prof_{{ class.class_index }}" value="{{ class.class_skill_prof }}">
-                                </button>
-                                <!-- Materialise Button End -->
-                            </div>
-                        </li>
-                    {% endfor %}
-                </ul>
-            </div>
-        </form>
-        <form method="POST" name="race" action="{{ url_for('edit_character', character_id=character._id) }}">
-            <div id="race" class="col s12">
-                <h3 class="center">Choose Your Race</h3>
-                <h4>Current Race: {{ character.race_name }}</h4>
-                    <ul class="collapsible">
-                        {% for race in races %}
-                            <li>
-                                <div class="collapsible-header"><i class="fas fa-caret-down"></i><strong>{{ race.race_name }}</strong></div>
-                                <div class="collapsible-body">
-                                    <p><strong>Ability Score Increase:</strong> {{ race.race_ability_score_increase }}</p>
-                                    <p><strong>Age:</strong> {{ race.race_age }}</p>
-                                    <p><strong>Alignment:</strong> {{ race.race_alignment }}</p>
-                                    <p><strong>Size:</strong> {{ race.race_size }}</p>
-                                    <p><strong>Speed:</strong> {{ race.race_speed }}</p>
-                                    <p><strong>Languages:</strong> {{ race.race_languages }}</p>
-
-                                    <!-- possible separate subrace collection have them relate somehow -->
-
-                                    <button class="btn waves-effect waves-light" type="submit" name="race" value="{{ race.race_index }}">
-                                        Choose Race
-                                        <input type="hidden" name="race_name_{{ race.race_index }}" value="{{ race.race_name }}">
-                                        <input type="hidden" name="race_size_{{ race.race_index }}" value="{{ race.race_size }}">
-                                        <input type="hidden" name="race_speed_{{ race.race_index }}" value="{{ race.race_speed }}">
-                                        <input type="hidden" name="race_languages_{{ race.race_index }}" value="{{ race.race_languages }}">
-                                    </button>
-                                </div>
-                            </li>
-                        {% endfor %}
-                    </ul>
-                </div>
-        </form>
-        <form method="POST" name="background" action="{{ url_for('edit_character', character_id=character._id) }}">
-            <div id="background" class="col s12">
-                <h3 class="center">Choose Your Background</h3>
-                <h4>Current Background: {{ character.background_name }}</h4>
-                <ul class="collapsible">
-                    {% for background in backgrounds %}
-                        <li>
-                            <div class="collapsible-header"><i class="fas fa-caret-down"></i><strong>{{ background.background_name }}</strong></div>
-                            <div class="collapsible-body">
-                                <p>{{ background.background_description}}</p>
-                                <p><strong>Skill Proficiences:</strong> {{ background.background_skill_prof }}</p>
-                                {% if background.background_tool_prof %}
-                                    <p><strong>Tool Proficiences:</strong> {{ background.background_tool_prof }}</p>
-                                {% endif %}
-                                {% if background.background_languages %}
-                                    <p><strong>Languages:</strong> {{ background.background_languages }}</p>
-                                {% endif %}
-                                <p><strong>Equipment:</strong> {{ background.background_equipment }}</p>
-                                <h6>Background Feature: {{ background.background_feature_name }}</h6>
-                                <p>{{ background.background_feature_description }}</p>
-                                        
-                                <button class="btn waves-effect waves-light" type="submit" name="background" value="{{ background.background_index }}">
-                                    Choose Background
-                                    <input type="hidden" name="background_name_{{ background.background_index }}" value="{{ background.background_name }}" >
-                                    <input type="hidden" name="background_skill_prof_{{ background.background_index }}" value="{{ background.background_skill_prof }}" >
-                                    <input type="hidden" name="background_equipment_{{ background.background_index }}" value="{{ background.background_equipment }}" >
-                                    <input type="hidden" name="background_languages_{{ background.background_index }}" value="{{ background.background_languages }}" >
-                                </button>
-                            </div>
-                        </li>
-                    {% endfor %}
-                </ul>
-            </div>
-        </form>
-        <form method="POST" name="ability_scores" action="{{ url_for('edit_character', character_id=character._id) }}">
-            <div id="ability_scores" class="col s12">
-                <h3 class="center">Choose Your Ability Scores</h3>
-                <div class="col s2">
+        <div class="row">
+            <div class="input-field col s1">
+                <div>
+                    <input id="strength" type="text" class="validate" value="{{ character.strength }}">
                     <label for="strength">Strength</label>
-                    <input type="number" name="strength" minlength="1" maxlength="2" min="3" max="30" value="{{  character.strength }}" class="validate">
+                    <div>
+                        {% if character.strength_modifier > 0 %}
+                            <input id="strength_modifier" type="text" class="validate" value=" +{{ character.strength_modifier }}">
+                        {% else %}
+                            <input id="strength_modifier" type="text" class="validate" value="{{ character.strength_modifier }}">
+                        {% endif %}
+                    </div>
                 </div>
-                <div class="col s2">
+                <div>
+                    <input id="dexterity" type="text" class="validate" value="{{ character.dexterity }}">
                     <label for="dexterity">Dexterity</label>
-                    <input type="number" name="dexterity" minlength="1" maxlength="2" min="3" max="30" value="{{  character.dexterity }}" class="validate">
+                    <div>
+                        {% if character.dexterity_modifier > 0 %}
+                            <input id="dexterity_modifier" type="text" class="validate" value=" +{{ character.dexterity_modifier }}">
+                        {% else %}
+                            <input id="dexterity_modifier" type="text" class="validate" value="{{ character.dexterity_modifier }}">
+                        {% endif %}
+                    </div>
                 </div>
-                <div class="col s2">
+                <div>
+                    <input id="constitution" type="text" class="validate" value="{{ character.constitution }}">
                     <label for="constitution">Constitution</label>
-                    <input type="number" name="constitution" minlength="1" maxlength="2" min="3" max="30" value="{{  character.constitution }}" class="validate">
+                    <div>
+                    {% if character.constitution_modifier > 0 %}
+                        <input id="constitution_modifier" type="text" class="validate" value=" +{{ character.constitution_modifier }}">
+                    {% else %}
+                        <input id="constitution_modifier" type="text" class="validate" value="{{ character.constitution_modifier }}">
+                    {% endif %}
+                    </div>
                 </div>
-                <div class="col s2">
+                <div>
+                    <input id="intelligence" type="text" class="validate" value="{{ character.intelligence }}">
                     <label for="intelligence">Intelligence</label>
-                    <input type="number" name="intelligence" minlength="1" maxlength="2" min="3" max="30" value="{{  character.intelligence }}" class="validate">
+                    <div>
+                        {% if character.intelligence_modifier > 0 %}
+                            <input id="intelligence_modifier" type="text" class="validate" value=" +{{ character.intelligence_modifier }}">
+                        {% else %}
+                            <input id="intelligence_modifier" type="text" class="validate" value="{{ character.intelligence_modifier }}">
+                        {% endif %}
+                    </div>
                 </div>
-                <div class="col s2">
+                <div>
+                    <input id="wisdom" type="text" class="validate" value="{{ character.wisdom }}">
                     <label for="wisdom">Wisdom</label>
-                    <input type="number" name="wisdom" minlength="1" maxlength="2" min="3" max="30" value="{{  character.wisdom }}" class="validate">
+                    <div>
+                        {% if character.wisdom_modifier > 0 %}
+                            <input id="wisdom_modifier" type="text" class="validate" value=" +{{ character.wisdom_modifier }}">
+                        {% else %}
+                            <input id="wisdom_modifier" type="text" class="validate" value="{{ character.wisdom_modifier }}">
+                        {% endif %}
+                    </div>
                 </div>
-                <div class="col s2">
+                <div>
+                    <input id="charisma" type="text" class="validate" value="{{ character.charisma }}">
                     <label for="charisma">Charisma</label>
-                    <input type="number" name="charisma" minlength="1" maxlength="2" min="3" max="30" value="{{  character.charisma }}" class="validate">
-                </div>
-                <div class="center">
-                    <button class="btn waves-effect waves-light"  name="ability_scores" type="submit" >Submit</button>
+                    <div>
+                        {% if character.charisma_modifier > 0 %}
+                            <input id="charisma_modifier" type="text" class="validate" value=" +{{ character.charisma_modifier }}">
+                        {% else %}
+                            <input id="charisma_modifier" type="text" class="validate" value="{{ character.charisma_modifier }}">
+                        {% endif %}
+                    </div>
                 </div>
             </div>
-        </form>
-        <form method="POST" action="{{ url_for('edit_character', character_id=character._id) }}">  
-            <div class="col s12 center" id="submit">
-                <h3>Finshed?</h3>
-                <a class="btn waves-effect waves-light" href="{{ url_for('characters') }}">Cancel</a>
-                <button class="btn waves-effect waves-light"  name="submit" type="submit" >Edit Character</button> 
-            </div> 
-        </form>
-
-    </div>
-    <!-- Materialise Collapsible End-->
-    <!-- Materialise Tabs End-->
+            <div class="input-field col s2">
+                <div>
+                    <input id="profiencey_bonus" class="validate" type="text" value="{{ character.profiencey_bonus }}">
+                    <label for="profiencey_bonus">Profiencey Bonus</label>
+                </div>
+                <div>
+                    <p>
+                        <label>
+                            {% if "Strength" in character.class_saving_throws %}
+                                <input type="checkbox" checked="checked"/>
+                            {% else %}
+                                <input type="checkbox"/>
+                            {% endif %}
+                            <span>Strength</span>
+                        </label>
+                    </p>
+                    <p>
+                        <label>
+                            {% if "Dexterity" in character.class_saving_throws %}
+                                <input type="checkbox" checked="checked"/>
+                            {% else %}
+                                <input type="checkbox"/>
+                            {% endif %}
+                            <span>Dexterity</span>
+                        </label>
+                    </p>
+                    <p>
+                        <label>
+                            {% if "Constitution" in character.class_saving_throws %}
+                                <input type="checkbox" checked="checked"/>
+                            {% else %}
+                                <input type="checkbox"/>
+                            {% endif %}
+                            <span>Constitution</span>
+                        </label>
+                    </p>
+                    <p>
+                        <label>
+                            {% if "Intelligence" in character.class_saving_throws %}
+                                <input type="checkbox" checked="checked"/>
+                            {% else %}
+                                <input type="checkbox"/>
+                            {% endif %}
+                            <span>Intelligence</span>
+                        </label>
+                    </p>
+                    <p>
+                        <label>
+                            {% if "Wisdom" in character.class_saving_throws %}
+                                <input type="checkbox" checked="checked"/>
+                            {% else %}
+                                <input type="checkbox"/>
+                            {% endif %}
+                            <span>Wisdom</span>
+                        </label>
+                    </p>
+                    <p>
+                        <label>
+                            {% if "Charisma" in character.class_saving_throws %}
+                                <input type="checkbox" checked="checked"/>
+                            {% else %}
+                                <input type="checkbox"/>
+                            {% endif %}
+                            <span>Charisma</span>
+                        </label>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </form>
 
 {% endblock %}

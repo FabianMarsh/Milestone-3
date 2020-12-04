@@ -1,6 +1,6 @@
 import os
 from flask import (
-    Flask, flash, render_template, 
+    Flask, flash, render_template,
     redirect, request, session, url_for)
 import math
 from flask_pymongo import PyMongo
@@ -48,9 +48,13 @@ def new_character():
             session["class"] = {
                 "class_name": request.form.get("class_name_" + index),
                 "class_hit_die": request.form.get("class_hit_die_" + index),
-                "class_skill_prof": request.form.get(
-                    "class_skill_prof_" + index)
+                "class_saving_throws": request.form.get(
+                    "class_saving_throws_" + index)
             }
+
+            session["skills"] = [
+                request.form.get("class_skill_prof_" + index)
+            ]
 
         if "race" in request.form:
 
@@ -185,19 +189,6 @@ def edit_character(character_id):
             }
 
         if "submit" in request.form:
-
-            #possibly use a loop odds = key, evens = variables?
-            # submit = mongo.db.characters.find_one(
-            #     {"_id": ObjectId(character_id)})
-
-            # if session["class_edit"]:
-            #     submit.update(session.get("class_edit"))
-            # elif session["race_edit"]:
-            #     submit.update(session.get("race_edit"))
-            # elif session["background_edit"]:
-            #     submit.update(session.get("background_edit"))
-            # elif session["ability_edit"]:
-            #     submit.update(session.get("ability_edit"))
 
             session.pop("class_edit")
             session.pop("race_edit")

@@ -25,7 +25,11 @@
                                 <p><strong>Hit Dice:</strong> {{ class.class_hit_die }}</p>
                                 <p><strong>Primary Ability:</strong> {{ class.class_primary_ability }}</p>
                                 <h6>Proficiences</h6>
-                                <p><strong>Saving Throw:</strong> {{ class.class_saving_throw_prof }}</p>
+                                <p><strong>Saving Throw:</strong> 
+                                    {% for saving_throw in class.class_saving_throws %}
+                                        {{ saving_throw }}
+                                    {% endfor %}
+                                </p>
                                 {% if class.class_tool_prof %}
                                     <p>
                                         <strong>Tools:</strong>
@@ -35,9 +39,9 @@
                                     </p>
                                 {% endif %}
                                 <p>
-                                    <strong>Skills:</strong> 
+                                    <strong>Skills:</strong>
                                     {% for skill in class.class_skill_prof %}
-                                        {{ skill }}, 
+                                        {{ skill }} 
                                     {% endfor %}
                                 </p>
                                 <p><strong>Armor:</strong>{{ class.class_armor_prof }}</p>
@@ -49,6 +53,10 @@
                                     <input type="hidden" name="class_name_{{ class.class_index }}" value="{{ class.class_name }}">
                                     <input type="hidden" name="class_hit_die_{{ class.class_index }}" value="{{ class.class_hit_die }}">
                                     <input type="hidden" name="class_skill_prof_{{ class.class_index }}" value="{{ class.class_skill_prof }}">
+                                    <input type="hidden" name="class_saving_throws_{{ class.class_index }}" value="{{ class.class_saving_throws }}">
+                                    {% if class.class_tool_prof %}
+                                        <input type="hidden" name="class_tool_prof_{{ class.class_index }}" value="{{ class.class_tool_prof }}">
+                                    {% endif %}
                                 </button>
                                 <!-- Materialise Button End -->
                             </div>
@@ -96,6 +104,8 @@
                 <textarea placeholder="Describle where your character came from, but don't worry you can change this later" 
                     id="character_description" name="character_description" class="materialize-textarea validate" minlength="1" maxlength="300"></textarea>
                 <label for="character_description">Character Description</label>
+                    <p>You haven't picked a class yet come back when you have!</p>
+
                 <h3 class="center">Choose Your Background</h3>
 
                 <ul class="collapsible">
