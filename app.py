@@ -49,7 +49,9 @@ def new_character():
                 "class_name": request.form.get("class_name_" + index),
                 "class_hit_die": request.form.get("class_hit_die_" + index),
                 "class_saving_throws": request.form.get(
-                    "class_saving_throws_" + index)
+                    "class_saving_throws_" + index),
+                "class_num_skills": int(request.form.get(
+                    "class_num_skills_" + index))
             }
 
             session["skills"] = [
@@ -81,8 +83,15 @@ def new_character():
                 "background_equipment": request.form.get(
                     "background_equipment_" + index),
                 "character_name": request.form.get("character_name"),
-                "chosen_skill_prof": request.form.get("skill_select")
+                "chosen_skills": ""
                 }
+
+            if session["class"]:
+
+                for i in range(0, session["class"]["class_num_skills"]):
+                    session["details"][
+                        "chosen_skills"] += request.form.get(
+                            "skill_select_" + str(i)) + " "
 
         if "ability_scores" in request.form:
             session["ability"] = {
@@ -119,6 +128,7 @@ def new_character():
             session.pop("race")
             session.pop("details")
             session.pop("ability")
+            session.pop("skills")
 
             mongo.db.characters.insert_one(character)
             flash("Character Successully Created")
@@ -127,7 +137,7 @@ def new_character():
     classes = mongo.db.classes.find()
     races = mongo.db.races.find()
     backgrounds = mongo.db.backgrounds.find()
-    skills = mongo.db.skills.find()
+    skills = list(mongo.db.skills.find())
 
     return render_template("new_character.html",
         classes=classes, races=races, backgrounds=backgrounds,

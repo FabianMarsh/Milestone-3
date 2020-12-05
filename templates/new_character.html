@@ -54,6 +54,7 @@
                                     <input type="hidden" name="class_hit_die_{{ class.class_index }}" value="{{ class.class_hit_die }}">
                                     <input type="hidden" name="class_skill_prof_{{ class.class_index }}" value="{{ class.class_skill_prof }}">
                                     <input type="hidden" name="class_saving_throws_{{ class.class_index }}" value="{{ class.class_saving_throws }}">
+                                    <input type="hidden" name="class_num_skills_{{ class.class_index }}" value="{{ class.class_num_skills }}">
                                     {% if class.class_tool_prof %}
                                         <input type="hidden" name="class_tool_prof_{{ class.class_index }}" value="{{ class.class_tool_prof }}">
                                     {% endif %}
@@ -99,24 +100,25 @@
             <div id="details" class="col s12">
                 <input placeholder="Ragnar The Great Alester" id="character_name" name="character_name" type="text" class="validate"
                     maxlength="30" required>
-
                 <label for="character_name">Character Name</label>
                 <textarea placeholder="Describle where your character came from, but don't worry you can change this later" 
                     id="character_description" name="character_description" class="materialize-textarea validate" minlength="1" maxlength="300"></textarea>
                 <label for="character_description">Character Description</label>
 
                 <div class="input-field col s12">
-                    {% if session["skills"] %}
-                        <select name="skill_select" multiple>
-                            {% for skill in skills %}
-                                {% if "Choose any three" in session["skills"][0] %}
-                                    <option  value="{{ skill.skill_name }}">{{ skill.skill_name }}</option>
-                                {% elif skill.skill_name in session["skills"][0] %}
-                                    <option value="{{ skill.skill_name }}">{{ skill.skill_name }}</option>
-                                {% endif %}
-                            {% endfor %}
-                        </select>
-                        <label>Pick Your Skills</label>
+                    {% if session["class"] %}
+                        {% for i in range(0, session["class"].class_num_skills) %}
+                            <select name="skill_select_{{ i }}">
+                                {% for skill in skills %}
+                                    {% if "any" in session["skills"][0] %}
+                                        <option value="{{ skill.skill_name }}">{{ skill.skill_name }}</option>
+                                    {% elif skill.skill_name in session["skills"][0] %}
+                                        <option value="{{ skill.skill_name }}">{{ skill.skill_name }}</option>
+                                    {% endif %}
+                                {% endfor %}
+                            </select>
+                            <label>Pick Your Skills</label>
+                        {% endfor %}    
                     {% else %}
                         <p>You haven't picked a class yet! Come back when you have</p>
                     {% endif %}
