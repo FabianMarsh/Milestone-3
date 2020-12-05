@@ -80,7 +80,8 @@ def new_character():
                     "background_skill_prof_" + index),
                 "background_equipment": request.form.get(
                     "background_equipment_" + index),
-                "character_name": request.form.get("character_name")
+                "character_name": request.form.get("character_name"),
+                "chosen_skill_prof": request.form.get("skill_select")
                 }
 
         if "ability_scores" in request.form:
@@ -126,9 +127,11 @@ def new_character():
     classes = mongo.db.classes.find()
     races = mongo.db.races.find()
     backgrounds = mongo.db.backgrounds.find()
+    skills = mongo.db.skills.find()
 
     return render_template("new_character.html",
-        classes=classes, races=races, backgrounds=backgrounds)
+        classes=classes, races=races, backgrounds=backgrounds,
+        skills=skills)
 
 
 @app.route("/my_characters")
@@ -205,10 +208,13 @@ def edit_character(character_id):
     classes = mongo.db.classes.find()
     races = mongo.db.races.find()
     backgrounds = mongo.db.backgrounds.find()
+    saving_throws = mongo.db.saving_throws.find()
+    skills = mongo.db.skills.find()
 
     return render_template("edit_character.html",
         character=character, characters=characters,
-            classes=classes, races=races, backgrounds=backgrounds)
+            classes=classes, races=races, backgrounds=backgrounds,
+                saving_throws=saving_throws, skills=skills)
 
 
 @app.route("/register", methods=["GET", "POST"])

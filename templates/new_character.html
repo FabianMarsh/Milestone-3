@@ -104,7 +104,23 @@
                 <textarea placeholder="Describle where your character came from, but don't worry you can change this later" 
                     id="character_description" name="character_description" class="materialize-textarea validate" minlength="1" maxlength="300"></textarea>
                 <label for="character_description">Character Description</label>
-                    <p>You haven't picked a class yet come back when you have!</p>
+
+                <div class="input-field col s12">
+                    {% if session["skills"] %}
+                        <select name="skill_select" multiple>
+                            {% for skill in skills %}
+                                {% if "Choose any three" in session["skills"][0] %}
+                                    <option  value="{{ skill.skill_name }}">{{ skill.skill_name }}</option>
+                                {% elif skill.skill_name in session["skills"][0] %}
+                                    <option value="{{ skill.skill_name }}">{{ skill.skill_name }}</option>
+                                {% endif %}
+                            {% endfor %}
+                        </select>
+                        <label>Pick Your Skills</label>
+                    {% else %}
+                        <p>You haven't picked a class yet! Come back when you have</p>
+                    {% endif %}
+                </div>
 
                 <h3 class="center">Choose Your Background</h3>
 

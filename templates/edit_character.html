@@ -99,70 +99,40 @@
                     <input id="profiencey_bonus" class="validate" type="text" value="{{ character.profiencey_bonus }}">
                     <label for="profiencey_bonus">Profiencey Bonus</label>
                 </div>
+                    <div>
+                        {% for saving_throw in saving_throws %}
+                        <p>
+                            <label>
+                                {% if saving_throw.saving_throw_name in character.class_saving_throws %}
+                                    <input type="checkbox" checked="checked"/>
+                                {% else %}
+                                    <input type="checkbox"/>
+                                {% endif %}
+                                <span>{{saving_throw.saving_throw_name}}</span>
+                            </label>
+                        </p>
+                        {% endfor %}
+                        <p>Saving Throws</p> 
+                    </div>
+                </div>
                 <div>
-                    <p>
-                        <label>
-                            {% if "Strength" in character.class_saving_throws %}
-                                <input type="checkbox" checked="checked"/>
-                            {% else %}
-                                <input type="checkbox"/>
-                            {% endif %}
-                            <span>Strength</span>
-                        </label>
-                    </p>
-                    <p>
-                        <label>
-                            {% if "Dexterity" in character.class_saving_throws %}
-                                <input type="checkbox" checked="checked"/>
-                            {% else %}
-                                <input type="checkbox"/>
-                            {% endif %}
-                            <span>Dexterity</span>
-                        </label>
-                    </p>
-                    <p>
-                        <label>
-                            {% if "Constitution" in character.class_saving_throws %}
-                                <input type="checkbox" checked="checked"/>
-                            {% else %}
-                                <input type="checkbox"/>
-                            {% endif %}
-                            <span>Constitution</span>
-                        </label>
-                    </p>
-                    <p>
-                        <label>
-                            {% if "Intelligence" in character.class_saving_throws %}
-                                <input type="checkbox" checked="checked"/>
-                            {% else %}
-                                <input type="checkbox"/>
-                            {% endif %}
-                            <span>Intelligence</span>
-                        </label>
-                    </p>
-                    <p>
-                        <label>
-                            {% if "Wisdom" in character.class_saving_throws %}
-                                <input type="checkbox" checked="checked"/>
-                            {% else %}
-                                <input type="checkbox"/>
-                            {% endif %}
-                            <span>Wisdom</span>
-                        </label>
-                    </p>
-                    <p>
-                        <label>
-                            {% if "Charisma" in character.class_saving_throws %}
-                                <input type="checkbox" checked="checked"/>
-                            {% else %}
-                                <input type="checkbox"/>
-                            {% endif %}
-                            <span>Charisma</span>
-                        </label>
-                    </p>
+                    <div>
+                        {% for skill in skills %}
+                            <p>
+                                <label>
+                                    {% if skill.skill_name in character.chosen_skills %}
+                                        <input type="checkbox" checked="checked"/>
+                                    {% else %}
+                                        <input type="checkbox"/>
+                                    {% endif %}
+                                    <span>{{ skill.skill_name}}</span>
+                                </label>
+                            </p>
+                        {% endfor %}
+                        <p>Skills</p> 
+                    </div>
                 </div>
             </div>
-        </div>
     </form>
 
 {% endblock %}
