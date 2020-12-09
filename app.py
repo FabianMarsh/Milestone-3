@@ -51,8 +51,30 @@ def new_character():
                 "class_saving_throws": request.form.get(
                     "class_saving_throws_" + index),
                 "class_num_skills": int(request.form.get(
-                    "class_num_skills_" + index))
+                    "class_num_skills_" + index)),
+                "profiency_bonus": int(request.form.get("profiency_bonus"))
             }
+
+            if "class_tool_prof_" + index in request.form:
+                session["class"].update({
+                    "class_tool_prof": request.form.get(
+                        "class_tool_prof_" + index)})
+
+            if "class_num_artisans_" + index in request.form:
+                session["class"].update({
+                    "class_num_artisans": int(request.form.get(
+                        "class_num_artisans_" + index))})
+            else:
+                session["class"].update({
+                    "class_num_artisans": 0})
+
+            if "class_num_instruments_" + index in request.form:
+                session["class"].update({
+                    "class_num_instruments": int(request.form.get(
+                        "class_num_instruments_" + index))})
+            else:
+                session["class"].update({
+                    "class_num_instruments": 0})
 
             session["skills"] = [
                 request.form.get("class_skill_prof_" + index)
@@ -73,18 +95,67 @@ def new_character():
 
             index = request.form.get("background")
 
-            session["details"] = {
+            session["background"] = {
                 "background_name": request.form.get(
                     "background_name_" + index),
-                "background_languages": request.form.get(
-                    "background_languages_" + index),
                 "background_skill_prof": request.form.get(
                     "background_skill_prof_" + index),
+                "background_tool_prof": request.form.get(
+                    "background_tool_prof_" + index),
                 "background_equipment": request.form.get(
                     "background_equipment_" + index),
-                "character_name": request.form.get("character_name"),
-                "chosen_skills": ""
+                "background_num_languages": int(request.form.get(
+                        "background_num_languages_" + index))
                 }
+
+            if "background_num_artisans_" + index in request.form:
+                session["background"].update({
+                    "background_num_artisans": int(request.form.get(
+                        "background_num_artisans_" + index))})
+            else:
+                session["background"].update({
+                    "background_num_artisans": 0})
+
+            if "background_num_instruments_" + index in request.form:
+                session["background"].update({
+                    "background_num_instruments": int(request.form.get(
+                        "background_num_instruments_" + index))})
+            else:
+                session["background"].update({
+                    "background_num_instruments": 0})
+
+        if "details" in request.form:
+
+            session["details"] = {
+                "character_name": request.form.get("character_name"),
+                "chosen_skills": "",
+                "chosen_languages": "",
+            }
+
+            if session["class"] and session["background"]:
+                if session["class"]["class_tool_prof"]:
+
+                    session["details"].update({"chosen_tools": " "})
+
+                    for i in range(0, session["class"][
+                        "class_num_artisans"] + session[
+                            "background"]["background_num_artisans"]):
+
+                        session["details"][
+                            "chosen_tools"] += request.form.get(
+                                "tool_select_" + str(i)) + " "
+
+                    if "instrument" in session["class"]["class_tool_prof"]:
+
+                        session["details"].update({"chosen_instruments": " "})
+
+                        for i in range(0, session["class"][
+                            "class_num_instruments"] + session[
+                                "background"]["background_num_instruments"]):
+
+                            session["details"][
+                                "chosen_instruments"] += request.form.get(
+                                    "instrument_select_" + str(i)) + " "
 
             if session["class"]:
 
@@ -92,6 +163,15 @@ def new_character():
                     session["details"][
                         "chosen_skills"] += request.form.get(
                             "skill_select_" + str(i)) + " "
+
+            if session["background"]["background_num_languages"] > 0:
+
+                for i in range(0, session["background"][
+                    "background_num_languages"]):
+
+                    session["details"][
+                        "chosen_languages"] += request.form.get(
+                            "language_select_" + str(i)) + " "
 
         if "ability_scores" in request.form:
             session["ability"] = {
@@ -117,9 +197,18 @@ def new_character():
 
         if "submit" in request.form:
 
+            session["details"]["chosen_skills"] = session[
+                "details"]["chosen_skills"] + session[
+                    "background"]["background_skill_prof"]
+
+            # Removes background skill prof from details cookie
+            # as it is no longer needed
+            session["details"].pop("background_skill_prof", None)
+
             character = {
                 **session.get("class"),
                 **session.get("race"),
+                **session.get("background"),
                 **session.get("details"),
                 **session.get("ability")
             }
@@ -127,6 +216,7 @@ def new_character():
             session.pop("class")
             session.pop("race")
             session.pop("details")
+            session.pop("background")
             session.pop("ability")
             session.pop("skills")
 
@@ -138,10 +228,13 @@ def new_character():
     races = mongo.db.races.find()
     backgrounds = mongo.db.backgrounds.find()
     skills = list(mongo.db.skills.find())
+    languages = list(mongo.db.languages.find())
+    tools = list(mongo.db.tools.find())
 
     return render_template("new_character.html",
         classes=classes, races=races, backgrounds=backgrounds,
-        skills=skills)
+            skills=skills, languages=languages,
+                tools=tools)
 
 
 @app.route("/my_characters")

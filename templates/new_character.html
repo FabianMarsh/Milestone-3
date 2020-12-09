@@ -5,8 +5,9 @@
         <!-- Materialise Tabs -->
         <div class="col s12">
             <ul class="tabs">
-                <li class="tab col s2 offset-s1"><a class="active" href="#class">Class</a></li>
+                <li class="tab col s2"><a class="active" href="#class">Class</a></li>
                 <li class="tab col s2"><a href="#race">Race</a></li>
+                <li class="tab col s2"><a href="#background">Background</a></li>
                 <li class="tab col s2"><a href="#details">Character Details</a></li>
                 <li class="tab col s2"><a href="#ability_scores">Ability Scores</a></li>
                 <li class="tab col s2"><a href="#submit">Submit</a></li>
@@ -58,6 +59,13 @@
                                     {% if class.class_tool_prof %}
                                         <input type="hidden" name="class_tool_prof_{{ class.class_index }}" value="{{ class.class_tool_prof }}">
                                     {% endif %}
+                                    {% if class.class_num_instruments %}
+                                        <input type="hidden" name="class_num_instruments_{{ class.class_index }}" value="{{ class.class_num_instruments }}">
+                                    {% endif %}
+                                    {% if class.class_num_artisans %}
+                                        <input type="hidden" name="class_num_artisans_{{ class.class_index }}" value="{{ class.class_num_artisans }}">
+                                    {% endif %}
+                                    <input type="hidden" name="profiency_bonus" value="2">
                                 </button>
                                 <!-- Materialise Button End -->
                             </div>
@@ -96,33 +104,8 @@
                     </ul>
                 </div>
         </form>
-        <form method="POST" name="details" action="{{ url_for('new_character') }}">
-            <div id="details" class="col s12">
-                <input placeholder="Ragnar The Great Alester" id="character_name" name="character_name" type="text" class="validate"
-                    maxlength="30" required>
-                <label for="character_name">Character Name</label>
-                <textarea placeholder="Describle where your character came from, but don't worry you can change this later" 
-                    id="character_description" name="character_description" class="materialize-textarea validate" minlength="1" maxlength="300"></textarea>
-                <label for="character_description">Character Description</label>
-
-                <div class="input-field col s12">
-                    {% if session["class"] %}
-                        {% for i in range(0, session["class"].class_num_skills) %}
-                            <select name="skill_select_{{ i }}">
-                                {% for skill in skills %}
-                                    {% if "any" in session["skills"][0] %}
-                                        <option value="{{ skill.skill_name }}">{{ skill.skill_name }}</option>
-                                    {% elif skill.skill_name in session["skills"][0] %}
-                                        <option value="{{ skill.skill_name }}">{{ skill.skill_name }}</option>
-                                    {% endif %}
-                                {% endfor %}
-                            </select>
-                            <label>Pick Your Skills</label>
-                        {% endfor %}    
-                    {% else %}
-                        <p>You haven't picked a class yet! Come back when you have</p>
-                    {% endif %}
-                </div>
+        <form method="POST" name="background" action="{{ url_for('new_character') }}">
+            <div id="background" class="col s12">
 
                 <h3 class="center">Choose Your Background</h3>
 
@@ -145,15 +128,131 @@
                                         
                                 <button class="btn waves-effect waves-light" type="submit" name="background" value="{{ background.background_index }}">
                                     Choose Background
-                                    <input type="hidden" name="background_name_{{ background.background_index }}" value="{{ background.background_name }}" >
-                                    <input type="hidden" name="background_skill_prof_{{ background.background_index }}" value="{{ background.background_skill_prof }}" >
-                                    <input type="hidden" name="background_equipment_{{ background.background_index }}" value="{{ background.background_equipment }}" >
-                                    <input type="hidden" name="background_languages_{{ background.background_index }}" value="{{ background.background_languages }}" >
+                                    <input type="hidden" name="background_name_{{ background.background_index }}" value="{{ background.background_name }}">
+                                    <input type="hidden" name="background_skill_prof_{{ background.background_index }}" value="{{ background.background_skill_prof }}">
+                                    <input type="hidden" name="background_tool_prof_{{ background.background_index }}" value="{{ background.background_tool_prof }}">
+                                    <input type="hidden" name="background_equipment_{{ background.background_index }}" value="{{ background.background_equipment }}">
+                                    <input type="hidden" name="background_languages_{{ background.background_index }}" value="{{ background.background_languages }}">
+                                    <input type="hidden" name="background_num_languages_{{ background.background_index }}" value="{{ background.background_num_languages }}">
+                                    {% if background.background_num_instruments %}
+                                        <input type="hidden" name="background_num_instruments_{{ background.background_index }}" value="{{ background.background_num_instruments }}">
+                                    {% endif %}
+                                    {% if background.background_num_artisans %}
+                                        <input type="hidden" name="background_num_artisans_{{ background.background_index }}" value="{{ background.background_num_artisans }}">
+                                    {% endif %}
                                 </button>
                             </div>
                         </li>
                     {% endfor %}
                 </ul>
+            </div>
+        </form>
+        <form method="POST" name="details" action="{{ url_for('new_character') }}">
+            <div id="details" class="col s12">
+                <h6>Character Name</h6>
+                <input placeholder="Ragnar The Great Alester" id="character_name" name="character_name" type="text" class="validate"
+                    maxlength="30" required>
+                <h6>Character Description</h6>
+                <textarea placeholder="Describle where your character came from, but don't worry you can change this later" 
+                    id="character_description" name="character_description" class="materialize-textarea validate" minlength="1" maxlength="300"></textarea>
+
+                <div class="input-field col s12">
+                    {% if session["background"] %}
+                        {% if session["background"].background_num_languages > 0  %}
+                            <h6>Pick Your Languages</h6>
+                            {% for i in range(0, session["background"].background_num_languages) %}
+                                <select name="language_select_{{ i }}">
+                                    {% for language in languages %}
+                                        <option value="{{ language.language_name }}">{{ language.language_name }}</option>
+                                    {% endfor %}
+                                </select>
+                            {% endfor %}
+                        {% else %}
+                            <p>Your background doesn't provide any additional languages</p>
+                        {% endif %}    
+                    {% else %}
+                        <p>You haven't picked a background yet! Come back when you have</p>
+                    {% endif %}
+                </div>
+                <div class="input-field col s12">
+                    {% if session["class"] %}
+                        <h6>Pick Your Skill Proficiences</h6>
+                        {% for i in range(0, session["class"].class_num_skills) %}
+                            <select name="skill_select_{{ i }}">
+                                {% for skill in skills %}
+                                    {% if "any" in session["skills"][0] %}
+                                        <option value="{{ skill.skill_name }}">{{ skill.skill_name }}</option>
+                                    {% elif skill.skill_name in session["skills"][0] %}
+                                        <option value="{{ skill.skill_name }}">{{ skill.skill_name }}</option>
+                                    {% endif %}
+                                {% endfor %}
+                            </select>
+                        {% endfor %}    
+                    {% else %}
+                        <h6>You haven't picked a class yet! Come back when you have</h6>
+                    {% endif %}
+                </div>
+                <div class="input-field col s12">
+                    {% if session["class"] and session["background"] %}
+                        {% if session["class"].class_tool_prof or session["background"].background_tool_prof %}
+                            <h6>Pick Your Tool Proficiences</h6>
+                            {% if "instrument" in session["class"].class_tool_prof or "instrument" in session["background"].background_tool_prof %}
+                                {% for i in range(0, session["class"].class_num_instruments + session["background"].background_num_instruments) %}
+                                    <select name="instrument_select_{{ i }}">
+                                        <option value="disabled selected">Musical Instruments</option>
+                                        {% for instrument in tools[0].musical_instruments %}
+                                            <option value="{{ instrument }}">{{ instrument }}</option>
+                                        {% endfor %}
+                                    </select>
+                                {% endfor %}    
+                            {% endif %}
+                            {% if "artisan" in session["class"].class_tool_prof or "artisan" in session["background"].background_tool_prof %}
+                                {% for i in range(0, session["class"].class_num_artisans + session["background"].background_num_artisans) %}
+                                <select name="tool_select_{{ i }}">
+                                    <option value="disabled selected">Artisans Tools</option>
+                                    {% for tool in tools[0].artisans_tools %}
+                                        <option value="{{ tool }}">{{ tool }}</option>
+                                    {% endfor %}
+                                </select>
+                                {% endfor %}
+                            {% endif %}
+                            {% if "gaming" in session["class"].class_tool_prof or "gaming" in session["background"].background_tool_prof %}
+                                <select name="gaming_set">
+                                    <option value="disabled selected">Gaming Sets</option>
+                                    {% for set in tools[0].gaming_sets %}
+                                        <option value="{{ set }}">{{ set }}</option>
+                                    {% endfor %}
+                                </select>
+                            {% endif %}
+                            {% if "Herbalism" in session["class"].class_tool_prof or "Herbalism" in session["background"].background_tool_prof %}
+                                <p>You have profiency in the Herbalism Kit</p>
+                            {% endif %}
+                            {% if "Thieves" in session["class"].class_tool_prof or "Thieves" in session["background"].background_tool_prof %}
+                                <p>You have profiency in Thieves' Tools</p>
+                            {% endif %}
+                            {% if "Navigator" in session["class"].class_tool_prof or "Navigator" in session["background"].background_tool_prof %}
+                                <p>You have profiency in Navigator's' Tools</p>
+                            {% endif %}
+                            {% if "Disguise" in session["class"].class_tool_prof or "Disguise" in session["background"].background_tool_prof %}
+                                <p>You have profiency in the Disguise Kit</p>
+                            {% endif %}
+                            {% if "Forgery" in session["class"].class_tool_prof or "Forgery" in session["background"].background_tool_prof %}
+                                <p>You have profiency in the Forgery Kit</p>
+                            {% endif %}
+                            {% if "land" in session["class"].class_tool_prof or "land" in session["background"].background_tool_prof %}
+                                <p>You have profiency using land vehicles</p>
+                            {% endif %}
+                            {% if "water" in session["class"].class_tool_prof or "water" in session["background"].background_tool_prof %}
+                                <p>You have profiency using water vehicles</p>
+                            {% endif %}
+                        {% endif %}
+                    {% else %}
+                            <p>You haven't picked your background or class yet! Come back when you have!</p>
+                    {% endif %}
+                </div>
+                <div>
+                    <button class="btn waves-effect waves-light" type="submit" name="details">Submit</button>
+                </div>
             </div>
         </form>
         <form method="POST" name="ability_scores" action="{{ url_for('new_character') }}">
