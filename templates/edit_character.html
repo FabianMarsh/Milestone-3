@@ -2,35 +2,38 @@
 {% block content %}
     <form>
         <div class="row">
-            <div class="row">
-                <div class="input-field col s3">
+            <div class="col s12 input-field">
+                <div class="col s3">
                     <input id="character_name" type="text" class="validate" value="{{ character.character_name }}">
                     <label for="character_name">Character Name</label>
                 </div>
-                <div class="input-field col s3">
+                <div class="col s3">
                     <input id="class_name" type="text" class="validate" value="{{ character.class_name }}">
                     <label for="class_name">Class</label>
                     <input id="race_name" type="text" class="validate" value="{{ character.race_name }}">
                     <label for="race_name">Race</label>
                 </div>
-                <div class="input-field col s3">
+                <div class="col s3">
                     <input id="background_name" type="text" class="validate" value="{{ character.background_name }}">
                     <label for="background_name">Background</label>
                     <input id="alignment" type="text" class="validate" value="{{ character.alignment }}">
                     <label for="alignment">Alignment</label>
                 </div>
-                <div class="input-field col s3">
+                <div class="col s3">
                     <input id="user_name" type="text" class="validate" value="{{ character.user }}">
                     <label for="class_name">Player Name</label>
                     <input id="experience" type="text" class="validate" value="{{ character.experience }}">
                     <label for="experience">Experience</label>
                 </div>
             </div>
-            <div class="row">
-                    <div class="input-field col s1">
+        </div>
+        <div class="row">
+            <div class="col s12 input-field">
+                <div class="col s4">
+                    <div class="col s4">
                         <div>
-                            <input id="strength" type="text" class="validate" value="{{ character.strength }}">
                             <label for="strength">Strength</label>
+                            <input id="strength" type="text" class="validate" value="{{ character.strength }}">
                             <div>
                                 {% if character.strength_modifier > 0 %}
                                     <input id="strength_modifier" type="text" class="validate" value=" +{{ character.strength_modifier }}">
@@ -40,30 +43,30 @@
                             </div>
                         </div>
                         <div>
-                            <input id="dexterity" type="text" class="validate" value="{{ character.dexterity }}">
                             <label for="dexterity">Dexterity</label>
+                            <input id="dexterity" type="text" class="validate" value="{{ character.dexterity }}">
                             <div>
-                                {% if character.dexterity_modifier > 0 %}
-                                    <input id="dexterity_modifier" type="text" class="validate" value=" +{{ character.dexterity_modifier }}">
-                                {% else %}
-                                    <input id="dexterity_modifier" type="text" class="validate" value="{{ character.dexterity_modifier }}">
-                                {% endif %}
-                            </div>
-                        </div>
-                        <div>
-                            <input id="constitution" type="text" class="validate" value="{{ character.constitution }}">
-                            <label for="constitution">Constitution</label>
-                            <div>
-                            {% if character.constitution_modifier > 0 %}
-                                <input id="constitution_modifier" type="text" class="validate" value=" +{{ character.constitution_modifier }}">
+                            {% if character.dexterity_modifier > 0 %}
+                                <input id="dexterity_modifier" type="text" class="validate" value=" +{{ character.dexterity_modifier }}">
                             {% else %}
-                                <input id="constitution_modifier" type="text" class="validate" value="{{ character.constitution_modifier }}">
+                                <input id="dexterity_modifier" type="text" class="validate" value="{{ character.dexterity_modifier }}">
                             {% endif %}
                             </div>
                         </div>
                         <div>
-                            <input id="intelligence" type="text" class="validate" value="{{ character.intelligence }}">
+                            <label for="constitution">Constitution</label>
+                            <input id="constitution" type="text" class="validate" value="{{ character.constitution }}">
+                            <div>
+                                {% if character.constitution_modifier > 0 %}
+                                    <input id="constitution_modifier" type="text" class="validate" value=" +{{ character.constitution_modifier }}">
+                                {% else %}
+                                    <input id="constitution_modifier" type="text" class="validate" value="{{ character.constitution_modifier }}">
+                                {% endif %}
+                            </div>
+                        </div>
+                        <div>
                             <label for="intelligence">Intelligence</label>
+                            <input id="intelligence" type="text" class="validate" value="{{ character.intelligence }}">
                             <div>
                                 {% if character.intelligence_modifier > 0 %}
                                     <input id="intelligence_modifier" type="text" class="validate" value=" +{{ character.intelligence_modifier }}">
@@ -73,8 +76,8 @@
                             </div>
                         </div>
                         <div>
-                            <input id="wisdom" type="text" class="validate" value="{{ character.wisdom }}">
                             <label for="wisdom">Wisdom</label>
+                            <input id="wisdom" type="text" class="validate" value="{{ character.wisdom }}">
                             <div>
                                 {% if character.wisdom_modifier > 0 %}
                                     <input id="wisdom_modifier" type="text" class="validate" value=" +{{ character.wisdom_modifier }}">
@@ -84,8 +87,8 @@
                             </div>
                         </div>
                         <div>
-                            <input id="charisma" type="text" class="validate" value="{{ character.charisma }}">
                             <label for="charisma">Charisma</label>
+                            <input id="charisma" type="text" class="validate" value="{{ character.charisma }}">
                             <div>
                                 {% if character.charisma_modifier > 0 %}
                                     <input id="charisma_modifier" type="text" class="validate" value=" +{{ character.charisma_modifier }}">
@@ -95,14 +98,13 @@
                             </div>
                         </div>
                     </div>
-                    <div class="row">
-                    <div class="input-field col s2">
+                    <div class="col s8">
                         <div>
-                            <input id="profiencey_bonus" class="validate" type="text" value=" +{{ character.profiency_bonus }}">
+                            <input id="profiencey_bonus" class="validate" type="text" value="+{{ character.profiency_bonus }}">
                             <label for="profiencey_bonus">Profiencey Bonus</label>
                         </div>
-                            <div>
-                                {% for saving_throw in saving_throws %}
+                        <div>
+                            {% for saving_throw in saving_throws %}
                                 <p>
                                     <label>
                                         {% if saving_throw.saving_throw_name in character.class_saving_throws %}
@@ -110,52 +112,228 @@
                                         {% else %}
                                             <input type="checkbox"/>
                                         {% endif %}
-                                        <span>{{saving_throw.saving_throw_name}}</span>
+                                            <span>{{saving_throw.saving_throw_name}}</span>
                                     </label>
                                 </p>
-                                {% endfor %}
-                                <p>Saving Throws</p> 
-                            </div>
+                            {% endfor %}
+                            <p>Saving Throws</p> 
                         </div>
                         <div>
+                            {% for skill in skills %}
+                                <p>
+                                    <label>
+                                        {% if skill.skill_name in character.chosen_skills %}
+                                            <input id="{{ skill }}" type="checkbox" checked="checked"/>
+                                        {% else %}
+                                            <input id="{{ skill }}" type="checkbox"/>
+                                        {% endif %}
+                                        <span>{{ skill.skill_name}}</span>
+                                    </label>
+                                </p>
+                            {% endfor %}
+                            <p>Skills</p> 
+                        </div>
+                    </div>
+                    <div class="col s12">
+                        <div class="col s4">
+                            {% if "Perception" in character.chosen_skills %}
+                                <input name="passive_perception" value="{{ 10 + character.wisdom_modifier + character.profiency_bonus }}">
+                            {% else %}
+                                <input name="passive_perception" value="{{ 10 + character.wisdom_modifier }}">
+                            {% endif %}
+                        </div>
+                        <div class="col s8">
+                            <p>Passive Perception</p>
+                        </div>
+                    </div>
+                    <div class="col s12 input-field">
+                        <textarea name="other_profiencies_languages" class="materialize-textarea">
+                            {%- if character.chosen_languages -%}
+                                {{- character.chosen_languages -}}
+                            {% endif %}
+                            {%- if character.chosen_tools -%}
+                                {{- character.chosen_tools -}}
+                            {% endif %}
+                            {%- if character.chosen_instruments -%}
+                                {{- character.chosen_instruments -}}
+                            {%- endif -%}
+                        </textarea>
+                        <p>Other Proficiencies & Languages</p>
+                    </div>
+                </div>
+                <div class="col s4">
+                    <div class="col s4">
+                        <input type="text" name="armor_class" value="{{ 10 + character.dexterity_modifier }}">
+                        <label for="armor_class">Armor Class</label>
+                    </div>
+                    <div class="col s4">
+                        <input type="text" name="intiative_bonus" value="+{{ character.dexterity_modifier }}">
+                        <label for="intiative_bonus">Intiative</label>
+                    </div>
+                    <div class="col s4">
+                        Race speed int
+                    </div>
+                    <div class="col s12">
+                        <div>
+                            <!-- Have hit dice int/split at the d save [1] as HDI -->
+                            <input type="number" name="hit_point_max" value="">
+                            <label for="hit_point_max">Hit Point Maximum</label>
+                            <!-- Same as max for the user they can change later -->
+                            <input type="number" name="current_hit_points" value="">
+                            <label for="current_hit_points">Current Hit Points</label>
+                        </div>
+                        <div>
+                            <!-- if Temp hit points > 0 display value if not leave blank-->
+                            <input type="number" name="temporary_hit_points" value="0">
+                            <label for="temporary_hit_points">Temporary Hit Points</label>
+                        </div>
+                        <div class="col s6">
+                            <input type="number" name="total_hit_dice" value="1">
+                            <label for="total_hit_dice">Total Hit Dice</label>
+                            <input type="text" name="hit_dice" value="{{ character.class_hit_dice }}">
+                            <label for="hit_dice">Hit Dice</label>
+                        </div>
+                        <div class="col s6">
                             <div>
-                                {% for skill in skills %}
-                                    <p>
+                                <label for="">Successes</label>
+                                <p>
+                                    <div class="col s4">
                                         <label>
-                                            {% if skill.skill_name in character.chosen_skills %}
-                                                <input id="{{ skill }}" type="checkbox" checked="checked"/>
-                                            {% else %}
-                                                <input id="{{ skill }}" type="checkbox"/>
-                                            {% endif %}
-                                            <span>{{ skill.skill_name}}</span>
+                                            <input type="checkbox" class="filled-in"/>
+                                            <span></span>
                                         </label>
-                                    </p>
-                                {% endfor %}
-                                <p>Skills</p> 
+                                    </div>
+                                    <div class="col s4">
+                                        <label>
+                                            <input type="checkbox" class="filled-in"/>
+                                            <span></span>
+                                        </label>
+                                    </div>
+                                    <div class="col s4">
+                                        <label>
+                                            <input type="checkbox" class="filled-in"/>
+                                            <span></span>
+                                        </label>
+                                    </div>
+                                </p>
+                            </div>
+                            <div>
+                                <label for="">Failures</label>
+                                <p>
+                                    <div class="col s4">
+                                        <label>
+                                            <input type="checkbox" class="filled-in"/>
+                                            <span></span>
+                                        </label>
+                                    </div>
+                                    <div class="col s4">
+                                        <label>
+                                            <input type="checkbox" class="filled-in"/>
+                                            <span></span>
+                                        </label>
+                                    </div>
+                                    <div class="col s4">
+                                        <label>
+                                            <input type="checkbox" class="filled-in"/>
+                                            <span></span>
+                                        </label>
+                                    </div>
+                                </p>
+                            </div>
+                            <p>Death Saves</p>
+                        </div>
+                        <div class="col s12">
+                            <div class="col s12">
+                                <div class="col s4">
+                                    <label for="attack_name">Name</label>
+                                    <input type="text" name="attack_name_1" value="">
+                                </div>
+                                <div class="col s4">
+                                    <label for="attack_bonus">Bonus</label>
+                                    <input type="text" name="attack_bonus_1" value="">
+                                </div>
+                                <div class="col s4">
+                                    <label for="attack_damage">Damage/Type</label>
+                                    <input type="text" name="attack_damage_1" value="">
+                                </div>
+                                <div class="col s4">
+                                    <input type="text" name="attack_name_2" value="">
+                                </div>
+                                <div class="col s4">
+                                    <input type="text" name="attack_bonus_2" value="">
+                                </div>
+                                <div class="col s4">
+                                    <input type="text" name="attack_damage_2" value="">
+                                </div>
+                                <div class="col s4">
+                                    <input type="text" name="attack_name_3" value="">
+                                </div>
+                                <div class="col s4">
+                                    <input type="text" name="attack_bonus_3" value="">
+                                </div>
+                                <div class="col s4">
+                                    <input type="text" name="attack_damage_3" value="">
+                                </div>
+                            </div>
+                            <div class="col s12 input-field">
+                                <textarea name="attacks_spellcasting" class="materialize-textarea"></textarea>
+                                <!--p element rather than label element for formatting purposes-->
+                                <p>Attacks & Spellcasting</p>
                             </div>
                         </div>
-                        <div class="input-field row">
-                            <div class="col s1">
-                                {% if "Perception" in character.chosen_skills %}
-                                    <input name="passive_perception" value="{{ 10 + character.wisdom_modifier + character.profiency_bonus }}
-                                        in if"/>
-                                {% else %}
-                                    <input name="passive_perception" value="{{ 10 + character.wisdom_modifier }}
-                                        in if"/>
-                                {% endif %}
-                                <label for="passive_perception">Passive Perception</label>
+                        <div class="col s12  input-field">
+                            <div class="col s4">
+                                <div>
+                                    <input type="number" name="copper_pieces" value="0">
+                                    <label for="copper_pieces">CP</label>
+                                </div>
+                                <div>
+                                    <input type="number" name="silver_pieces" value="0">
+                                    <label for="silver_pieces">SP</label>
+                                </div>
+                                <div>
+                                    <input type="number" name="electrum_pieces" value="0">
+                                    <label for="electrum_pieces">EP</label>
+                                </div>
+                                <div>
+                                    <input type="number" name="gold_pieces" value="0">
+                                    <label for="gold_pieces">GP</label>
+                                </div>
+                                <div>
+                                    <input type="number" name="platinum_pieces" value="0">
+                                    <label for="platinum_pieces">PP</label>
+                                </div>
                             </div>
-                        </div>
-                        <div class="input-field col s3">
-                            <textarea id="textarea1" class="materialize-textarea">
-                                {{ character.languages }}
-                                {{ character.tool_prof }}
-                            </textarea>
-                            <label for="textarea1">Textarea</label>
+                            <div class="col s8">
+                                <textarea name="equipment" class="materialize-textarea"></textarea>
+                                <p>Equipment</p>
+                            </div>
                         </div>
                     </div>
                 </div>
+                <div class="col s4">
+                    <div class="col s12">
+                        <textarea name="personality_traits" class="materialize-textarea"></textarea>
+                        <p>Personality Traits</p>
+                    </div>
+                    <div class="col s12">
+                        <textarea name="ideals" class="materialize-textarea"></textarea>
+                        <p>Ideals</p>
+                    </div>
+                    <div class="col s12">
+                        <textarea name="bonds" class="materialize-textarea"></textarea>
+                        <p>Bonds</p>
+                    </div>
+                    <div class="col s12">
+                        <textarea name="flaws" class="materialize-textarea"></textarea>
+                        <p>Flaws</p>
+                    </div>
+                    <div class="col s12">
+                        <textarea name="feature_traits" class="materialize-textarea"></textarea>
+                        <p>Features & Traits</p>
+                    </div>
+                </div>
             </div>
+        </div>
     </form>
-
 {% endblock %}
