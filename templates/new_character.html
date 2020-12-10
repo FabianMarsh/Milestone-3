@@ -134,6 +134,7 @@
                                     <input type="hidden" name="background_equipment_{{ background.background_index }}" value="{{ background.background_equipment }}">
                                     <input type="hidden" name="background_languages_{{ background.background_index }}" value="{{ background.background_languages }}">
                                     <input type="hidden" name="background_num_languages_{{ background.background_index }}" value="{{ background.background_num_languages }}">
+                                    <input type="hidden" name="background_gold_{{ background.background_index }}" value="{{ background.background_gold }}">
                                     {% if background.background_num_instruments %}
                                         <input type="hidden" name="background_num_instruments_{{ background.background_index }}" value="{{ background.background_num_instruments }}">
                                     {% endif %}
@@ -155,6 +156,12 @@
                 <h6>Character Description</h6>
                 <textarea placeholder="Describle where your character came from, but don't worry you can change this later" 
                     id="character_description" name="character_description" class="materialize-textarea validate" minlength="1" maxlength="300"></textarea>
+                <h6>Character Alignment</h6>
+                <select name="character_alignment">
+                    {% for alignment in alignments[0].alignment_name %}
+                        <option value="{{ alignment }}">{{ alignment }}</option>
+                    {% endfor %}
+                </select>
 
                 <div class="input-field col s12">
                     {% if session["background"] %}
@@ -260,27 +267,27 @@
                 <h3 class="center">Choose Your Ability Scores</h3>
                 <div class="col s2">
                     <label for="strength">Strength</label>
-                    <input type="number" name="strength" minlength="1" maxlength="2" min="3" max="30" class="validate">
+                    <input type="number" name="strength" minlength="1" maxlength="2" min="3" max="30" class="validate" required>
                 </div>
                 <div class="col s2">
                     <label for="dexterity">Dexterity</label>
-                    <input type="number" name="dexterity" minlength="1" maxlength="2" min="3" max="30" class="validate">
+                    <input type="number" name="dexterity" minlength="1" maxlength="2" min="3" max="30" class="validate" required>
                 </div>
                 <div class="col s2">
                     <label for="constitution">Constitution</label>
-                    <input type="number" name="constitution" minlength="1" maxlength="2" min="3" max="30" class="validate">
+                    <input type="number" name="constitution" minlength="1" maxlength="2" min="3" max="30" class="validate" required>
                 </div>
                 <div class="col s2">
                     <label for="intelligence">Intelligence</label>
-                    <input type="number" name="intelligence" minlength="1" maxlength="2" min="3" max="30" class="validate">
+                    <input type="number" name="intelligence" minlength="1" maxlength="2" min="3" max="30" class="validate" required>
                 </div>
                 <div class="col s2">
                     <label for="wisdom">Wisdom</label>
-                    <input type="number" name="wisdom" minlength="1" maxlength="2" min="3" max="30" class="validate">
+                    <input type="number" name="wisdom" minlength="1" maxlength="2" min="3" max="30" class="validate" required>
                 </div>
                 <div class="col s2">
                     <label for="charisma">Charisma</label>
-                    <input type="number" name="charisma" minlength="1" maxlength="2" min="3" max="30" class="validate">
+                    <input type="number" name="charisma" minlength="1" maxlength="2" min="3" max="30" class="validate" required>
                 </div>
                 <div class="center">
                     <button class="btn waves-effect waves-light"  name="ability_scores" type="submit">Done</button>

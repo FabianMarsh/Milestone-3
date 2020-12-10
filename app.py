@@ -45,14 +45,20 @@ def new_character():
 
             index = request.form.get("class")
 
+            class_hit_die_int = request.form.get(
+                "class_hit_die_" + index).split("d")
+
             session["class"] = {
                 "class_name": request.form.get("class_name_" + index),
                 "class_hit_die": request.form.get("class_hit_die_" + index),
+                "class_hit_die_int": int(class_hit_die_int[1]),
+                "class_total_hit_dice": 1,
                 "class_saving_throws": request.form.get(
                     "class_saving_throws_" + index),
                 "class_num_skills": int(request.form.get(
                     "class_num_skills_" + index)),
-                "profiency_bonus": int(request.form.get("profiency_bonus"))
+                "profiency_bonus": int(request.form.get("profiency_bonus")),
+                "character_experience": 0
             }
 
             if "class_tool_prof_" + index in request.form:
@@ -105,7 +111,9 @@ def new_character():
                 "background_equipment": request.form.get(
                     "background_equipment_" + index),
                 "background_num_languages": int(request.form.get(
-                        "background_num_languages_" + index))
+                    "background_num_languages_" + index)),
+                "character_gold": int(request.form.get(
+                    "background_gold_" + index))
                 }
 
             if "background_num_artisans_" + index in request.form:
@@ -128,12 +136,14 @@ def new_character():
 
             session["details"] = {
                 "character_name": request.form.get("character_name"),
+                "character_alignment": request.form.get("character_alignment"),
                 "chosen_skills": "",
                 "chosen_languages": "",
+                "user": session["user"]
             }
 
             if session["class"] and session["background"]:
-                if session["class"]["class_tool_prof"]:
+                if "class_tool_prof" in session["class"]:
 
                     session["details"].update({"chosen_tools": " "})
 
@@ -195,6 +205,16 @@ def new_character():
                     int(request.form.get("charisma"))),
             }
 
+            if session["class"]:
+
+                hit_point_maximum = session["class"][
+                    "class_hit_die_int"] + session[
+                        "ability"]["constitution_modifier"]
+
+                session["class"].update({
+                    "hit_point_maximum": hit_point_maximum,
+                    "current_hit_points": hit_point_maximum})
+
         if "submit" in request.form:
 
             session["details"]["chosen_skills"] = session[
@@ -230,11 +250,12 @@ def new_character():
     skills = list(mongo.db.skills.find())
     languages = list(mongo.db.languages.find())
     tools = list(mongo.db.tools.find())
+    alignments = list(mongo.db.alignments.find())
 
     return render_template("new_character.html",
         classes=classes, races=races, backgrounds=backgrounds,
             skills=skills, languages=languages,
-                tools=tools)
+                tools=tools, alignments=alignments)
 
 
 @app.route("/my_characters")
@@ -307,17 +328,11 @@ def edit_character(character_id):
     character = mongo.db.characters.find_one(
         {"_id": ObjectId(character_id)})
 
-    characters = mongo.db.characters.find()
-    classes = mongo.db.classes.find()
-    races = mongo.db.races.find()
-    backgrounds = mongo.db.backgrounds.find()
     saving_throws = mongo.db.saving_throws.find()
     skills = mongo.db.skills.find()
 
-    return render_template("edit_character.html",
-        character=character, characters=characters,
-            classes=classes, races=races, backgrounds=backgrounds,
-                saving_throws=saving_throws, skills=skills)
+    return render_template("edit_character.html", character=character,
+        saving_throws=saving_throws, skills=skills)
 
 
 @app.route("/register", methods=["GET", "POST"])
