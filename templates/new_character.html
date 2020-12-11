@@ -245,7 +245,7 @@
                                 {% endfor %}
                             {% endif %}
                             {% if "gaming" in session["class"].class_tool_prof or "gaming" in session["background"].background_tool_prof %}
-                                <select name="gaming_set">
+                                <select name="gaming_select">
                                     <option value="disabled selected">Gaming Sets</option>
                                     {% for set in tools[0].gaming_sets %}
                                         <option value="{{ set }}">{{ set }}</option>

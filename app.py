@@ -65,6 +65,9 @@ def new_character():
                 session["class"].update({
                     "class_tool_prof": request.form.get(
                         "class_tool_prof_" + index)})
+            else:
+                session["class"].update({
+                    "class_tool_prof": " "})
 
             if "class_num_artisans_" + index in request.form:
                 session["class"].update({
@@ -152,7 +155,9 @@ def new_character():
             }
 
             if "class" in session and "background" in session:
-                if "class_tool_prof" in session["class"]:
+                if "class_tool_prof" in session[
+                    "class"] or "background_tool_prof" in session[
+                        "background"]:
 
                     session["details"].update({"chosen_tools": " "})
 
@@ -164,7 +169,46 @@ def new_character():
                             "chosen_tools"] += request.form.get(
                                 "tool_select_" + str(i)) + " "
 
-                    if "instrument" in session["class"]["class_tool_prof"]:
+                    if "Disguise" in session["class"][
+                        "class_tool_prof"] or "Disguise" in session[
+                            "background"]["background_tool_prof"]:
+
+                        session["details"]["chosen_tools"] += "Disguise Kit "
+
+                    if "Forgery" in session["class"][
+                        "class_tool_prof"] or "Forgery" in session[
+                            "background"]["background_tool_prof"]:
+
+                        session["details"]["chosen_tools"] += "Forgery Kit "
+
+                    if "Herbalism" in session["class"][
+                        "class_tool_prof"] or "Herbalism" in session[
+                            "background"]["background_tool_prof"]:
+
+                        session["details"]["chosen_tools"] += "Herbalism Kit "
+
+                    if "Navigator" in session["class"][
+                        "class_tool_prof"] or "Navigator" in session[
+                            "background"]["background_tool_prof"]:
+
+                        session["details"][
+                            "chosen_tools"] += "Navigator's Tools "
+
+                    if "Poisoner" in session["class"][
+                        "class_tool_prof"] or "Poisoner" in session[
+                            "background"]["background_tool_prof"]:
+
+                        session["details"]["chosen_tools"] += "Poisoner's Kit "
+
+                    if "Thieves" in session["class"][
+                        "class_tool_prof"] or "Thieves" in session[
+                            "background"]["background_tool_prof"]:
+
+                        session["details"]["chosen_tools"] += "Thieves' Tools "
+
+                    if "instrument" in session["class"][
+                        "class_tool_prof"] or "instrument" in session[
+                            "background"]["background_tool_prof"]:
 
                         session["details"].update({"chosen_instruments": " "})
 
@@ -175,6 +219,16 @@ def new_character():
                             session["details"][
                                 "chosen_instruments"] += request.form.get(
                                     "instrument_select_" + str(i)) + " "
+
+                    if "gaming" in session["class"][
+                        "class_tool_prof"] or "gaming" in session[
+                            "background"]["background_tool_prof"]:
+
+                        session["details"].update({"chosen_gaming_sets": " "})
+
+                        session["details"][
+                            "chosen_gaming_sets"] += request.form.get(
+                                "gaming_select")
 
             if "class" in session:
 
