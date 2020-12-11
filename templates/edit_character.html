@@ -136,32 +136,15 @@
                     </div>
                     <div class="col s12">
                         <div class="col s4">
-                            {% if character.passive_perception %}
-                                <input name="passive_perception" value="{{ character.passive_perception }}">
-                            {% elif "Perception" in character.chosen_skills %}
-                                <input name="passive_perception" value="{{ 10 + character.wisdom_modifier + character.profiency_bonus }}">
-                            {% else %}
-                                <input name="passive_perception" value="{{ 10 + character.wisdom_modifier }}">
-                            {% endif %}
+                            <input type="number" value="{{ character.passive_perception }}">
                         </div>
                         <div class="col s8">
                             <p>Passive Perception</p>
                         </div>
                     </div>
                     <div class="col s12 input-field">
-                        <textarea name="other_profiencies_languages" class="materialize-textarea">
-                            {%- if character.chosen_languages -%}
-                                {{- character.chosen_languages -}}
-                            {% endif %}
-                            {%- if character.chosen_tools -%}
-                                {{- character.chosen_tools -}}
-                            {% endif %}
-                            {%- if character.chosen_instruments -%}
-                                {{- character.chosen_instruments -}}
-                            {%- endif -%}
-                            {%- if character.chosen_gaming_sets -%}
-                                {{- character.chosen_gaming_sets -}}
-                            {%- endif -%}
+                        <textarea name="other_languages_profiencies" class="materialize-textarea">
+                            {{- character.other_languages_profiencies -}}
                         </textarea>
                         <p>Other Proficiencies & Languages</p>
                     </div>
