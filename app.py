@@ -101,6 +101,10 @@ def new_character():
 
             index = request.form.get("background")
 
+            background_feature = request.form.get(
+                "background_feature_name_" + index) + " " + request.form.get(
+                    "background_feature_description_" + index)
+
             session["background"] = {
                 "background_name": request.form.get(
                     "background_name_" + index),
@@ -113,7 +117,8 @@ def new_character():
                 "background_num_languages": int(request.form.get(
                     "background_num_languages_" + index)),
                 "character_gold": int(request.form.get(
-                    "background_gold_" + index))
+                    "background_gold_" + index)),
+                "background_feature": background_feature
                 }
 
             if "background_num_artisans_" + index in request.form:
@@ -139,10 +144,14 @@ def new_character():
                 "character_alignment": request.form.get("character_alignment"),
                 "chosen_skills": "",
                 "chosen_languages": "",
-                "user": session["user"]
+                "user": session["user"],
+                "personality_traits": request.form.get("personality_traits"),
+                "ideals": request.form.get("ideals"),
+                "bonds": request.form.get("bonds"),
+                "flaws": request.form.get("flaws"),
             }
 
-            if session["class"] and session["background"]:
+            if "class" in session and "background" in session:
                 if "class_tool_prof" in session["class"]:
 
                     session["details"].update({"chosen_tools": " "})
@@ -167,7 +176,7 @@ def new_character():
                                 "chosen_instruments"] += request.form.get(
                                     "instrument_select_" + str(i)) + " "
 
-            if session["class"]:
+            if "class" in session:
 
                 for i in range(0, session["class"]["class_num_skills"]):
                     session["details"][
@@ -205,7 +214,7 @@ def new_character():
                     int(request.form.get("charisma"))),
             }
 
-            if session["class"]:
+            if "class" in session:
 
                 hit_point_maximum = session["class"][
                     "class_hit_die_int"] + session[
@@ -216,33 +225,50 @@ def new_character():
                     "current_hit_points": hit_point_maximum})
 
         if "submit" in request.form:
+            # checks to see if all necessary cookies exists
+            # if not informs the user
+            if "class" not in session:
+                flash("You haven't picked a class!")
+                return redirect(url_for("new_character"))
+            elif "race" not in session:
+                flash("You haven't picked a race!")
+                return redirect(url_for("new_character"))
+            elif "background" not in session:
+                flash("You haven't picked a background!")
+                return redirect(url_for("new_character"))
+            elif "details" not in session:
+                flash("You haven't filled in your character's details!")
+                return redirect(url_for("new_character"))
+            elif "ability" not in session:
+                flash("You haven't picked your ability scores!")
+                return redirect(url_for("new_character"))
+            else:
+                session["details"]["chosen_skills"] = session[
+                    "details"]["chosen_skills"] + session[
+                        "background"]["background_skill_prof"]
 
-            session["details"]["chosen_skills"] = session[
-                "details"]["chosen_skills"] + session[
-                    "background"]["background_skill_prof"]
+                # Removes background skill prof from details cookie
+                # as it is no longer needed
+                session["details"].pop("background_skill_prof", None)
 
-            # Removes background skill prof from details cookie
-            # as it is no longer needed
-            session["details"].pop("background_skill_prof", None)
+                character = {
+                    **session.get("class"),
+                    **session.get("race"),
+                    **session.get("background"),
+                    **session.get("details"),
+                    **session.get("ability")
+                }
 
-            character = {
-                **session.get("class"),
-                **session.get("race"),
-                **session.get("background"),
-                **session.get("details"),
-                **session.get("ability")
-            }
+                session.pop("class")
+                session.pop("race")
+                session.pop("details")
+                session.pop("background")
+                session.pop("ability")
+                session.pop("skills")
 
-            session.pop("class")
-            session.pop("race")
-            session.pop("details")
-            session.pop("background")
-            session.pop("ability")
-            session.pop("skills")
-
-            mongo.db.characters.insert_one(character)
-            flash("Character Successully Created")
-            return redirect(url_for("my_characters"))
+                mongo.db.characters.insert_one(character)
+                flash("Character Successully Created")
+                return redirect(url_for("my_characters"))
 
     classes = mongo.db.classes.find()
     races = mongo.db.races.find()

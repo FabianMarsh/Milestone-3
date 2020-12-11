@@ -123,6 +123,7 @@
                                     <p><strong>Languages:</strong> {{ background.background_languages }}</p>
                                 {% endif %}
                                 <p><strong>Equipment:</strong> {{ background.background_equipment }}</p>
+                                <p><strong>Starting Gold:</strong> {{ background.background_gold }}gp</p>
                                 <h6>Background Feature: {{ background.background_feature_name }}</h6>
                                 <p>{{ background.background_feature_description }}</p>
                                         
@@ -135,6 +136,8 @@
                                     <input type="hidden" name="background_languages_{{ background.background_index }}" value="{{ background.background_languages }}">
                                     <input type="hidden" name="background_num_languages_{{ background.background_index }}" value="{{ background.background_num_languages }}">
                                     <input type="hidden" name="background_gold_{{ background.background_index }}" value="{{ background.background_gold }}">
+                                    <input type="hidden" name="background_feature_name_{{ background.background_index }}" value="{{ background.background_feature_name }}">
+                                    <input type="hidden" name="background_feature_description_{{ background.background_index }}" value="{{ background.background_feature_description }}">
                                     {% if background.background_num_instruments %}
                                         <input type="hidden" name="background_num_instruments_{{ background.background_index }}" value="{{ background.background_num_instruments }}">
                                     {% endif %}
@@ -149,7 +152,7 @@
             </div>
         </form>
         <form method="POST" name="details" action="{{ url_for('new_character') }}">
-            <div id="details" class="col s12">
+            <div id="details" class="col s12 input-field">
                 <h6>Character Name</h6>
                 <input placeholder="Ragnar The Great Alester" id="character_name" name="character_name" type="text" class="validate"
                     maxlength="30" required>
@@ -162,8 +165,18 @@
                         <option value="{{ alignment }}">{{ alignment }}</option>
                     {% endfor %}
                 </select>
+                <div>
+                <label for="personality_trait">Personality Trait</label>
+                    <input name="personality_traits" placeholder="Personality traits are small, simple ways to help you set your character apart." type="text">
+                    <label for="ideals" >Ideals</label>
+                    <input name="ideals" placeholder="Your ideals are the things that you believe in most strongly." type="text">
+                    <label for="bonds">Bonds</label>
+                    <input name="bonds" placeholder="Bonds represent a character’s connections to people, places, and events in the world." type="text">
+                    <label for="flaws">Flaws</label>
+                    <input name="flaws" placeholder="Your character’s flaws represents some vice, compulsion, fear, or weakness." type="text">
+                </div>
 
-                <div class="input-field col s12">
+                <div class="col s12">
                     {% if session["background"] %}
                         {% if session["background"].background_num_languages > 0  %}
                             <h6>Pick Your Languages</h6>

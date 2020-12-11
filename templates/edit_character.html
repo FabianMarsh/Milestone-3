@@ -246,33 +246,33 @@
                             <div class="col s12">
                                 <div class="col s4">
                                     <label for="attack_name">Name</label>
-                                    <input type="text" name="attack_name_1" value="">
+                                    <input type="text" name="attack_name_1" placeholder="Spear" value="{{ character.attack_name_1 }}">
                                 </div>
                                 <div class="col s4">
                                     <label for="attack_bonus">Bonus</label>
-                                    <input type="text" name="attack_bonus_1" value="">
+                                    <input type="text" name="attack_bonus_1" placeholder="+5" value="{{ character.attack_bonus_1 }}">
                                 </div>
                                 <div class="col s4">
                                     <label for="attack_damage">Damage/Type</label>
-                                    <input type="text" name="attack_damage_1" value="">
+                                    <input type="text" name="attack_damage_1" placeholder="1d6 + 3" value="{{ character.attack_damage_1 }}">
                                 </div>
                                 <div class="col s4">
-                                    <input type="text" name="attack_name_2" value="">
+                                    <input type="text" name="attack_name_2" value="{{ character.attack_name_2 }}">
                                 </div>
                                 <div class="col s4">
-                                    <input type="text" name="attack_bonus_2" value="">
+                                    <input type="text" name="attack_bonus_2" value="{{ character.attack_bonus_2 }}">
                                 </div>
                                 <div class="col s4">
-                                    <input type="text" name="attack_damage_2" value="">
+                                    <input type="text" name="attack_damage_2" value="{{ character.attack_damage_2 }}">
                                 </div>
                                 <div class="col s4">
-                                    <input type="text" name="attack_name_3" value="">
+                                    <input type="text" name="attack_name_3" value="{{ character.attack_name_3 }}">
                                 </div>
                                 <div class="col s4">
-                                    <input type="text" name="attack_bonus_3" value="">
+                                    <input type="text" name="attack_bonus_3" value="{{ character.attack_bonus_3 }}">
                                 </div>
                                 <div class="col s4">
-                                    <input type="text" name="attack_damage_3" value="">
+                                    <input type="text" name="attack_damage_3" value="{{ character.attack_damage_3 }}">
                                 </div>
                             </div>
                             <div class="col s12 input-field">
@@ -305,7 +305,9 @@
                                 </div>
                             </div>
                             <div class="col s8">
-                                <textarea name="equipment" class="materialize-textarea"></textarea>
+                                <textarea name="equipment" class="materialize-textarea">
+                                    {{- character.background_equipment -}}
+                                </textarea>
                                 <p>Equipment</p>
                             </div>
                         </div>
@@ -313,23 +315,25 @@
                 </div>
                 <div class="col s4">
                     <div class="col s12">
-                        <textarea name="personality_traits" class="materialize-textarea"></textarea>
+                        <textarea name="personality_traits" class="materialize-textarea">{{ character.personality_traits }}</textarea>
                         <p>Personality Traits</p>
                     </div>
                     <div class="col s12">
-                        <textarea name="ideals" class="materialize-textarea"></textarea>
+                        <textarea name="ideals" class="materialize-textarea">{{ character.ideals }}</textarea>
                         <p>Ideals</p>
                     </div>
                     <div class="col s12">
-                        <textarea name="bonds" class="materialize-textarea"></textarea>
+                        <textarea name="bonds" class="materialize-textarea">{{ character.bonds }}</textarea>
                         <p>Bonds</p>
                     </div>
                     <div class="col s12">
-                        <textarea name="flaws" class="materialize-textarea"></textarea>
+                        <textarea name="flaws" class="materialize-textarea">{{ character.flaws }}</textarea>
                         <p>Flaws</p>
                     </div>
                     <div class="col s12">
-                        <textarea name="feature_traits" class="materialize-textarea"></textarea>
+                        <textarea name="feature_traits" class="materialize-textarea">
+                            {{- character.background_feature }}
+                        </textarea>
                         <p>Features & Traits</p>
                     </div>
                 </div>

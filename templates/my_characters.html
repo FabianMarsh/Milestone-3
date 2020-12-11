@@ -2,20 +2,22 @@
 {% block content%}
 
     {% for character in characters %}
-        {{ character.character_name }}<br>
-        {{ character.class_name }}<br>
-        {{ character.class_hit_die }}<br>
-        {{ character.class_skill_prof }}<br>
-        {{ character.race_name }}<br>
-        {{ character.race_size }}<br>
-        {{ character.race_speed }}<br>
-        {{ character.race_languages }}<br>
-        {{ character.background_languages }}<br>
-        {{ character.background_name }}<br>
-        {{ character.background_prof }}<br>
-        {{ character.background_equipment }}<br>
-        <a href="" class="waves-effect waves-light btn-small">Delete</a>
-        <a href="{{ url_for('edit_character', character_id=character._id) }}" class="waves-effect waves-light btn-small">Edit</a>
+        {% if session["user"] in character.user %}
+            {{ character.character_name }}<br>
+            {{ character.class_name }}<br>
+            {{ character.class_hit_die }}<br>
+            {{ character.class_skill_prof }}<br>
+            {{ character.race_name }}<br>
+            {{ character.race_size }}<br>
+            {{ character.race_speed }}<br>
+            {{ character.race_languages }}<br>
+            {{ character.background_languages }}<br>
+            {{ character.background_name }}<br>
+            {{ character.background_prof }}<br>
+            {{ character.background_equipment }}<br>
+            <a href="" class="waves-effect waves-light btn-small">Delete</a>
+            <a href="{{ url_for('edit_character', character_id=character._id) }}" class="waves-effect waves-light btn-small">Edit</a>
+        {% endif %}
     {% endfor %}
 
 {% endblock %}
