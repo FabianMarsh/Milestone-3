@@ -16,6 +16,9 @@
         <form method="POST" name="class" action="{{ url_for('new_character') }}">
             <div id="class" class="col s12">
                 <h3 class="center">Choose Your Class</h3>
+                {% if session["class"] %}
+                    {{ session["class"].class_name }} selected
+                {% endif %}
                 <!-- Materialise Callapisble -->
                 <ul class="collapsible">
                     {% for class in classes %}
@@ -77,38 +80,43 @@
         <form method="POST" name="race" action="{{ url_for('new_character') }}">
             <div id="race" class="col s12">
                 <h3 class="center">Choose Your Race</h3>
-                    <ul class="collapsible">
-                        {% for race in races %}
-                            <li>
-                                <div class="collapsible-header"><i class="fas fa-caret-down"></i><strong>{{ race.race_name }}</strong></div>
-                                <div class="collapsible-body">
-                                    <p><strong>Ability Score Increase:</strong> {{ race.race_ability_score_increase }}</p>
-                                    <p><strong>Age:</strong> {{ race.race_age }}</p>
-                                    <p><strong>Alignment:</strong> {{ race.race_alignment }}</p>
-                                    <p><strong>Size:</strong> {{ race.race_size }}</p>
-                                    <p><strong>Speed:</strong> {{ race.race_speed }}</p>
-                                    <p><strong>Languages:</strong> {{ race.race_languages }}</p>
+                {% if session["race"] %}
+                    {{ session["race"].race_name }} selected
+                {% endif %}
+                <ul class="collapsible">
+                    {% for race in races %}
+                        <li>
+                            <div class="collapsible-header"><i class="fas fa-caret-down"></i><strong>{{ race.race_name }}</strong></div>
+                            <div class="collapsible-body">
+                                <p><strong>Ability Score Increase:</strong> {{ race.race_ability_score_increase }}</p>
+                                <p><strong>Age:</strong> {{ race.race_age }}</p>
+                                <p><strong>Alignment:</strong> {{ race.race_alignment }}</p>
+                                <p><strong>Size:</strong> {{ race.race_size }}</p>
+                                <p><strong>Speed:</strong> {{ race.race_speed }}</p>
+                                <p><strong>Languages:</strong> {{ race.race_languages }}</p>
 
-                                    <!-- possible separate subrace collection have them relate somehow -->
+                                <!-- possible separate subrace collection have them relate somehow -->
                                     
-                                    <button class="btn waves-effect waves-light" type="submit" name="race" value="{{ race.race_index }}">
-                                        Choose Race
-                                        <input type="hidden" name="race_name_{{ race.race_index }}" value="{{ race.race_name }}">
-                                        <input type="hidden" name="race_size_{{ race.race_index }}" value="{{ race.race_size }}">
-                                        <input type="hidden" name="race_speed_{{ race.race_index }}" value="{{ race.race_speed }}">
-                                        <input type="hidden" name="race_languages_{{ race.race_index }}" value="{{ race.race_languages }}">
-                                    </button>
-                                </div>
-                            </li>
-                        {% endfor %}
-                    </ul>
-                </div>
+                                <button class="btn waves-effect waves-light" type="submit" name="race" value="{{ race.race_index }}">
+                                    Choose Race
+                                    <input type="hidden" name="race_name_{{ race.race_index }}" value="{{ race.race_name }}">
+                                    <input type="hidden" name="race_size_{{ race.race_index }}" value="{{ race.race_size }}">
+                                    <input type="hidden" name="race_speed_{{ race.race_index }}" value="{{ race.race_speed }}">
+                                    <input type="hidden" name="race_languages_{{ race.race_index }}" value="{{ race.race_languages }}">
+                                </button>
+                            </div>
+                        </li>
+                    {% endfor %}
+                </ul>
+            </div>
         </form>
         <form method="POST" name="background" action="{{ url_for('new_character') }}">
             <div id="background" class="col s12">
 
                 <h3 class="center">Choose Your Background</h3>
-
+                {% if session["background"] %}
+                    {{ session["background"].background_name }} selected
+                {% endif %}
                 <ul class="collapsible">
                     {% for background in backgrounds %}
                         <li>
