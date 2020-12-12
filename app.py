@@ -542,7 +542,7 @@ def login():
 def delete_character(character_id):
     mongo.db.characters.remove({"_id": ObjectId(character_id)})
     flash("Character Successfully Removed")
-    redirect(url_for("my_characters"))
+    return redirect(url_for("my_characters"))
 
 
 @app.route("/profile/<username>", methods=["GET", "POST"])
