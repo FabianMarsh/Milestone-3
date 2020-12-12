@@ -11,5 +11,127 @@
             </div>
         </div>
     </div>
-
+    <div>
+        <h3 class="center">My Characters</h3>
+        {% for character in characters %}
+            {% if session["user"] in character.player_name %}
+                <div class="row">
+                    <div class="col s12 m4">
+                        <div class="card-panel teal">
+                            <h6>{{ character.character_name }}</h6>
+                            <p>
+                                {{ character.character_description }}
+                            </p>
+                            <ul class="collapsible">
+                                <li>
+                                    <div class="collapsible-header">More Details</div>
+                                    <div class="collapsible-body">
+                                        <div class="row">
+                                            <div class="col s4">
+                                                <h6>Class</h6>
+                                                {{ character.class_name }}
+                                            </div>
+                                            <div class="col s4">
+                                                <h6>Race</h6>
+                                                {{ character.race_name }}
+                                            </div>
+                                            <div class="col s4">
+                                                <h6>Background</h6>
+                                                {{ character.background_name }}
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col s4">
+                                                <div>
+                                                    <h6>Str</h6>
+                                                    {{ character.strength }}
+                                                    <div>
+                                                        {% if character.strength_modifier > 0 %}
+                                                            +{{ character.strength_modifier }}
+                                                        {% else %}
+                                                            {{ character.strength_modifier }}
+                                                        {% endif %}
+                                                    </div>
+                                                </div>
+                                                <div>
+                                                    <h6>Int</h6>
+                                                    {{ character.intelligence }}
+                                                    <div>
+                                                        {% if character.intelligence_modifier > 0 %}
+                                                            +{{ character.intelligence_modifier }}
+                                                        {% else %}
+                                                            {{ character.intelligence_modifier }}
+                                                        {% endif %}
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col s4">
+                                                <div>
+                                                    <h6>Dex</h6>
+                                                    {{ character.dexterity }}
+                                                    <div>
+                                                        {% if character.dexterity_modifier > 0 %}
+                                                            +{{ character.dexterity_modifier }}
+                                                        {% else %}
+                                                            {{ character.dexterity_modifier }}
+                                                        {% endif %}
+                                                    </div>
+                                                </div>
+                                                <div>
+                                                    <h6>Wis</h6>
+                                                    {{ character.wisdom }}
+                                                    <div>
+                                                        {% if character.wisdom_modifier > 0 %}
+                                                            +{{ character.wisdom_modifier }}
+                                                        {% else %}
+                                                            {{ character.wisdom_modifier }}
+                                                        {% endif %}
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col s4">
+                                                <div>
+                                                    <h6>Con</h6>
+                                                    {{ character.constitution }}
+                                                    <div>
+                                                        {% if character.constitution_modifier > 0 %}
+                                                            +{{ character.constitution_modifier }}
+                                                        {% else %}
+                                                            {{ character.constitution_modifier }}
+                                                        {% endif %}
+                                                    </div>
+                                                </div>
+                                                <div>
+                                                    <h6>Cha</h6>
+                                                    {{ character.charisma }}
+                                                    <div>
+                                                        {% if character.charisma_modifier > 0 %}
+                                                            +{{ character.charisma_modifier }}
+                                                        {% else %}
+                                                            {{ character.charisma_modifier }}
+                                                        {% endif %}
+                                                    </div>
+                                                </div>                                            </div>
+                                        </div>
+                                        <a class="waves-effect waves-light btn modal-trigger" href="#delete_character">Delete</a>
+                                        <a href="{{ url_for('edit_character', character_id=character._id) }}" class="waves-effect waves-light btn-small">Edit</a>
+                                        <div id="delete_character" class="modal">
+                                            <div class="modal-content center">
+                                                <h4>Vanquish this charater into the Void</h4>
+                                                <p>Are you sure you want to delete this character?</p>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <a href="{{ url_for('delete_character', character_id=character._id) }}" class="center waves-effect waves-light btn-small">Kick them off the edge!</a>
+                                                <a href="" class="center waves-effect waves-light btn-small">No, let them live</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            {% endif %}
+        {% endfor %}
+    </div>
 {% endblock %}

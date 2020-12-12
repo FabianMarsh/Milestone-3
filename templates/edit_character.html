@@ -108,9 +108,9 @@
                                 <p>
                                     <label>
                                         {% if saving_throw.saving_throw_name in character.class_saving_throws %}
-                                            <input name="{{ saving_throw }}" type="checkbox" checked="checked"/>
+                                            <input name="{{ saving_throw.saving_throw_name }}" type="checkbox" checked="checked"/>
                                         {% else %}
-                                            <input name="{{ saving_throw }}" type="checkbox"/>
+                                            <input name="{{ saving_throw.saving_throw_name }}" type="checkbox"/>
                                         {% endif %}
                                             <span>{{saving_throw.saving_throw_name}}</span>
                                     </label>
@@ -123,9 +123,9 @@
                                 <p>
                                     <label>
                                         {% if skill.skill_name in character.chosen_skills %}
-                                            <input name="{{ skill }}" type="checkbox" checked="checked"/>
+                                            <input name="{{ skill.skill_name }}" type="checkbox" checked="checked"/>
                                         {% else %}
-                                            <input name="{{ skill }}" type="checkbox"/>
+                                            <input name="{{ skill.skill_name }}" type="checkbox"/>
                                         {% endif %}
                                         <span>{{ skill.skill_name}}</span>
                                     </label>
@@ -159,7 +159,7 @@
                         <label for="intiative_bonus">Intiative</label>
                     </div>
                     <div class="col s4">
-                        Race speed int
+                        <input type="number" name="race_speed" value="character.race_speed" required>
                     </div>
                     <div class="col s12">
                         <div>

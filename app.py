@@ -37,12 +37,6 @@ def get_modifier(stat):
     return modifier
 
 
-@app.route("/my_characters")
-def my_characters():
-    characters = mongo.db.characters.find()
-    return render_template("my_characters.html", characters=characters)
-
-
 @app.route("/new_character", methods=["GET", "POST"])
 def new_character():
 
@@ -157,6 +151,8 @@ def new_character():
 
             session["details"] = {
                 "character_name": request.form.get("character_name"),
+                "character_description": request.form.get(
+                    "character_description"),
                 "character_alignment": request.form.get("character_alignment"),
                 "chosen_skills": "",
                 "chosen_languages": "",
@@ -364,7 +360,7 @@ def new_character():
 
                 mongo.db.characters.insert_one(character)
                 flash("Character Successully Created")
-                return redirect(url_for("my_characters"))
+                return redirect(url_for("profile", username=session['user']))
 
     classes = mongo.db.classes.find()
     races = mongo.db.races.find()
@@ -393,12 +389,13 @@ def edit_character(character_id):
 
         for saving_throw in saving_throws:
             check = request.form.get(saving_throw["saving_throw_name"])
-            if check == "checked":
-                class_saving_throws += check + " "
+            if check == "on":
+                class_saving_throws = class_saving_throws + saving_throw[
+                    "saving_throw_name"] + " "
         for skill in skills:
             check = request.form.get(skill["skill_name"])
-            if check == "checked":
-                chosen_skills += check + " "
+            if check == "on":
+                chosen_skills = chosen_skills + skill["skill_name"] + " "
 
         intiative_bonus = request.form.get("intiative_bonus")
         if "+" in intiative_bonus:
@@ -441,7 +438,7 @@ def edit_character(character_id):
                 "other_languages_profiencies"),
             "armor_class": int(request.form.get("armor_class")),
             "intiative_bonus": int(intiative_bonus[1]),
-            "speed": request.form.get("speed"),
+            "race_speed": request.form.get("speed"),
             "hit_point_maximum": int(request.form.get("hit_point_maximum")),
             "current_hit_points": int(request.form.get("current_hit_points")),
             "temporary_hit_points": int(request.form.get(
@@ -464,7 +461,7 @@ def edit_character(character_id):
             "character_electrum": int(request.form.get("character_electrum")),
             "character_gold": int(request.form.get("character_gold")),
             "character_platinum": int(request.form.get("character_platinum")),
-            "equiment": request.form.get("equipment"),
+            "equipment": request.form.get("equipment"),
             "personality_traits": request.form.get("personality_traits"),
             "ideals": request.form.get("ideals"),
             "bonds": request.form.get("bonds"),
@@ -474,7 +471,7 @@ def edit_character(character_id):
 
         mongo.db.characters.update({"_id": ObjectId(character_id)}, submit)
         flash("Character Successully Updated")
-        return redirect(url_for("my_characters"))
+        return redirect(url_for("profile", username=session['user']))
 
     # skills and saving throws are defined above
     # as the POST function also uses them
@@ -542,7 +539,7 @@ def login():
 def delete_character(character_id):
     mongo.db.characters.remove({"_id": ObjectId(character_id)})
     flash("Character Successfully Removed")
-    return redirect(url_for("my_characters"))
+    return redirect(url_for("profile", username=session['user']))
 
 
 @app.route("/profile/<username>", methods=["GET", "POST"])
@@ -552,9 +549,20 @@ def profile(username):
         {"username": session["user"]})["username"]
 
     if session["user"]:
-        return render_template("profile.html", username=username)
+
+        characters = mongo.db.characters.find()
+        return render_template("profile.html", username=username,
+            characters=characters)
 
     return redirect(url_for("login"))
+
+
+@app.route("/character_gallery")
+def character_gallery():
+
+    characters = mongo.db.characters.find()
+
+    return render_template("character_gallery.html", characters=characters)
 
 
 @app.route("/logout")

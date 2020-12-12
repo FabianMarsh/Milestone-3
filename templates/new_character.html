@@ -5,12 +5,36 @@
         <!-- Materialise Tabs -->
         <div class="col s12">
             <ul class="tabs">
-                <li class="tab col s2"><a class="active" href="#class">Class</a></li>
-                <li class="tab col s2"><a href="#race">Race</a></li>
-                <li class="tab col s2"><a href="#background">Background</a></li>
-                <li class="tab col s2"><a href="#details">Character Details</a></li>
-                <li class="tab col s2"><a href="#ability_scores">Ability Scores</a></li>
-                <li class="tab col s2"><a href="#submit">Submit</a></li>
+                {% if session["class"] %}
+                    <li class="tab col s2"><a href="#class">Class</a></li>
+                {% else %}
+                    <li class="tab col s2"><a class="active" href="#class">Class</a></li>
+                {% endif %}
+                {% if session["class"] and not session["race"] %}
+                    <li class="tab col s2"><a class="active" href="#race">Race</a></li>
+                {% else %}
+                    <li class="tab col s2"><a href="#race">Race</a></li>
+                {% endif %}
+                {% if session["race"] and not session["background"] %}
+                    <li class="tab col s2"><a class="active" href="#background">Background</a></li>
+                {% else %}
+                    <li class="tab col s2"><a href="#background">Background</a></li>
+                {% endif %}
+                {% if session["background"] and not session["details"] %}
+                    <li class="tab col s2"><a class="active" href="#details">Character Details</a></li>
+                {% else %}
+                    <li class="tab col s2"><a href="#details">Character Details</a></li>
+                {% endif %}
+                {% if session["background"] and not session["ability"] %}
+                    <li class="tab col s2"><a class="active" href="#ability_scores">Ability Scores</a></li>
+                {% else %}    
+                    <li class="tab col s2"><a href="#ability_scores">Ability Scores</a></li>
+                {% endif %}
+                {% if session["ability"] %}
+                    <li class="tab col s2"><a class="active" href="#submit">Submit</a></li>
+                {% else %}
+                    <li class="tab col s2"><a href="#submit">Submit</a></li>
+                {% endif %}
             </ul>
         </div>
         <form method="POST" name="class" action="{{ url_for('new_character') }}">
@@ -23,7 +47,7 @@
                 <ul class="collapsible">
                     {% for class in classes %}
                         <li>
-                            <div class="collapsible-header"><i class="fas fa-caret-down"></i><strong>{{ class.class_name }}</strong></div>
+                            <div class="collapsible-header"><strong>{{ class.class_name }}</strong></div>
                             <div class="collapsible-body">
                                 <p>{{ class.class_description }}</p>
                                 <p><strong>Hit Dice:</strong> {{ class.class_hit_die }}</p>

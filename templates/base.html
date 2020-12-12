@@ -24,11 +24,10 @@
                 <ul class="right hide-on-med-and-down">
                     <!-- Home for now -->
                     <li><a href="{{ url_for('characters') }}">Home</a></li>
-                    <li><a href="#">Character Gallery</a></li>
+                    <li><a href="{{ url_for('character_gallery') }}">Character Gallery</a></li>
                     {% if session.user %}
                         <li><a href="{{ url_for('profile', username=session['user']) }}">Profile</a></li>
                         <li><a href="{{ url_for('new_character') }}">New Character</a></li>
-                        <li><a href="{{ url_for('my_characters') }}">My Characters</a></li>
                         <li><a href="{{ url_for('logout') }}">Log Out</a></li>
                     {% else %}
                         <li><a href="{{ url_for('login') }}">Log In</a></li>
@@ -42,11 +41,10 @@
         <ul class="sidenav" id="mobile-demo">
             <!-- Home for now -->
             <li><a href="{{ url_for('characters') }}">Home</a></li>
-            <li><a href="#">Character Gallery</a></li>
+            <li><a href="{{ url_for('character_gallery') }}">Character Gallery</a></li>
             {% if session.user %}
                 <li><a href="{{ url_for('profile', username=session['user']) }}">Profile</a></li>
                 <li><a href="{{ url_for('new_character') }}">New Character</a></li>
-                <li><a href="{{ url_for('my_characters') }}">My Characters</a></li>
                 <li><a href="{{ url_for('logout') }}">Log Out</a></li>
             {% else %}
                 <li><a href="{{ url_for('login') }}">Log In</a></li>

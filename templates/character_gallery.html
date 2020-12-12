@@ -1,0 +1,116 @@
+{% extends "base.html" %}
+{% block content %}
+    <div>
+        <h3 class="center">Community Characters</h3>
+        {% for character in characters %}
+            <div class="row">
+                <div class="col s12 m4">
+                    <div class="card-panel teal">
+                        <h6>{{ character.character_name }}</h6>
+                        <p>
+                            {{ character.character_description }}
+                        </p>
+                        <p>
+                            Created By {{ character.player_name }}
+                        </p>
+                        <ul class="collapsible">
+                            <li>
+                                <div class="collapsible-header">More Details</div>
+                                <div class="collapsible-body">
+                                    <div class="row">
+                                        <div class="col s4">
+                                            <h6>Class</h6>
+                                            {{ character.class_name }}
+                                        </div>
+                                        <div class="col s4">
+                                            <h6>Race</h6>
+                                            {{ character.race_name }}
+                                        </div>
+                                        <div class="col s4">
+                                            <h6>Background</h6>
+                                            {{ character.background_name }}
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col s4">
+                                            <div>
+                                                <h6>Str</h6>
+                                                {{ character.strength }}
+                                                <div>
+                                                    {% if character.strength_modifier > 0 %}
+                                                        +{{ character.strength_modifier }}
+                                                    {% else %}
+                                                        {{ character.strength_modifier }}
+                                                    {% endif %}
+                                                </div>
+                                            </div>
+                                            <div>
+                                                <h6>Int</h6>
+                                                {{ character.intelligence }}
+                                                <div>
+                                                    {% if character.intelligence_modifier > 0 %}
+                                                        +{{ character.intelligence_modifier }}
+                                                    {% else %}
+                                                        {{ character.intelligence_modifier }}
+                                                    {% endif %}
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col s4">
+                                            <div>
+                                                <h6>Dex</h6>
+                                                {{ character.dexterity }}
+                                                <div>
+                                                    {% if character.dexterity_modifier > 0 %}
+                                                        +{{ character.dexterity_modifier }}
+                                                    {% else %}
+                                                        {{ character.dexterity_modifier }}
+                                                    {% endif %}
+                                                </div>
+                                            </div>
+                                            <div>
+                                                <h6>Wis</h6>
+                                                {{ character.wisdom }}
+                                                <div>
+                                                    {% if character.wisdom_modifier > 0 %}
+                                                        +{{ character.wisdom_modifier }}
+                                                    {% else %}
+                                                        {{ character.wisdom_modifier }}
+                                                    {% endif %}
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col s4">
+                                            <div>
+                                                <h6>Con</h6>
+                                                {{ character.constitution }}
+                                                <div>
+                                                    {% if character.constitution_modifier > 0 %}
+                                                        +{{ character.constitution_modifier }}
+                                                    {% else %}
+                                                        {{ character.constitution_modifier }}
+                                                    {% endif %}
+                                                </div>
+                                            </div>
+                                            <div>
+                                                <h6>Cha</h6>
+                                                {{ character.charisma }}
+                                                <div>
+                                                    {% if character.charisma_modifier > 0 %}
+                                                        +{{ character.charisma_modifier }}
+                                                    {% else %}
+                                                        {{ character.charisma_modifier }}
+                                                    {% endif %}
+                                                </div>
+                                            </div>                                            
+                                        </div>
+                                    </div>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+{% endblock %}
