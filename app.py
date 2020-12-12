@@ -28,12 +28,19 @@ def characters():
 
 @app.route("/get_modifier")
 def get_modifier(stat):
-    int(stat)
+    if type(stat) is str:
+        int(stat)
 
     modifier = (stat - 10) / 2
     modifier = math.floor(modifier)
 
     return modifier
+
+
+@app.route("/my_characters")
+def my_characters():
+    characters = mongo.db.characters.find()
+    return render_template("my_characters.html", characters=characters)
 
 
 @app.route("/new_character", methods=["GET", "POST"])
@@ -53,11 +60,13 @@ def new_character():
                 "class_hit_die": request.form.get("class_hit_die_" + index),
                 "class_hit_die_int": int(class_hit_die_int[1]),
                 "class_total_hit_dice": 1,
+                "temporary_hit_points": 0,
                 "class_saving_throws": request.form.get(
                     "class_saving_throws_" + index),
                 "class_num_skills": int(request.form.get(
                     "class_num_skills_" + index)),
-                "profiency_bonus": int(request.form.get("profiency_bonus")),
+                "proficiency_bonus": int(request.form.get(
+                    "proficiency_bonus")),
                 "character_experience": 0
             }
 
@@ -119,8 +128,12 @@ def new_character():
                     "background_equipment_" + index),
                 "background_num_languages": int(request.form.get(
                     "background_num_languages_" + index)),
+                "character_copper": 0,
+                "character_silver": 0,
+                "character_electrum": 0,
                 "character_gold": int(request.form.get(
                     "background_gold_" + index)),
+                "character_platinum": 0,
                 "background_feature": background_feature
                 }
 
@@ -147,7 +160,7 @@ def new_character():
                 "character_alignment": request.form.get("character_alignment"),
                 "chosen_skills": "",
                 "chosen_languages": "",
-                "user": session["user"],
+                "player_name": session["user"],
                 "personality_traits": request.form.get("personality_traits"),
                 "ideals": request.form.get("ideals"),
                 "bonds": request.form.get("bonds"),
@@ -271,15 +284,18 @@ def new_character():
                 "charisma": int(request.form.get("charisma")),
                 "charisma_modifier": get_modifier(
                     int(request.form.get("charisma"))),
+                "intiative_bonus": get_modifier(
+                    int(request.form.get("dexterity"))),
+                "armor_class": get_modifier(
+                    int(request.form.get("dexterity"))) + 10,
             }
 
             # Calculate passive perception
-            # based on whether character has profiency or not
+            # based on whether character has proficiency or not
             if "Perception" in session["details"]["chosen_skills"]:
                 passive_perception = 10 + session[
                     "ability"]["wisdom_modifier"] + session[
-                        "class"]["profiency_bonus"]
-
+                        "class"]["proficiency_bonus"]
             else:
                 passive_perception = 10 + session[
                     "ability"]["wisdom_modifier"]
@@ -296,6 +312,13 @@ def new_character():
                 session["class"].update({
                     "hit_point_maximum": hit_point_maximum,
                     "current_hit_points": hit_point_maximum})
+
+            if "background" in session:
+
+                session["details"].update({"equipment": session[
+                    "background"]["background_equipment"]})
+                session["details"].update({"feature_traits": session[
+                    "background"]["background_feature"]})
 
         if "submit" in request.form:
             # checks to see if all necessary cookies exists
@@ -357,78 +380,107 @@ def new_character():
                 tools=tools, alignments=alignments)
 
 
-@app.route("/my_characters")
-def my_characters():
-    characters = mongo.db.characters.find()
-    return render_template("my_characters.html", characters=characters)
-
-
 @app.route("/edit_character/<character_id>", methods=["GET", "POST"])
 def edit_character(character_id):
-    if request.method == "POST":
-
-        if "class" in request.form:
-
-            index = request.form.get("class")
-
-            session["class_edit"] = {
-                "class_name": request.form.get("class_name_" + index),
-                "class_hit_die": request.form.get("class_hit_die_" + index),
-                "class_skill_prof": request.form.get(
-                    "class_skill_prof_" + index)
-            }
-
-        if "race" in request.form:
-
-            index = request.form.get("race")
-
-            session["race_edit"] = {
-                "race_name": request.form.get("race_name_" + index),
-                "race_size": request.form.get("race_size_" + index),
-                "race_speed": request.form.get("race_speed_" + index),
-                "race_languages": request.form.get("race_languages_" + index)
-            }
-
-        if "background" in request.form:
-
-            index = request.form.get("background")
-
-            session["background_edit"] = {
-                "background_name": request.form.get(
-                    "background_name_" + index),
-                "background_languages": request.form.get(
-                    "background_languages_" + index),
-                "background_skill_prof": request.form.get(
-                    "background_skill_prof_" + index),
-                "background_equipment": request.form.get(
-                    "background_equipment_" + index)
-            }
-
-        if "ability_scores" in request.form:
-            session["ability_edit"] = {
-                "strength": request.form.get("strength"),
-                "dexterity": request.form.get("dexterity"),
-                "constitution": request.form.get("constitution"),
-                "intelligence": request.form.get("intelligence"),
-                "wisdom": request.form.get("wisdom"),
-                "charisma": request.form.get("charisma"),
-            }
-
-        if "submit" in request.form:
-
-            session.pop("class_edit")
-            session.pop("race_edit")
-            session.pop("background_edit")
-            session.pop("ability_edit")
-
-            mongo.db.characters.update({"_id": ObjectId(character_id)}, submit)
-            flash("Character Successully Updated")
-
-    character = mongo.db.characters.find_one(
-        {"_id": ObjectId(character_id)})
 
     saving_throws = mongo.db.saving_throws.find()
     skills = mongo.db.skills.find()
+
+    if request.method == "POST":
+
+        class_saving_throws = " "
+        chosen_skills = " "
+
+        for saving_throw in saving_throws:
+            check = request.form.get(saving_throw["saving_throw_name"])
+            if check == "checked":
+                class_saving_throws += check + " "
+        for skill in skills:
+            check = request.form.get(skill["skill_name"])
+            if check == "checked":
+                chosen_skills += check + " "
+
+        intiative_bonus = request.form.get("intiative_bonus")
+        if "+" in intiative_bonus:
+            intiative_bonus = intiative_bonus.split("+")
+        proficiency_bonus = request.form.get("proficiency_bonus")
+        if "+" in proficiency_bonus:
+            proficiency_bonus = proficiency_bonus.split("+")
+
+        submit = {
+            "character_name": request.form.get("character_name"),
+            "class_name": request.form.get("class_name"),
+            "background_name": request.form.get("background_name"),
+            "player_name": request.form.get("player_name"),
+            "race_name": request.form.get("race_name"),
+            "character_alignment": request.form.get("character_alignment"),
+            "character_experience": int(request.form.get(
+                "character_experience")),
+            "proficiency_bonus": int(proficiency_bonus[1]),
+            "strength": int(request.form.get("strength")),
+            "strength_modifier": get_modifier(int(request.form.get(
+                "strength"))),
+            "dexterity": int(request.form.get("dexterity")),
+            "dexterity_modifier": get_modifier(int(request.form.get(
+                "dexterity"))),
+            "constitution": int(request.form.get("constitution")),
+            "constitution_modifier": get_modifier(int(request.form.get(
+                "constitution"))),
+            "intelligence": int(request.form.get("intelligence")),
+            "intelligence_modifier": get_modifier(int(request.form.get(
+                "intelligence"))),
+            "wisdom": int(request.form.get("wisdom")),
+            "wisdom_modifier": get_modifier(int(request.form.get("wisdom"))),
+            "charisma": int(request.form.get("charisma")),
+            "charisma_modifier": get_modifier(int(request.form.get(
+                "charisma"))),
+            "class_saving_throws": class_saving_throws,
+            "chosen_skills": chosen_skills,
+            "passive_perception": int(request.form.get("passive_perception")),
+            "other_languages_profiencies": request.form.get(
+                "other_languages_profiencies"),
+            "armor_class": int(request.form.get("armor_class")),
+            "intiative_bonus": int(intiative_bonus[1]),
+            "speed": request.form.get("speed"),
+            "hit_point_maximum": int(request.form.get("hit_point_maximum")),
+            "current_hit_points": int(request.form.get("current_hit_points")),
+            "temporary_hit_points": int(request.form.get(
+                "temporary_hit_points")),
+            "class_total_hit_dice": int(request.form.get(
+                "class_total_hit_dice")),
+            "class_hit_die": request.form.get("class_hit_die"),
+            "attack_name_1": request.form.get("attack_name_1"),
+            "attack_bonus_1": request.form.get("attack_bonus_1"),
+            "attack_damage_1": request.form.get("attack_damage_1"),
+            "attack_name_2": request.form.get("attack_name_2"),
+            "attack_bonus_2": request.form.get("attack_bonus_2"),
+            "attack_damage_2": request.form.get("attack_damage_2"),
+            "attack_name_3": request.form.get("attack_name_3"),
+            "attack_bonus_3": request.form.get("attack_bonus_3"),
+            "attack_damage_3": request.form.get("attack_damage_3"),
+            "attacks_spellcasting": request.form.get("attacks_spellcasting"),
+            "character_copper": int(request.form.get("character_copper")),
+            "character_silver": int(request.form.get("character_silver")),
+            "character_electrum": int(request.form.get("character_electrum")),
+            "character_gold": int(request.form.get("character_gold")),
+            "character_platinum": int(request.form.get("character_platinum")),
+            "equiment": request.form.get("equipment"),
+            "personality_traits": request.form.get("personality_traits"),
+            "ideals": request.form.get("ideals"),
+            "bonds": request.form.get("bonds"),
+            "flaws": request.form.get("flaws"),
+            "feature_traits": request.form.get("feature_traits")
+        }
+
+        mongo.db.characters.update({"_id": ObjectId(character_id)}, submit)
+        flash("Character Successully Updated")
+        return redirect(url_for("my_characters"))
+
+    # skills and saving throws are defined above
+    # as the POST function also uses them
+
+    character = mongo.db.characters.find_one(
+        {"_id": ObjectId(character_id)})
 
     return render_template("edit_character.html", character=character,
         saving_throws=saving_throws, skills=skills)
@@ -484,6 +536,7 @@ def login():
             return redirect(url_for("login"))
 
     return render_template("login.html")
+
 
 
 @app.route("/profile/<username>", methods=["GET", "POST"])
