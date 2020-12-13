@@ -40,447 +40,459 @@ def get_modifier(stat):
 @app.route("/new_character", methods=["GET", "POST"])
 def new_character():
 
-    if request.method == "POST":
+    if "user" in session:
 
-        if "class" in request.form:
+        if request.method == "POST":
 
-            index = request.form.get("class")
+            if "class" in request.form:
 
-            class_hit_die_int = request.form.get(
-                "class_hit_die_" + index).split("d")
+                index = request.form.get("class")
 
-            session["class"] = {
-                "class_name": request.form.get("class_name_" + index),
-                "class_hit_die": request.form.get("class_hit_die_" + index),
-                "class_hit_die_int": int(class_hit_die_int[1]),
-                "class_total_hit_dice": 1,
-                "temporary_hit_points": 0,
-                "class_saving_throws": request.form.get(
-                    "class_saving_throws_" + index),
-                "class_num_skills": int(request.form.get(
-                    "class_num_skills_" + index)),
-                "proficiency_bonus": int(request.form.get(
-                    "proficiency_bonus")),
-                "character_experience": 0
-            }
+                class_hit_die_int = request.form.get(
+                    "class_hit_die_" + index).split("d")
 
-            if "class_tool_prof_" + index in request.form:
-                session["class"].update({
-                    "class_tool_prof": request.form.get(
-                        "class_tool_prof_" + index)})
-            else:
-                session["class"].update({
-                    "class_tool_prof": " "})
-
-            if "class_num_artisans_" + index in request.form:
-                session["class"].update({
-                    "class_num_artisans": int(request.form.get(
-                        "class_num_artisans_" + index))})
-            else:
-                session["class"].update({
-                    "class_num_artisans": 0})
-
-            if "class_num_instruments_" + index in request.form:
-                session["class"].update({
-                    "class_num_instruments": int(request.form.get(
-                        "class_num_instruments_" + index))})
-            else:
-                session["class"].update({
-                    "class_num_instruments": 0})
-
-            session["skills"] = [
-                request.form.get("class_skill_prof_" + index)
-            ]
-
-        if "race" in request.form:
-
-            index = request.form.get("race")
-
-            session["race"] = {
-                "race_name": request.form.get("race_name_" + index),
-                "race_size": request.form.get("race_size_" + index),
-                "race_speed": request.form.get("race_speed_" + index),
-                "race_languages": request.form.get("race_languages_" + index)
-            }
-
-        if "background" in request.form:
-
-            index = request.form.get("background")
-
-            background_feature = request.form.get(
-                "background_feature_name_" + index) + " " + request.form.get(
-                    "background_feature_description_" + index)
-
-            session["background"] = {
-                "background_name": request.form.get(
-                    "background_name_" + index),
-                "background_skill_prof": request.form.get(
-                    "background_skill_prof_" + index),
-                "background_tool_prof": request.form.get(
-                    "background_tool_prof_" + index),
-                "background_equipment": request.form.get(
-                    "background_equipment_" + index),
-                "background_num_languages": int(request.form.get(
-                    "background_num_languages_" + index)),
-                "character_copper": 0,
-                "character_silver": 0,
-                "character_electrum": 0,
-                "character_gold": int(request.form.get(
-                    "background_gold_" + index)),
-                "character_platinum": 0,
-                "background_feature": background_feature
+                session["class"] = {
+                    "class_name": request.form.get("class_name_" + index),
+                    "class_hit_die": request.form.get("class_hit_die_" + index),
+                    "class_hit_die_int": int(class_hit_die_int[1]),
+                    "class_total_hit_dice": 1,
+                    "temporary_hit_points": 0,
+                    "class_saving_throws": request.form.get(
+                        "class_saving_throws_" + index),
+                    "class_num_skills": int(request.form.get(
+                        "class_num_skills_" + index)),
+                    "proficiency_bonus": int(request.form.get(
+                        "proficiency_bonus")),
+                    "character_experience": 0
                 }
 
-            if "background_num_artisans_" + index in request.form:
-                session["background"].update({
-                    "background_num_artisans": int(request.form.get(
-                        "background_num_artisans_" + index))})
-            else:
-                session["background"].update({
-                    "background_num_artisans": 0})
+                if "class_tool_prof_" + index in request.form:
+                    session["class"].update({
+                        "class_tool_prof": request.form.get(
+                            "class_tool_prof_" + index)})
+                else:
+                    session["class"].update({
+                        "class_tool_prof": " "})
 
-            if "background_num_instruments_" + index in request.form:
-                session["background"].update({
-                    "background_num_instruments": int(request.form.get(
-                        "background_num_instruments_" + index))})
-            else:
-                session["background"].update({
-                    "background_num_instruments": 0})
+                if "class_num_artisans_" + index in request.form:
+                    session["class"].update({
+                        "class_num_artisans": int(request.form.get(
+                            "class_num_artisans_" + index))})
+                else:
+                    session["class"].update({
+                        "class_num_artisans": 0})
 
-        if "details" in request.form:
+                if "class_num_instruments_" + index in request.form:
+                    session["class"].update({
+                        "class_num_instruments": int(request.form.get(
+                            "class_num_instruments_" + index))})
+                else:
+                    session["class"].update({
+                        "class_num_instruments": 0})
 
-            session["details"] = {
-                "character_name": request.form.get("character_name"),
-                "character_description": request.form.get(
-                    "character_description"),
-                "character_alignment": request.form.get("character_alignment"),
-                "chosen_skills": "",
-                "chosen_languages": "",
-                "player_name": session["user"],
-                "personality_traits": request.form.get("personality_traits"),
-                "ideals": request.form.get("ideals"),
-                "bonds": request.form.get("bonds"),
-                "flaws": request.form.get("flaws"),
-            }
+                session["skills"] = [
+                    request.form.get("class_skill_prof_" + index)
+                ]
 
-            if "class" in session and "background" in session:
-                if "class_tool_prof" in session[
-                    "class"] or "background_tool_prof" in session[
-                        "background"]:
+            if "race" in request.form:
 
-                    session["details"].update({
-                        "other_languages_profiencies": " "})
+                index = request.form.get("race")
 
-                    for i in range(0, session["class"][
-                        "class_num_artisans"] + session[
-                            "background"]["background_num_artisans"]):
+                session["race"] = {
+                    "race_name": request.form.get("race_name_" + index),
+                    "race_size": request.form.get("race_size_" + index),
+                    "race_speed": request.form.get("race_speed_" + index),
+                    "race_languages": request.form.get("race_languages_" + index)
+                }
 
-                        session["details"][
-                            "other_languages_profiencies"] += request.form.get(
-                                "tool_select_" + str(i)) + " "
+            if "background" in request.form:
 
-                    if "Disguise" in session["class"][
-                        "class_tool_prof"] or "Disguise" in session[
-                            "background"]["background_tool_prof"]:
+                index = request.form.get("background")
 
-                        session["details"][
-                            "other_languages_profiencies"] += "Disguise Kit "
+                background_feature = request.form.get(
+                    "background_feature_name_" + index) + " " + request.form.get(
+                        "background_feature_description_" + index)
 
-                    if "Forgery" in session["class"][
-                        "class_tool_prof"] or "Forgery" in session[
-                            "background"]["background_tool_prof"]:
+                session["background"] = {
+                    "background_name": request.form.get(
+                        "background_name_" + index),
+                    "background_skill_prof": request.form.get(
+                        "background_skill_prof_" + index),
+                    "background_tool_prof": request.form.get(
+                        "background_tool_prof_" + index),
+                    "background_equipment": request.form.get(
+                        "background_equipment_" + index),
+                    "background_num_languages": int(request.form.get(
+                        "background_num_languages_" + index)),
+                    "character_copper": 0,
+                    "character_silver": 0,
+                    "character_electrum": 0,
+                    "character_gold": int(request.form.get(
+                        "background_gold_" + index)),
+                    "character_platinum": 0,
+                    "background_feature": background_feature
+                    }
 
-                        session["details"][
-                            "other_languages_profiencies"] += "Forgery Kit "
+                if "background_num_artisans_" + index in request.form:
+                    session["background"].update({
+                        "background_num_artisans": int(request.form.get(
+                            "background_num_artisans_" + index))})
+                else:
+                    session["background"].update({
+                        "background_num_artisans": 0})
 
-                    if "Herbalism" in session["class"][
-                        "class_tool_prof"] or "Herbalism" in session[
-                            "background"]["background_tool_prof"]:
+                if "background_num_instruments_" + index in request.form:
+                    session["background"].update({
+                        "background_num_instruments": int(request.form.get(
+                            "background_num_instruments_" + index))})
+                else:
+                    session["background"].update({
+                        "background_num_instruments": 0})
 
-                        session["details"][
-                            "other_languages_profiencies"] += "Herbalism Kit "
+            if "details" in request.form:
 
-                    if "Navigator" in session["class"][
-                        "class_tool_prof"] or "Navigator" in session[
-                            "background"][
-                                "background_tool_prof"]:
+                session["details"] = {
+                    "character_name": request.form.get("character_name"),
+                    "character_description": request.form.get(
+                        "character_description"),
+                    "character_alignment": request.form.get("character_alignment"),
+                    "chosen_skills": "",
+                    "chosen_languages": "",
+                    "player_name": session["user"],
+                    "personality_traits": request.form.get("personality_traits"),
+                    "ideals": request.form.get("ideals"),
+                    "bonds": request.form.get("bonds"),
+                    "flaws": request.form.get("flaws"),
+                }
 
-                        session["details"][
-                            "other_languages_profiencies"
-                                ] += "Navigator's Tools "
+                if "class" in session and "background" in session:
+                    if "class_tool_prof" in session[
+                        "class"] or "background_tool_prof" in session[
+                            "background"]:
 
-                    if "Poisoner" in session["class"][
-                        "class_tool_prof"] or "Poisoner" in session[
-                            "background"]["background_tool_prof"]:
-
-                        session["details"][
-                            "other_languages_profiencies"] += "Poisoner's Kit "
-
-                    if "Thieves" in session["class"][
-                        "class_tool_prof"] or "Thieves" in session[
-                            "background"]["background_tool_prof"]:
-
-                        session["details"][
-                            "other_languages_profiencies"] += "Thieves' Tools "
-
-                    if "instrument" in session["class"][
-                        "class_tool_prof"] or "instrument" in session[
-                            "background"]["background_tool_prof"]:
+                        session["details"].update({
+                            "other_languages_profiencies": " "})
 
                         for i in range(0, session["class"][
-                            "class_num_instruments"] + session[
-                                "background"]["background_num_instruments"]):
+                            "class_num_artisans"] + session[
+                                "background"]["background_num_artisans"]):
+
+                            session["details"][
+                                "other_languages_profiencies"] += request.form.get(
+                                    "tool_select_" + str(i)) + " "
+
+                        if "Disguise" in session["class"][
+                            "class_tool_prof"] or "Disguise" in session[
+                                "background"]["background_tool_prof"]:
+
+                            session["details"][
+                                "other_languages_profiencies"] += "Disguise Kit "
+
+                        if "Forgery" in session["class"][
+                            "class_tool_prof"] or "Forgery" in session[
+                                "background"]["background_tool_prof"]:
+
+                            session["details"][
+                                "other_languages_profiencies"] += "Forgery Kit "
+
+                        if "Herbalism" in session["class"][
+                            "class_tool_prof"] or "Herbalism" in session[
+                                "background"]["background_tool_prof"]:
+
+                            session["details"][
+                                "other_languages_profiencies"] += "Herbalism Kit "
+
+                        if "Navigator" in session["class"][
+                            "class_tool_prof"] or "Navigator" in session[
+                                "background"][
+                                    "background_tool_prof"]:
 
                             session["details"][
                                 "other_languages_profiencies"
-                                    ] += request.form.get(
-                                    "instrument_select_" + str(i)) + " "
+                                    ] += "Navigator's Tools "
 
-                    if "gaming" in session["class"][
-                        "class_tool_prof"] or "gaming" in session[
-                            "background"]["background_tool_prof"]:
+                        if "Poisoner" in session["class"][
+                            "class_tool_prof"] or "Poisoner" in session[
+                                "background"]["background_tool_prof"]:
+
+                            session["details"][
+                                "other_languages_profiencies"] += "Poisoner's Kit "
+
+                        if "Thieves" in session["class"][
+                            "class_tool_prof"] or "Thieves" in session[
+                                "background"]["background_tool_prof"]:
+
+                            session["details"][
+                                "other_languages_profiencies"] += "Thieves' Tools "
+
+                        if "instrument" in session["class"][
+                            "class_tool_prof"] or "instrument" in session[
+                                "background"]["background_tool_prof"]:
+
+                            for i in range(0, session["class"][
+                                "class_num_instruments"] + session[
+                                    "background"]["background_num_instruments"]):
+
+                                session["details"][
+                                    "other_languages_profiencies"
+                                        ] += request.form.get(
+                                        "instrument_select_" + str(i)) + " "
+
+                        if "gaming" in session["class"][
+                            "class_tool_prof"] or "gaming" in session[
+                                "background"]["background_tool_prof"]:
+
+                            session["details"][
+                                "other_languages_profiencies"] += request.form.get(
+                                    "gaming_select")
+
+                if "class" in session:
+
+                    for i in range(0, session["class"]["class_num_skills"]):
+                        session["details"][
+                            "chosen_skills"] += request.form.get(
+                                "skill_select_" + str(i)) + " "
+
+                if session["background"]["background_num_languages"] > 0:
+
+                    for i in range(0, session["background"][
+                        "background_num_languages"]):
 
                         session["details"][
                             "other_languages_profiencies"] += request.form.get(
-                                "gaming_select")
+                                "language_select_" + str(i)) + " "
 
-            if "class" in session:
-
-                for i in range(0, session["class"]["class_num_skills"]):
-                    session["details"][
-                        "chosen_skills"] += request.form.get(
-                            "skill_select_" + str(i)) + " "
-
-            if session["background"]["background_num_languages"] > 0:
-
-                for i in range(0, session["background"][
-                    "background_num_languages"]):
-
-                    session["details"][
-                        "other_languages_profiencies"] += request.form.get(
-                            "language_select_" + str(i)) + " "
-
-        if "ability_scores" in request.form:
-            session["ability"] = {
-                "strength": int(request.form.get("strength")),
-                "strength_modifier": get_modifier(
-                    int(request.form.get("strength"))),
-                "dexterity": int(request.form.get("dexterity")),
-                "dexterity_modifier": get_modifier(
-                    int(request.form.get("dexterity"))),
-                "constitution": int(request.form.get("constitution")),
-                "constitution_modifier": get_modifier(
-                    int(request.form.get("constitution"))),
-                "intelligence": int(request.form.get("intelligence")),
-                "intelligence_modifier": get_modifier(
-                    int(request.form.get("intelligence"))),
-                "wisdom": int(request.form.get("wisdom")),
-                "wisdom_modifier": get_modifier(
-                    int(request.form.get("strength"))),
-                "charisma": int(request.form.get("charisma")),
-                "charisma_modifier": get_modifier(
-                    int(request.form.get("charisma"))),
-                "intiative_bonus": get_modifier(
-                    int(request.form.get("dexterity"))),
-                "armor_class": get_modifier(
-                    int(request.form.get("dexterity"))) + 10,
-            }
-
-            # Calculate passive perception
-            # based on whether character has proficiency or not
-            if "Perception" in session["details"]["chosen_skills"]:
-                passive_perception = 10 + session[
-                    "ability"]["wisdom_modifier"] + session[
-                        "class"]["proficiency_bonus"]
-            else:
-                passive_perception = 10 + session[
-                    "ability"]["wisdom_modifier"]
-
-            session["details"].update({
-                "passive_perception": passive_perception})
-
-            if "class" in session:
-
-                hit_point_maximum = session["class"][
-                    "class_hit_die_int"] + session[
-                        "ability"]["constitution_modifier"]
-
-                session["class"].update({
-                    "hit_point_maximum": hit_point_maximum,
-                    "current_hit_points": hit_point_maximum})
-
-            if "background" in session:
-
-                session["details"].update({"equipment": session[
-                    "background"]["background_equipment"]})
-                session["details"].update({"feature_traits": session[
-                    "background"]["background_feature"]})
-
-        if "submit" in request.form:
-            # checks to see if all necessary cookies exists
-            # if not informs the user
-            if "class" not in session:
-                flash("You haven't picked a class!")
-                return redirect(url_for("new_character"))
-            elif "race" not in session:
-                flash("You haven't picked a race!")
-                return redirect(url_for("new_character"))
-            elif "background" not in session:
-                flash("You haven't picked a background!")
-                return redirect(url_for("new_character"))
-            elif "details" not in session:
-                flash("You haven't filled in your character's details!")
-                return redirect(url_for("new_character"))
-            elif "ability" not in session:
-                flash("You haven't picked your ability scores!")
-                return redirect(url_for("new_character"))
-            else:
-                session["details"]["chosen_skills"] = session[
-                    "details"]["chosen_skills"] + session[
-                        "background"]["background_skill_prof"]
-
-                # Removes background skill prof from details cookie
-                # as it is no longer needed
-                session["details"].pop("background_skill_prof", None)
-
-                character = {
-                    **session.get("class"),
-                    **session.get("race"),
-                    **session.get("background"),
-                    **session.get("details"),
-                    **session.get("ability")
+            if "ability_scores" in request.form:
+                session["ability"] = {
+                    "strength": int(request.form.get("strength")),
+                    "strength_modifier": get_modifier(
+                        int(request.form.get("strength"))),
+                    "dexterity": int(request.form.get("dexterity")),
+                    "dexterity_modifier": get_modifier(
+                        int(request.form.get("dexterity"))),
+                    "constitution": int(request.form.get("constitution")),
+                    "constitution_modifier": get_modifier(
+                        int(request.form.get("constitution"))),
+                    "intelligence": int(request.form.get("intelligence")),
+                    "intelligence_modifier": get_modifier(
+                        int(request.form.get("intelligence"))),
+                    "wisdom": int(request.form.get("wisdom")),
+                    "wisdom_modifier": get_modifier(
+                        int(request.form.get("strength"))),
+                    "charisma": int(request.form.get("charisma")),
+                    "charisma_modifier": get_modifier(
+                        int(request.form.get("charisma"))),
+                    "intiative_bonus": get_modifier(
+                        int(request.form.get("dexterity"))),
+                    "armor_class": get_modifier(
+                        int(request.form.get("dexterity"))) + 10,
                 }
 
-                session.pop("class")
-                session.pop("race")
-                session.pop("details")
-                session.pop("background")
-                session.pop("ability")
-                session.pop("skills")
+                # Calculate passive perception
+                # based on whether character has proficiency or not
+                if "Perception" in session["details"]["chosen_skills"]:
+                    passive_perception = 10 + session[
+                        "ability"]["wisdom_modifier"] + session[
+                            "class"]["proficiency_bonus"]
+                else:
+                    passive_perception = 10 + session[
+                        "ability"]["wisdom_modifier"]
 
-                mongo.db.characters.insert_one(character)
-                flash("Character Successully Created")
-                return redirect(url_for("profile", username=session['user']))
+                session["details"].update({
+                    "passive_perception": passive_perception})
 
-    classes = mongo.db.classes.find()
-    races = mongo.db.races.find()
-    backgrounds = mongo.db.backgrounds.find()
-    skills = list(mongo.db.skills.find())
-    languages = list(mongo.db.languages.find())
-    tools = list(mongo.db.tools.find())
-    alignments = list(mongo.db.alignments.find())
+                if "class" in session:
 
-    return render_template("new_character.html",
-        classes=classes, races=races, backgrounds=backgrounds,
-            skills=skills, languages=languages,
-                tools=tools, alignments=alignments)
+                    hit_point_maximum = session["class"][
+                        "class_hit_die_int"] + session[
+                            "ability"]["constitution_modifier"]
+
+                    session["class"].update({
+                        "hit_point_maximum": hit_point_maximum,
+                        "current_hit_points": hit_point_maximum})
+
+                if "background" in session:
+
+                    session["details"].update({"equipment": session[
+                        "background"]["background_equipment"]})
+                    session["details"].update({"feature_traits": session[
+                        "background"]["background_feature"]})
+
+            if "submit" in request.form:
+                # checks to see if all necessary cookies exists
+                # if not informs the user
+                if "class" not in session:
+                    flash("You haven't picked a class!")
+                    return redirect(url_for("new_character"))
+                elif "race" not in session:
+                    flash("You haven't picked a race!")
+                    return redirect(url_for("new_character"))
+                elif "background" not in session:
+                    flash("You haven't picked a background!")
+                    return redirect(url_for("new_character"))
+                elif "details" not in session:
+                    flash("You haven't filled in your character's details!")
+                    return redirect(url_for("new_character"))
+                elif "ability" not in session:
+                    flash("You haven't picked your ability scores!")
+                    return redirect(url_for("new_character"))
+                else:
+                    session["details"]["chosen_skills"] = session[
+                        "details"]["chosen_skills"] + session[
+                            "background"]["background_skill_prof"]
+
+                    # Removes background skill prof from details cookie
+                    # as it is no longer needed
+                    session["details"].pop("background_skill_prof", None)
+
+                    character = {
+                        **session.get("class"),
+                        **session.get("race"),
+                        **session.get("background"),
+                        **session.get("details"),
+                        **session.get("ability")
+                    }
+
+                    session.pop("class")
+                    session.pop("race")
+                    session.pop("details")
+                    session.pop("background")
+                    session.pop("ability")
+                    session.pop("skills")
+
+                    mongo.db.characters.insert_one(character)
+                    flash("Character Successully Created")
+                    return redirect(url_for("profile",
+                        username=session['user']))
+
+        classes = mongo.db.classes.find()
+        races = mongo.db.races.find()
+        backgrounds = mongo.db.backgrounds.find()
+        skills = list(mongo.db.skills.find())
+        languages = list(mongo.db.languages.find())
+        tools = list(mongo.db.tools.find())
+        alignments = list(mongo.db.alignments.find())
+
+        return render_template("new_character.html",
+            classes=classes, races=races, backgrounds=backgrounds,
+                skills=skills, languages=languages,
+                    tools=tools, alignments=alignments)
+
+    return redirect(url_for("login"))
 
 
 @app.route("/edit_character/<character_id>", methods=["GET", "POST"])
 def edit_character(character_id):
 
-    saving_throws = mongo.db.saving_throws.find()
-    skills = mongo.db.skills.find()
+    if "user" in session:
+        saving_throws = mongo.db.saving_throws.find()
+        skills = mongo.db.skills.find()
 
-    if request.method == "POST":
+        if request.method == "POST":
 
-        class_saving_throws = " "
-        chosen_skills = " "
+            class_saving_throws = " "
+            chosen_skills = " "
 
-        for saving_throw in saving_throws:
-            check = request.form.get(saving_throw["saving_throw_name"])
-            if check == "on":
-                class_saving_throws = class_saving_throws + saving_throw[
-                    "saving_throw_name"] + " "
-        for skill in skills:
-            check = request.form.get(skill["skill_name"])
-            if check == "on":
-                chosen_skills = chosen_skills + skill["skill_name"] + " "
+            for saving_throw in saving_throws:
+                check = request.form.get(saving_throw["saving_throw_name"])
+                if check == "on":
+                    class_saving_throws = class_saving_throws + saving_throw[
+                        "saving_throw_name"] + " "
+            for skill in skills:
+                check = request.form.get(skill["skill_name"])
+                if check == "on":
+                    chosen_skills = chosen_skills + skill["skill_name"] + " "
 
-        intiative_bonus = request.form.get("intiative_bonus")
-        if "+" in intiative_bonus:
-            intiative_bonus = intiative_bonus.split("+")
-        proficiency_bonus = request.form.get("proficiency_bonus")
-        if "+" in proficiency_bonus:
-            proficiency_bonus = proficiency_bonus.split("+")
+            intiative_bonus = request.form.get("intiative_bonus")
+            if "+" in intiative_bonus:
+                intiative_bonus = intiative_bonus.split("+")
+            proficiency_bonus = request.form.get("proficiency_bonus")
+            if "+" in proficiency_bonus:
+                proficiency_bonus = proficiency_bonus.split("+")
 
-        submit = {
-            "character_name": request.form.get("character_name"),
-            "class_name": request.form.get("class_name"),
-            "background_name": request.form.get("background_name"),
-            "player_name": request.form.get("player_name"),
-            "race_name": request.form.get("race_name"),
-            "character_alignment": request.form.get("character_alignment"),
-            "character_experience": int(request.form.get(
-                "character_experience")),
-            "proficiency_bonus": int(proficiency_bonus[1]),
-            "strength": int(request.form.get("strength")),
-            "strength_modifier": get_modifier(int(request.form.get(
-                "strength"))),
-            "dexterity": int(request.form.get("dexterity")),
-            "dexterity_modifier": get_modifier(int(request.form.get(
-                "dexterity"))),
-            "constitution": int(request.form.get("constitution")),
-            "constitution_modifier": get_modifier(int(request.form.get(
-                "constitution"))),
-            "intelligence": int(request.form.get("intelligence")),
-            "intelligence_modifier": get_modifier(int(request.form.get(
-                "intelligence"))),
-            "wisdom": int(request.form.get("wisdom")),
-            "wisdom_modifier": get_modifier(int(request.form.get("wisdom"))),
-            "charisma": int(request.form.get("charisma")),
-            "charisma_modifier": get_modifier(int(request.form.get(
-                "charisma"))),
-            "class_saving_throws": class_saving_throws,
-            "chosen_skills": chosen_skills,
-            "passive_perception": int(request.form.get("passive_perception")),
-            "other_languages_profiencies": request.form.get(
-                "other_languages_profiencies"),
-            "armor_class": int(request.form.get("armor_class")),
-            "intiative_bonus": int(intiative_bonus[1]),
-            "race_speed": request.form.get("speed"),
-            "hit_point_maximum": int(request.form.get("hit_point_maximum")),
-            "current_hit_points": int(request.form.get("current_hit_points")),
-            "temporary_hit_points": int(request.form.get(
-                "temporary_hit_points")),
-            "class_total_hit_dice": int(request.form.get(
-                "class_total_hit_dice")),
-            "class_hit_die": request.form.get("class_hit_die"),
-            "attack_name_1": request.form.get("attack_name_1"),
-            "attack_bonus_1": request.form.get("attack_bonus_1"),
-            "attack_damage_1": request.form.get("attack_damage_1"),
-            "attack_name_2": request.form.get("attack_name_2"),
-            "attack_bonus_2": request.form.get("attack_bonus_2"),
-            "attack_damage_2": request.form.get("attack_damage_2"),
-            "attack_name_3": request.form.get("attack_name_3"),
-            "attack_bonus_3": request.form.get("attack_bonus_3"),
-            "attack_damage_3": request.form.get("attack_damage_3"),
-            "attacks_spellcasting": request.form.get("attacks_spellcasting"),
-            "character_copper": int(request.form.get("character_copper")),
-            "character_silver": int(request.form.get("character_silver")),
-            "character_electrum": int(request.form.get("character_electrum")),
-            "character_gold": int(request.form.get("character_gold")),
-            "character_platinum": int(request.form.get("character_platinum")),
-            "equipment": request.form.get("equipment"),
-            "personality_traits": request.form.get("personality_traits"),
-            "ideals": request.form.get("ideals"),
-            "bonds": request.form.get("bonds"),
-            "flaws": request.form.get("flaws"),
-            "feature_traits": request.form.get("feature_traits")
-        }
+            submit = {
+                "character_name": request.form.get("character_name"),
+                "class_name": request.form.get("class_name"),
+                "background_name": request.form.get("background_name"),
+                "player_name": request.form.get("player_name"),
+                "race_name": request.form.get("race_name"),
+                "character_alignment": request.form.get("character_alignment"),
+                "character_experience": int(request.form.get(
+                    "character_experience")),
+                "proficiency_bonus": int(proficiency_bonus[1]),
+                "strength": int(request.form.get("strength")),
+                "strength_modifier": get_modifier(int(request.form.get(
+                    "strength"))),
+                "dexterity": int(request.form.get("dexterity")),
+                "dexterity_modifier": get_modifier(int(request.form.get(
+                    "dexterity"))),
+                "constitution": int(request.form.get("constitution")),
+                "constitution_modifier": get_modifier(int(request.form.get(
+                    "constitution"))),
+                "intelligence": int(request.form.get("intelligence")),
+                "intelligence_modifier": get_modifier(int(request.form.get(
+                    "intelligence"))),
+                "wisdom": int(request.form.get("wisdom")),
+                "wisdom_modifier": get_modifier(int(request.form.get(
+                    "wisdom"))),
+                "charisma": int(request.form.get("charisma")),
+                "charisma_modifier": get_modifier(int(request.form.get(
+                    "charisma"))),
+                "class_saving_throws": class_saving_throws,
+                "chosen_skills": chosen_skills,
+                "passive_perception": int(request.form.get(
+                    "passive_perception")),
+                "other_languages_profiencies": request.form.get(
+                    "other_languages_profiencies"),
+                "armor_class": int(request.form.get("armor_class")),
+                "intiative_bonus": int(intiative_bonus[1]),
+                "race_speed": request.form.get("race_speed"),
+                "hit_point_maximum": int(request.form.get(
+                    "hit_point_maximum")),
+                "current_hit_points": int(request.form.get(
+                    "current_hit_points")),
+                "temporary_hit_points": int(request.form.get(
+                    "temporary_hit_points")),
+                "class_total_hit_dice": int(request.form.get(
+                    "class_total_hit_dice")),
+                "class_hit_die": request.form.get("class_hit_die"),
+                "attack_name_1": request.form.get("attack_name_1"),
+                "attack_bonus_1": request.form.get("attack_bonus_1"),
+                "attack_damage_1": request.form.get("attack_damage_1"),
+                "attack_name_2": request.form.get("attack_name_2"),
+                "attack_bonus_2": request.form.get("attack_bonus_2"),
+                "attack_damage_2": request.form.get("attack_damage_2"),
+                "attack_name_3": request.form.get("attack_name_3"),
+                "attack_bonus_3": request.form.get("attack_bonus_3"),
+                "attack_damage_3": request.form.get("attack_damage_3"),
+                "attacks_spellcasting": request.form.get("attacks_spellcasting"),
+                "character_copper": int(request.form.get("character_copper")),
+                "character_silver": int(request.form.get("character_silver")),
+                "character_electrum": int(request.form.get("character_electrum")),
+                "character_gold": int(request.form.get("character_gold")),
+                "character_platinum": int(request.form.get("character_platinum")),
+                "equipment": request.form.get("equipment"),
+                "personality_traits": request.form.get("personality_traits"),
+                "ideals": request.form.get("ideals"),
+                "bonds": request.form.get("bonds"),
+                "flaws": request.form.get("flaws"),
+                "feature_traits": request.form.get("feature_traits")
+            }
 
-        mongo.db.characters.update({"_id": ObjectId(character_id)}, submit)
-        flash("Character Successully Updated")
-        return redirect(url_for("profile", username=session['user']))
+            mongo.db.characters.update({"_id": ObjectId(character_id)}, submit)
+            flash("Character Successully Updated")
+            return redirect(url_for("profile", username=session['user']))
 
-    # skills and saving throws are defined above
-    # as the POST function also uses them
+        # skills and saving throws are defined above
+        # as the POST function also uses them
 
-    character = mongo.db.characters.find_one(
-        {"_id": ObjectId(character_id)})
+        character = mongo.db.characters.find_one(
+            {"_id": ObjectId(character_id)})
 
-    return render_template("edit_character.html", character=character,
-        saving_throws=saving_throws, skills=skills)
+        return render_template("edit_character.html", character=character,
+            saving_throws=saving_throws, skills=skills)
+
+    return redirect(url_for("login"))
 
 
 @app.route("/register", methods=["GET", "POST"])
@@ -545,10 +557,9 @@ def delete_character(character_id):
 @app.route("/profile/<username>", methods=["GET", "POST"])
 def profile(username):
     # Grab session user's username for the db
-    username = mongo.db.users.find_one(
-        {"username": session["user"]})["username"]
-
-    if session["user"]:
+    if "user" in session:
+        username = mongo.db.users.find_one(
+            {"username": session["user"]})["username"]
 
         characters = mongo.db.characters.find()
         return render_template("profile.html", username=username,

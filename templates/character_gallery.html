@@ -2,8 +2,8 @@
 {% block content %}
     <div>
         <h3 class="center">Community Characters</h3>
+        <div class="row">
         {% for character in characters %}
-            <div class="row">
                 <div class="col s12 m4">
                     <div class="card-panel teal">
                         <h6>{{ character.character_name }}</h6>
@@ -110,7 +110,7 @@
                         </ul>
                     </div>
                 </div>
-            </div>
-        {% endfor %}
+            {% endfor %}
+        </div>
     </div>
 {% endblock %}
