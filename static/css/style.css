@@ -61,7 +61,7 @@ label{
     padding: 20px;
 }
 
-/*----------------------------- Character Gallery */
+/*----------------------------- New Character */
 
 .tabs{
     margin: 10px;
@@ -72,5 +72,13 @@ label{
 }
 
 .collapsible-body strong{
+    font-family: "Cinzel", sans-serif;
+}
+
+.submit{
+        font-size: 20px;
+}
+
+.submit strong{
     font-family: "Cinzel", sans-serif;
 }

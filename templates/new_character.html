@@ -319,43 +319,197 @@
             </div>
         </form>
         <form method="POST" name="ability_scores" action="{{ url_for('new_character') }}">
-            <div id="ability_scores" class="col s12">
-                <h3 class="center">Choose Your Ability Scores</h3>
-                <div class="col s2">
-                    <label for="strength">Strength</label>
-                    <input type="number" name="strength" minlength="1" maxlength="2" min="3" max="30" class="validate" required>
+            <div class="row center">
+                <div id="ability_scores" class="col s12">
+                    <h3 class="center">Choose Your Ability Scores</h3>
+                    <div class="col s12 l2">
+                        <label for="strength">Strength</label>
+                        <input type="number" name="strength" minlength="1" maxlength="2" min="3" max="30" class="validate" required>
+                    </div>
+                    <div class="col s12 l2">
+                        <label for="dexterity">Dexterity</label>
+                        <input type="number" name="dexterity" minlength="1" maxlength="2" min="3" max="30" class="validate" required>
+                    </div>
+                    <div class="col s12 l2">
+                        <label for="constitution">Constitution</label>
+                        <input type="number" name="constitution" minlength="1" maxlength="2" min="3" max="30" class="validate" required>
+                    </div>
+                    <div class="col s12 l2">
+                        <label for="intelligence">Intelligence</label>
+                        <input type="number" name="intelligence" minlength="1" maxlength="2" min="3" max="30" class="validate" required>
+                    </div>
+                    <div class="col s12 l2">
+                        <label for="wisdom">Wisdom</label>
+                        <input type="number" name="wisdom" minlength="1" maxlength="2" min="3" max="30" class="validate" required>
+                    </div>
+                    <div class="col s12 l2">
+                        <label for="charisma">Charisma</label>
+                        <input type="number" name="charisma" minlength="1" maxlength="2" min="3" max="30" class="validate" required>
+                    </div>
+                    <div class="center">
+                        <button class="btn red accent-4"  name="ability_scores" type="submit">Submit</button>
+                    </div>
+                    <div>
+                        <div class="col s12 l6">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Score</th>
+                                        <th>Modifier</th>
+                                        <th>Score</th>
+                                        <th>Modifier</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>1</td>
+                                        <td>-5</td>
+                                        <td>8 - 9</td>
+                                        <td>-1</td>
+                                    </tr>
+                                    <tr>
+                                        <td>2 - 3</td>
+                                        <td>-4</td>
+                                        <td>10 - 11</td>
+                                        <td>+0</td>
+                                    </tr>
+                                    <tr>
+                                        <td>4 - 5</td>
+                                        <td>-3</td>
+                                        <td>12 - 13</td>
+                                        <td>+ 1</td>
+                                    </tr>
+                                    <tr>
+                                        <td>6 - 7</td>
+                                        <td>-2</td>
+                                        <td>14 - 15</td>
+                                        <td>+2</td>
+                                    </tr>
+                                </tbody>            
+                            </table>
+                        </div>
+                        <div class="col s12 l6">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Score</th>
+                                        <th>Modifier</th>
+                                        <th>Score</th>
+                                        <th>Modifier</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>16 - 17</td>
+                                        <td>+3</td>
+                                        <td>24 - 25</td>
+                                        <td>+7</td>
+                                    </tr>
+                                    <tr>
+                                        <td>18 - 19</td>
+                                        <td>+4</td>
+                                        <td>26 - 27</td>
+                                        <td>+8</td>
+                                    </tr>
+                                    <tr>
+                                        <td>20 - 21</td>
+                                        <td>+5</td>
+                                        <td>28 - 29</td>
+                                        <td>+9</td>
+                                    </tr>
+                                    <tr>
+                                        <td>22 - 23</td>
+                                        <td>+6</td>
+                                        <td>30</td>
+                                        <td>+10</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
                 </div>
-                <div class="col s2">
-                    <label for="dexterity">Dexterity</label>
-                    <input type="number" name="dexterity" minlength="1" maxlength="2" min="3" max="30" class="validate" required>
-                </div>
-                <div class="col s2">
-                    <label for="constitution">Constitution</label>
-                    <input type="number" name="constitution" minlength="1" maxlength="2" min="3" max="30" class="validate" required>
-                </div>
-                <div class="col s2">
-                    <label for="intelligence">Intelligence</label>
-                    <input type="number" name="intelligence" minlength="1" maxlength="2" min="3" max="30" class="validate" required>
-                </div>
-                <div class="col s2">
-                    <label for="wisdom">Wisdom</label>
-                    <input type="number" name="wisdom" minlength="1" maxlength="2" min="3" max="30" class="validate" required>
-                </div>
-                <div class="col s2">
-                    <label for="charisma">Charisma</label>
-                    <input type="number" name="charisma" minlength="1" maxlength="2" min="3" max="30" class="validate" required>
-                </div>
-                <div class="center">
-                    <button class="btn red accent-4"  name="ability_scores" type="submit">Submit</button>
-                </div>
-                <p>add modifier fomuala and examples</p>
             </div>
         </form>
         <form method="POST" action="{{ url_for('new_character') }}">  
-            <div class="col s12 center" id="submit">
+            <div class="col s12 submit center" id="submit">
                 <h3>Finshed?</h3>
-                <a class="btn red accent-4" href="{{ url_for('characters') }}">Cancel</a>
-                <button class="btn red accent-4"  name="submit" type="submit">Create Character</button> 
+                {% if session["details"] %}
+                    <p><strong>Character Name:</strong> {{ session["details"].character_name }}</p>
+                {% endif %}
+                {% if session["class"] %}
+                    <p><strong>Class:</strong> {{ session["class"].class_name }}</p>
+                {% endif %}
+                {% if session["race"] %}
+                    <p><strong>Race:</strong> {{ session["race"].race_name }}</p>
+                {% endif %}
+                {% if session["background"] %}
+                    <p><strong>Background:</strong> {{ session["background"].background_name }}</p>
+                {% endif %}
+                {% if session["ability"] %}
+                    <div class="row">
+                        <div class="col s6 m4 xl2">
+                            <p><strong>Strength:</strong></p>
+                            <p>{{ session["ability"].strength }}</p>
+                            {% if session["ability"].strength_modifier > 0 %}
+                                <p>+{{ session["ability"].strength_modifier }}</p>
+                            {% else %}
+                                <p>{{ session["ability"].strength_modifier }}</p>
+                            {% endif %}
+                        </div>
+                        <div class="col s6 m4 xl2">
+                            <p><strong>Dexterity:</strong></p>
+                            <p>{{ session["ability"].dexterity }}</p>
+                            {% if session["ability"].dexterity_modifier > 0 %}
+                                <p>+{{ session["ability"].dexterity_modifier }}</p>
+                            {% else %}
+                                <p>{{ session["ability"].dexterity_modifier }}</p>
+                            {% endif %}
+                        </div>
+                        <div class="col s6 m4 xl2">
+                            <p><strong>Constitution:</strong></p>
+                            <p>{{ session["ability"].constitution }}</p>
+                            {% if session["ability"].constitution_modifier > 0 %}
+                                <p>+{{ session["ability"].constitution_modifier }}</p>
+                            {% else %}
+                                <p>{{ session["ability"].constitution_modifier }}</p>
+                            {% endif %}
+                        </div>
+                        <div class="col s6 m4 xl2">
+                            <p><strong>Intelligence:</strong></p>
+                            <p>{{ session["ability"].intelligence }}</p>
+                            {% if session["ability"].intelligence_modifier > 0 %}
+                                <p>+{{ session["ability"].intelligence_modifier }}</p>
+                            {% else %}
+                                <p>{{ session["ability"].intelligence_modifier }}</p>
+                            {% endif %}
+                        </div>
+                        <div class="col s6 m4 xl2">
+                            <p><strong>Wisdom:</strong></p>
+                            <p>{{ session["ability"].wisdom }}</p>
+                            {% if session["ability"].wisdom_modifier > 0 %}
+                                <p>+{{ session["ability"].wisdom_modifier }}</p>
+                            {% else %}
+                                <p>{{ session["ability"].wisdom_modifier }}</p>
+                            {% endif %}
+                        </div>
+                        <div class="col s6 m4 xl2">
+                            <p><strong>Charisma:</strong></p>
+                            <p>{{ session["ability"].charisma }}</p>
+                            {% if session["ability"].charisma_modifier > 0 %}
+                                <p>+{{ session["ability"].charisma_modifier }}</p>
+                            {% else %}
+                                <p>{{ session["ability"].charisma_modifier }}</p>
+                            {% endif %}
+                        </div>
+                    </div>
+                {% endif %}
+                {% if session["details"] %}
+                    <p><strong></strong></p>
+                {% endif %}
+                <div class="center">
+                    <a class="btn red accent-4" href="{{ url_for('characters') }}">Cancel</a>
+                    <button class="btn red accent-4"  name="submit" type="submit">Create Character</button>
+                </div>  
             </div> 
         </form>
     </div>

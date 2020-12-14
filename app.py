@@ -380,6 +380,7 @@ def new_character():
 
                     session["details"].update({"equipment": session[
                         "background"]["background_equipment"]})
+
                     session["details"].update({"feature_traits": session[
                         "background"][
                             "background_feature"] + " " + session[
@@ -403,34 +404,25 @@ def new_character():
                 elif "ability" not in session:
                     flash("You haven't picked your ability scores!")
                     return redirect(url_for("new_character"))
-                else:
-                    session["details"]["chosen_skills"] = session[
-                        "details"]["chosen_skills"] + session[
-                            "background"]["background_skill_prof"]
 
-                    # Removes background skill prof from details cookie
-                    # as it is no longer needed
-                    session["details"].pop("background_skill_prof", None)
+                character = {
+                    **session.get("class"),
+                    **session.get("race"),
+                    **session.get("background"),
+                    **session.get("details"),
+                    **session.get("ability")
+                 }
 
-                    character = {
-                        **session.get("class"),
-                        **session.get("race"),
-                        **session.get("background"),
-                        **session.get("details"),
-                        **session.get("ability")
-                    }
+                session.pop("class")
+                session.pop("race")
+                session.pop("details")
+                session.pop("background")
+                session.pop("ability")
+                session.pop("skills")
 
-                    session.pop("class")
-                    session.pop("race")
-                    session.pop("details")
-                    session.pop("background")
-                    session.pop("ability")
-                    session.pop("skills")
-
-                    mongo.db.characters.insert_one(character)
-                    flash("Character Successully Created")
-                    return redirect(url_for("profile",
-                        username=session['user']))
+                mongo.db.characters.insert_one(character)
+                flash("Character Successully Created")
+                return redirect(url_for("profile", username=session['user']))
 
         classes = mongo.db.classes.find()
         races = mongo.db.races.find()
