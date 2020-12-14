@@ -20,10 +20,9 @@ mongo = PyMongo(app)
 
 
 @app.route("/")
-@app.route("/characters")
-def characters():
-    characters = mongo.db.characters.find()
-    return render_template("characters.html", characters=characters)
+@app.route("/home")
+def home():
+    return render_template("home.html")
 
 
 @app.route("/get_modifier")

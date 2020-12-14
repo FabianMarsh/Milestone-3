@@ -39,6 +39,28 @@ label{
     text-align: center;
 }
 
+/*----------------------------- Home */
+
+.forge-banner{
+    background-image: url("../assets/images/forge_background.jpg");
+    background-position: center;
+    background-size: cover;
+    height: 500px;
+    max-width: none;
+    font-family: "Cinzel", sans-serif;
+    padding-top: 150px;
+}
+
+.forge-banner h1 {
+    margin: 0;
+    font-size: 50px;
+}
+
+.forge-info{
+    font-family: "Cinzel", sans-serif;
+    font-size: 25px;
+}
+
 /*----------------------------- Character Gallery */
 
 .card-panel{
