@@ -5,18 +5,18 @@
         <div class="row">
         {% for character in characters %}
                 <div class="col s12 m4">
-                    <div class="card-panel teal">
-                        <h6>{{ character.character_name }}</h6>
+                    <div class="card-panel orange darken-2 white-text z-depth-2">
+                        <h6 class="card-header">{{ character.character_name }}</h6>
                         <p>
                             {{ character.character_description }}
                         </p>
                         <p>
                             Created By {{ character.player_name }}
                         </p>
-                        <ul class="collapsible">
+                        <ul class="collapsible black-text">
                             <li>
-                                <div class="collapsible-header">More Details</div>
-                                <div class="collapsible-body">
+                                <div class="collapsible-header orange accent-2"><i class="right fas fa-caret-down"></i>More Details</div>
+                                <div class="collapsible-body orange accent-2">
                                     <div class="row">
                                         <div class="col s4">
                                             <h6>Class</h6>
@@ -33,10 +33,12 @@
                                     </div>
                                     <div class="row">
                                         <div class="col s4">
-                                            <div>
-                                                <h6>Str</h6>
-                                                {{ character.strength }}
+                                            <div class="box box-radius white">
                                                 <div>
+                                                    <h6>Str</h6>
+                                                    {{ character.strength }}
+                                                </div>
+                                                <div class="bubble">
                                                     {% if character.strength_modifier > 0 %}
                                                         +{{ character.strength_modifier }}
                                                     {% else %}
@@ -44,10 +46,12 @@
                                                     {% endif %}
                                                 </div>
                                             </div>
-                                            <div>
-                                                <h6>Int</h6>
-                                                {{ character.intelligence }}
+                                            <div class="box box-radius white">
                                                 <div>
+                                                    <h6>Int</h6>
+                                                    {{ character.intelligence }}
+                                                </div>
+                                                <div class="bubble">
                                                     {% if character.intelligence_modifier > 0 %}
                                                         +{{ character.intelligence_modifier }}
                                                     {% else %}
@@ -57,10 +61,12 @@
                                             </div>
                                         </div>
                                         <div class="col s4">
-                                            <div>
-                                                <h6>Dex</h6>
-                                                {{ character.dexterity }}
+                                            <div class="box box-radius white">
                                                 <div>
+                                                    <h6>Dex</h6>
+                                                    {{ character.dexterity }}
+                                                </div>
+                                                <div class="bubble">
                                                     {% if character.dexterity_modifier > 0 %}
                                                         +{{ character.dexterity_modifier }}
                                                     {% else %}
@@ -68,10 +74,12 @@
                                                     {% endif %}
                                                 </div>
                                             </div>
-                                            <div>
-                                                <h6>Wis</h6>
-                                                {{ character.wisdom }}
-                                                <div>
+                                            <div class="box box-radius white">
+                                                <div >
+                                                    <h6>Wis</h6>
+                                                    {{ character.wisdom }}
+                                                </div>
+                                                <div class="bubble">
                                                     {% if character.wisdom_modifier > 0 %}
                                                         +{{ character.wisdom_modifier }}
                                                     {% else %}
@@ -81,10 +89,12 @@
                                             </div>
                                         </div>
                                         <div class="col s4">
-                                            <div>
-                                                <h6>Con</h6>
-                                                {{ character.constitution }}
+                                            <div class="box box-radius white">
                                                 <div>
+                                                    <h6>Con</h6>
+                                                    {{ character.constitution }}
+                                                </div>
+                                                <div class="bubble">
                                                     {% if character.constitution_modifier > 0 %}
                                                         +{{ character.constitution_modifier }}
                                                     {% else %}
@@ -92,10 +102,12 @@
                                                     {% endif %}
                                                 </div>
                                             </div>
-                                            <div>
-                                                <h6>Cha</h6>
-                                                {{ character.charisma }}
+                                            <div class="box box-radius white">
                                                 <div>
+                                                    <h6>Cha</h6>
+                                                    {{ character.charisma }}
+                                                </div>
+                                                <div class="bubble">
                                                     {% if character.charisma_modifier > 0 %}
                                                         +{{ character.charisma_modifier }}
                                                     {% else %}
@@ -103,6 +115,16 @@
                                                     {% endif %}
                                                 </div>
                                             </div>                                            
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col s6 box">
+                                            <h6>Armor Class</h6>
+                                            <p>{{ character.armor_class }}</p>
+                                        </div>
+                                        <div class="col s6 box">
+                                            <h6>Max HP</h6>
+                                            <p>{{ character.hit_point_maximum }}</p>
                                         </div>
                                     </div>
                                 </div>

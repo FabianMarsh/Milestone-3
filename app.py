@@ -53,7 +53,8 @@ def new_character():
 
                 session["class"] = {
                     "class_name": request.form.get("class_name_" + index),
-                    "class_hit_die": request.form.get("class_hit_die_" + index),
+                    "class_hit_die": request.form.get(
+                        "class_hit_die_" + index),
                     "class_hit_die_int": int(class_hit_die_int[1]),
                     "class_total_hit_dice": 1,
                     "temporary_hit_points": 0,
@@ -102,8 +103,17 @@ def new_character():
                     "race_name": request.form.get("race_name_" + index),
                     "race_size": request.form.get("race_size_" + index),
                     "race_speed": request.form.get("race_speed_" + index),
-                    "race_languages": request.form.get("race_languages_" + index)
+                    "race_languages": request.form.get(
+                        "race_languages_" + index),
+                    "race_feature_num": int(request.form.get(
+                        "race_feature_num_" + index)),
+                    "race_features": " "
                 }
+
+                for i in range(0, session["race"]["race_feature_num"]):
+
+                    session["race"]["race_features"] += request.form.get(
+                        "race_features_" + index + "_" + str(i)) + " "
 
             if "background" in request.form:
 
@@ -278,7 +288,7 @@ def new_character():
                         int(request.form.get("intelligence"))),
                     "wisdom": int(request.form.get("wisdom")),
                     "wisdom_modifier": get_modifier(
-                        int(request.form.get("strength"))),
+                        int(request.form.get("wisdom"))),
                     "charisma": int(request.form.get("charisma")),
                     "charisma_modifier": get_modifier(
                         int(request.form.get("charisma"))),
@@ -316,7 +326,9 @@ def new_character():
                     session["details"].update({"equipment": session[
                         "background"]["background_equipment"]})
                     session["details"].update({"feature_traits": session[
-                        "background"]["background_feature"]})
+                        "background"][
+                            "background_feature"] + " " + session[
+                                "race"]["race_features"]})
 
             if "submit" in request.form:
                 # checks to see if all necessary cookies exists
@@ -465,12 +477,15 @@ def edit_character(character_id):
                 "attack_name_3": request.form.get("attack_name_3"),
                 "attack_bonus_3": request.form.get("attack_bonus_3"),
                 "attack_damage_3": request.form.get("attack_damage_3"),
-                "attacks_spellcasting": request.form.get("attacks_spellcasting"),
+                "attacks_spellcasting": request.form.get(
+                    "attacks_spellcasting"),
                 "character_copper": int(request.form.get("character_copper")),
                 "character_silver": int(request.form.get("character_silver")),
-                "character_electrum": int(request.form.get("character_electrum")),
+                "character_electrum": int(request.form.get(
+                    "character_electrum")),
                 "character_gold": int(request.form.get("character_gold")),
-                "character_platinum": int(request.form.get("character_platinum")),
+                "character_platinum": int(request.form.get(
+                    "character_platinum")),
                 "equipment": request.form.get("equipment"),
                 "personality_traits": request.form.get("personality_traits"),
                 "ideals": request.form.get("ideals"),

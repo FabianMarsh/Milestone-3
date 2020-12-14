@@ -1,0 +1,52 @@
+@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Courgette&display=swap');
+
+/*----------------------------- Base.html */
+
+.brand-logo, 
+h3,
+nav,
+h6,
+label{
+    font-family: "Cinzel", sans-serif;
+    font-weight: 800;
+}
+
+label{
+    font-size: medium;
+}
+
+.box{
+    border: 1px black solid;
+    text-align: center;
+}
+
+.box-radius{
+    border-radius: 0 0 12px 12px;
+}
+
+.bubble{
+    border: 1px black solid;
+    border-radius: 50px;
+    text-align: center;
+}
+
+/*----------------------------- Character Gallery */
+
+.card-panel{
+    border-radius: 10px;
+}
+
+.card-header{
+    font-family: "Courgette", sans-serif;
+}
+
+.card-panel-box{
+    padding: 20px;
+}
+
+/*----------------------------- Character Gallery */
+
+.tabs{
+    margin: 10px;
+}
