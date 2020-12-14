@@ -61,9 +61,16 @@ label{
     padding: 20px;
 }
 
-
 /*----------------------------- Character Gallery */
 
 .tabs{
     margin: 10px;
+}
+
+.tab-title{
+    font-family: "Cinzel", sans-serif;
+}
+
+.collapsible-body strong{
+    font-family: "Cinzel", sans-serif;
 }

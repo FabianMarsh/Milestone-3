@@ -71,9 +71,6 @@ def new_character():
                     session["class"].update({
                         "class_tool_prof": request.form.get(
                             "class_tool_prof_" + index)})
-                else:
-                    session["class"].update({
-                        "class_tool_prof": " "})
 
                 if "class_num_artisans_" + index in request.form:
                     session["class"].update({
@@ -105,6 +102,8 @@ def new_character():
                     "race_speed": request.form.get("race_speed_" + index),
                     "race_languages": request.form.get(
                         "race_languages_" + index),
+                    "race_language": request.form.get(
+                        "race_language_" + index),
                     "race_feature_num": int(request.form.get(
                         "race_feature_num_" + index)),
                     "race_features": " "
@@ -129,8 +128,6 @@ def new_character():
                         "background_name_" + index),
                     "background_skill_prof": request.form.get(
                         "background_skill_prof_" + index),
-                    "background_tool_prof": request.form.get(
-                        "background_tool_prof_" + index),
                     "background_equipment": request.form.get(
                         "background_equipment_" + index),
                     "background_num_languages": int(request.form.get(
@@ -143,6 +140,11 @@ def new_character():
                     "character_platinum": 0,
                     "background_feature": background_feature
                     }
+
+                if "background_tool_prof_" + index in request.form:
+                    session["background"].update({
+                        "background_tool_prof": request.form.get(
+                            "background_tool_prof_" + index)})
 
                 if "background_num_artisans_" + index in request.form:
                     session["background"].update({
@@ -178,101 +180,143 @@ def new_character():
                     "flaws": request.form.get("flaws"),
                 }
 
-                if "class" in session and "background" in session:
-                    if "class_tool_prof" in session[
-                        "class"] or "background_tool_prof" in session[
-                            "background"]:
+                session["details"].update({
+                    "other_languages_proficiencies": " "})
 
-                        session["details"].update({
-                            "other_languages_profiencies": " "})
+                if "class" in session and "background" in session:
+                    if "class_tool_prof" in session["class"]:
 
                         for i in range(0, session["class"][
                             "class_num_artisans"] + session[
                                 "background"]["background_num_artisans"]):
 
                             session["details"][
-                                "other_languages_profiencies"
+                                "other_languages_proficiencies"
                                 ] += request.form.get(
-                                    "tool_select_" + str(i)) + " "
+                                    "tool_select_" + str(i)) + ", "
 
-                        if "Disguise" in session["class"][
-                            "class_tool_prof"] or "Disguise" in session[
-                                "background"]["background_tool_prof"]:
+                        if "Disguise" in session["class"]["class_tool_prof"]:
 
                             session["details"][
-                                "other_languages_profiencies"
-                                ] += "Disguise Kit "
+                                "other_languages_proficiencies"
+                                ] += "Disguise Kit, "
 
-                        if "Forgery" in session["class"][
-                            "class_tool_prof"] or "Forgery" in session[
-                                "background"]["background_tool_prof"]:
+                        if "Forgery" in session["class"]["class_tool_prof"]:
 
                             session["details"][
-                                "other_languages_profiencies"
-                                ] += "Forgery Kit "
+                                "other_languages_proficiencies"
+                                ] += "Forgery Kit, "
 
-                        if "Herbalism" in session["class"][
-                            "class_tool_prof"] or "Herbalism" in session[
-                                "background"]["background_tool_prof"]:
+                        if "Herbalism" in session["class"]["class_tool_prof"]:
 
                             session["details"][
-                                "other_languages_profiencies"
-                                ] += "Herbalism Kit "
+                                "other_languages_proficiencies"
+                                ] += "Herbalism Kit, "
 
-                        if "Navigator" in session["class"][
-                            "class_tool_prof"] or "Navigator" in session[
-                                "background"][
-                                    "background_tool_prof"]:
+                        if "Navigator" in session["class"]["class_tool_prof"]:
 
                             session["details"][
-                                "other_languages_profiencies"
-                                    ] += "Navigator's Tools "
+                                "other_languages_proficiencies"
+                                    ] += "Navigator's Tools, "
 
-                        if "Poisoner" in session["class"][
-                            "class_tool_prof"] or "Poisoner" in session[
-                                "background"]["background_tool_prof"]:
+                        if "Poisoner" in session["class"]["class_tool_prof"]:
 
                             session["details"][
-                                "other_languages_profiencies"
-                                ] += "Poisoner's Kit "
+                                "other_languages_proficiencies"
+                                ] += "Poisoner's Kit, "
 
                         if "Thieves" in session["class"][
-                            "class_tool_prof"] or "Thieves" in session[
-                                "background"]["background_tool_prof"]:
+                            "class_tool_prof"]:
 
                             session["details"][
-                                "other_languages_profiencies"
-                                ] += "Thieves' Tools "
+                                "other_languages_proficiencies"
+                                ] += "Thieves' Tools, "
 
                         if "instrument" in session["class"][
-                            "class_tool_prof"] or "instrument" in session[
-                                "background"]["background_tool_prof"]:
+                            "class_tool_prof"]:
 
                             for i in range(0, session["class"][
-                                "class_num_instruments"] + session[
-                                    "background"][
-                                        "background_num_instruments"]):
+                                "class_num_instruments"]):
 
                                 session["details"][
-                                    "other_languages_profiencies"
+                                    "other_languages_proficiencies"
                                         ] += request.form.get(
-                                        "instrument_select_" + str(i)) + " "
+                                        "instrument_select_" + str(i)) + ", "
 
                         if "gaming" in session["class"][
-                            "class_tool_prof"] or "gaming" in session[
-                                "background"]["background_tool_prof"]:
+                            "class_tool_prof"]:
 
                             session["details"][
-                                "other_languages_profiencies"
+                                "other_languages_proficiencies"
                                 ] += request.form.get(
                                     "gaming_select")
+
+                if "background_tool_prof" in session[
+                    "background"]:
+
+                    if "Disguise" in session["background"][
+                        "background_tool_prof"]:
+
+                        session["details"][
+                            "other_languages_proficiencies"
+                                ] += "Disguise Kit, "
+
+                    if "Forgery" in session["background"][
+                        "background_tool_prof"]:
+
+                        session["details"][
+                                "other_languages_proficiencies"
+                                ] += "Forgery Kit, "
+
+                    if "Herbalism" in session[
+                        "background"]["background_tool_prof"]:
+
+                        session["details"][
+                            "other_languages_proficiencies"
+                                ] += "Herbalism Kit, "
+
+                    if "Navigator" in session["background"][
+                        "background_tool_prof"]:
+
+                        session["details"][
+                            "other_languages_proficiencies"
+                                ] += "Navigator's Tools "
+
+                    if "Thieves" in session["background"][
+                        "background_tool_prof"]:
+
+                        session["details"][
+                            "other_languages_proficiencies"
+                                ] += "Thieves' Tools "
+
+                    if "instrument" in session[
+                        "background"]["background_tool_prof"]:
+
+                        for i in range(0, session["background"][
+                            "background_num_instruments"]):
+
+                            session["details"][
+                                "other_languages_proficiencies"
+                                    ] += request.form.get(
+                                        "instrument_select_" + str(i)) + ", "
+
+                    if "gaming" in session["background"][
+                        "background_tool_prof"]:
+
+                        session["details"]["other_languages_proficiencies"
+                            ] += request.form.get(
+                                "gaming_select")
 
                 if "class" in session:
 
                     for i in range(0, session["class"]["class_num_skills"]):
                         session["details"][
                             "chosen_skills"] += request.form.get(
-                                "skill_select_" + str(i)) + " "
+                                "skill_select_" + str(i)) + ", "
+
+                session["details"][
+                        "other_languages_proficiencies"] += session[
+                            "race"]["race_language"]
 
                 if session["background"]["background_num_languages"] > 0:
 
@@ -280,8 +324,8 @@ def new_character():
                         "background_num_languages"]):
 
                         session["details"][
-                            "other_languages_profiencies"] += request.form.get(
-                                "language_select_" + str(i)) + " "
+                            "other_languages_proficiencies"] += request.form.get(
+                                "language_select_" + str(i)) + ", " 
 
             if "ability_scores" in request.form:
                 session["ability"] = {
@@ -465,8 +509,8 @@ def edit_character(character_id):
                 "chosen_skills": chosen_skills,
                 "passive_perception": int(request.form.get(
                     "passive_perception")),
-                "other_languages_profiencies": request.form.get(
-                    "other_languages_profiencies"),
+                "other_languages_proficiencies": request.form.get(
+                    "other_languages_proficiencies"),
                 "armor_class": int(request.form.get("armor_class")),
                 "intiative_bonus": int(intiative_bonus[1]),
                 "race_speed": request.form.get("race_speed"),
