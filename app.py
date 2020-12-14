@@ -120,7 +120,8 @@ def new_character():
                 index = request.form.get("background")
 
                 background_feature = request.form.get(
-                    "background_feature_name_" + index) + " " + request.form.get(
+                    "background_feature_name_" + index
+                    ) + " " + request.form.get(
                         "background_feature_description_" + index)
 
                 session["background"] = {
@@ -165,11 +166,13 @@ def new_character():
                     "character_name": request.form.get("character_name"),
                     "character_description": request.form.get(
                         "character_description"),
-                    "character_alignment": request.form.get("character_alignment"),
+                    "character_alignment": request.form.get(
+                        "character_alignment"),
                     "chosen_skills": "",
                     "chosen_languages": "",
                     "player_name": session["user"],
-                    "personality_traits": request.form.get("personality_traits"),
+                    "personality_traits": request.form.get(
+                        "personality_traits"),
                     "ideals": request.form.get("ideals"),
                     "bonds": request.form.get("bonds"),
                     "flaws": request.form.get("flaws"),
@@ -188,7 +191,8 @@ def new_character():
                                 "background"]["background_num_artisans"]):
 
                             session["details"][
-                                "other_languages_profiencies"] += request.form.get(
+                                "other_languages_profiencies"
+                                ] += request.form.get(
                                     "tool_select_" + str(i)) + " "
 
                         if "Disguise" in session["class"][
@@ -196,21 +200,24 @@ def new_character():
                                 "background"]["background_tool_prof"]:
 
                             session["details"][
-                                "other_languages_profiencies"] += "Disguise Kit "
+                                "other_languages_profiencies"
+                                ] += "Disguise Kit "
 
                         if "Forgery" in session["class"][
                             "class_tool_prof"] or "Forgery" in session[
                                 "background"]["background_tool_prof"]:
 
                             session["details"][
-                                "other_languages_profiencies"] += "Forgery Kit "
+                                "other_languages_profiencies"
+                                ] += "Forgery Kit "
 
                         if "Herbalism" in session["class"][
                             "class_tool_prof"] or "Herbalism" in session[
                                 "background"]["background_tool_prof"]:
 
                             session["details"][
-                                "other_languages_profiencies"] += "Herbalism Kit "
+                                "other_languages_profiencies"
+                                ] += "Herbalism Kit "
 
                         if "Navigator" in session["class"][
                             "class_tool_prof"] or "Navigator" in session[
@@ -226,14 +233,16 @@ def new_character():
                                 "background"]["background_tool_prof"]:
 
                             session["details"][
-                                "other_languages_profiencies"] += "Poisoner's Kit "
+                                "other_languages_profiencies"
+                                ] += "Poisoner's Kit "
 
                         if "Thieves" in session["class"][
                             "class_tool_prof"] or "Thieves" in session[
                                 "background"]["background_tool_prof"]:
 
                             session["details"][
-                                "other_languages_profiencies"] += "Thieves' Tools "
+                                "other_languages_profiencies"
+                                ] += "Thieves' Tools "
 
                         if "instrument" in session["class"][
                             "class_tool_prof"] or "instrument" in session[
@@ -241,7 +250,8 @@ def new_character():
 
                             for i in range(0, session["class"][
                                 "class_num_instruments"] + session[
-                                    "background"]["background_num_instruments"]):
+                                    "background"][
+                                        "background_num_instruments"]):
 
                                 session["details"][
                                     "other_languages_profiencies"
@@ -253,7 +263,8 @@ def new_character():
                                 "background"]["background_tool_prof"]:
 
                             session["details"][
-                                "other_languages_profiencies"] += request.form.get(
+                                "other_languages_profiencies"
+                                ] += request.form.get(
                                     "gaming_select")
 
                 if "class" in session:

@@ -2,13 +2,13 @@
 {% block content %}
     <form method="POST" name="view_edit" action="{{ url_for('edit_character', character_id=character._id) }}">
         <div class="row">
-            <div class="col s12 m3 input-field">
+            <div class="col s12 l3 input-field">
                 <div class="col s12">
                     <input name="character_name" type="text" class="validate" value="{{ character.character_name }}">
                     <label for="character_name">Character Name</label>
                 </div>
             </div>    
-            <div class="col s12 m9">   
+            <div class="col s12 l9">   
                 <div class="col s4">
                     <input name="class_name" type="text" class="validate" value="{{ character.class_name }}">
                     <label for="class_name">Class</label>
@@ -23,7 +23,7 @@
                 </div>
                 <div class="col s4">
                     <input name="player_name" type="text" class="validate" value="{{ character.player_name }}">
-                    <label for="player_name">Player Name</label>
+                    <label for="player_name">Name</label>
                     <input name="character_experience" type="text" class="validate" value="{{ character.character_experience }}">
                     <label for="character_experience">Experience</label>
                 </div>
@@ -31,10 +31,10 @@
         </div>
         <div class="row">
             <div class="col s12 input-field">
-                <div class="col s12 m4">
-                    <div class="col s12 m4">
-                        <div class="col s4 m12">
-                            <label for="strength">Strength</label>
+                <div class="col s12 l4">
+                    <div class="col s12 l4">
+                        <div class="col s4 l12">
+                            <label for="strength">Str</label>
                             <input name="strength" type="number" class="validate" value="{{ character.strength }}" required>
                             <div>
                                 {% if character.strength_modifier > 0 %}
@@ -44,8 +44,8 @@
                                 {% endif %}
                             </div>
                         </div>
-                        <div class="col s4 m12">
-                            <label for="dexterity">Dexterity</label>
+                        <div class="col s4 l12">
+                            <label for="dexterity">Dex</label>
                             <input name="dexterity" type="number" class="validate" value="{{ character.dexterity }}" required>
                             <div>
                             {% if character.dexterity_modifier > 0 %}
@@ -55,8 +55,8 @@
                             {% endif %}
                             </div>
                         </div>
-                        <div class="col s4 m12">
-                            <label for="constitution">Constitution</label>
+                        <div class="col s4 l12">
+                            <label for="constitution">Con</label>
                             <input name="constitution" type="number" class="validate" value="{{ character.constitution }}" required>
                             <div>
                                 {% if character.constitution_modifier > 0 %}
@@ -66,8 +66,8 @@
                                 {% endif %}
                             </div>
                         </div>
-                        <div class="col s4 m12">
-                            <label for="intelligence">Intelligence</label>
+                        <div class="col s4 l12">
+                            <label for="intelligence">Int</label>
                             <input name="intelligence" type="number" class="validate" value="{{ character.intelligence }}" required>
                             <div>
                                 {% if character.intelligence_modifier > 0 %}
@@ -77,8 +77,8 @@
                                 {% endif %}
                             </div>
                         </div>
-                        <div class="col s4 m12">
-                            <label for="wisdom">Wisdom</label>
+                        <div class="col s4 l12">
+                            <label for="wisdom">Wis</label>
                             <input name="wisdom" type="number" class="validate" value="{{ character.wisdom }}" required>
                             <div>
                                 {% if character.wisdom_modifier > 0 %}
@@ -88,8 +88,8 @@
                                 {% endif %}
                             </div>
                         </div>
-                        <div class="col s4 m12">
-                            <label for="charisma">Charisma</label>
+                        <div class="col s4 l12">
+                            <label for="charisma">Cha</label>
                             <input name="charisma" type="number" class="validate" value="{{ character.charisma }}" required>
                             <div>
                                 {% if character.charisma_modifier > 0 %}
@@ -101,13 +101,13 @@
                         </div>
                     </div>
                     <div>
-                        <div class="col s12 m8">
+                        <div class="col s12 l8">
                             <input name="proficiency_bonus" class="validate" type="text" value="+{{ character.proficiency_bonus }}" required>
                             <label for="proficiency_bonus">Proficiency Bonus</label>
                         </div>
-                        <div class="col s12 m8">
+                        <div class="col s12 l8">
                             {% for saving_throw in saving_throws %}
-                                <div class="col s6 m12">
+                                <div class="col s6 l12">
                                     <p>
                                         <label>
                                             {% if saving_throw.saving_throw_name in character.class_saving_throws %}
@@ -120,11 +120,13 @@
                                     </p>
                                 </div> 
                             {% endfor %}
-                            <p>Saving Throws</p> 
+                            <div class="center">
+                                <label for="saving_throw">Saving Throws</label>
+                            </div> 
                         </div>
-                        <div class="col s12 m8">
+                        <div class="col s12 l8">
                             {% for skill in skills %}
-                                <div class="col s6 m12">
+                                <div class="col s6 l12">
                                     <p>
                                         <label>
                                             {% if skill.skill_name in character.chosen_skills %}
@@ -137,25 +139,31 @@
                                     </p>
                                 </div>
                             {% endfor %}
-                            <p>Skills</p> 
+                            <div class="col s12 center">
+                                <label for="skills">Skills</label>
+                            </div>
                         </div>
                     </div>
                     <div class="col s12">
-                        <div class="col s12 m4">
+                        <div class="col s12 l4">
                             <input name="passive_perception" type="number" value="{{ character.passive_perception }}" required>
                         </div>
                         <div class="col s8">
-                            <p>Passive Perception</p>
+                            <p>
+                                <label for="passive_perception">Passive Perception</label>
+                            </p>
                         </div>
                     </div>
                     <div class="col s12 input-field">
                         <textarea name="other_languages_profiencies" class="materialize-textarea">
                             {{- character.other_languages_profiencies -}}
                         </textarea>
-                        <p>Other Proficiencies & Languages</p>
                     </div>
+                        <div>
+                            <label for="other_languages_profiencies">Other Proficiencies & Languages</label>
+                        </div>
                 </div>
-                <div class="col s12 m4">
+                <div class="col s12 l4">
                     <div class="col s4">
                         <input type="number" name="armor_class" value="{{ character.armor_class }}" required>
                         <label for="armor_class">Armor Class</label>
@@ -269,12 +277,11 @@
                             </div>
                             <div class="col s12 input-field">
                                 <textarea name="attacks_spellcasting" class="materialize-textarea"></textarea>
-                                <!--p element rather than label element for formatting purposes-->
-                                <p>Attacks & Spellcasting</p>
+                                <label for="attacks_spellcasting">Attacks & Spellcasting</label>
                             </div>
                         </div>
                         <div class="col s12  input-field">
-                            <div class="col s12 m4">
+                            <div class="col s12 l4">
                                 <div>
                                     <input type="number" name="character_copper" value="{{ character.character_copper }}" required>
                                     <label for="character_copper">CP</label>
@@ -296,41 +303,41 @@
                                     <label for="character_platinum">PP</label>
                                 </div>
                             </div>
-                            <div class="col s12 m8">
+                            <div class="col s12 l8">
                                 <textarea name="equipment" class="materialize-textarea">
                                     {{- character.equipment -}}
                                 </textarea>
-                                <p>Equipment</p>
+                                <label for="equipment">Equipment</label>
                             </div>
                         </div>
                     </div>
                 </div>
-                <div class="col s12 m4">
+                <div class="col s12 l4">
                     <div class="col s12">
                         <textarea name="personality_traits" class="materialize-textarea">{{- character.personality_traits -}}</textarea>
-                        <p>Personality Traits</p>
+                        <label for="personality_traits">Personality Traits</label>
                     </div>
                     <div class="col s12">
                         <textarea name="ideals" class="materialize-textarea">{{- character.ideals -}}</textarea>
-                        <p>Ideals</p>
+                        <label for="ideals">Ideals</label>
                     </div>
                     <div class="col s12">
                         <textarea name="bonds" class="materialize-textarea">{{- character.bonds -}}</textarea>
-                        <p>Bonds</p>
+                        <label for="bonds">Bonds</label>
                     </div>
                     <div class="col s12">
                         <textarea name="flaws" class="materialize-textarea">{{- character.flaws -}}</textarea>
-                        <p>Flaws</p>
+                        <label for="flaws">Flaws</label>
                     </div>
                     <div class="col s12">
                         <textarea name="feature_traits" class="materialize-textarea">
                             {{- character.feature_traits -}}
                         </textarea>
-                        <p>Features & Traits</p>
+                        <label for="feature_traits">Features & Traits</label>
                     </div>
                 </div>
             </div>
-            <button class="btn waves-effect waves-light" type="submit" name="confirm">Confirm Changes</button>
+            <button class="btn red accent-4" type="submit" name="confirm">Confirm Changes</button>
         </div>
         <input type="hidden" name="character_description" value="character.character_description">
     </form>

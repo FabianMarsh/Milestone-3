@@ -5,11 +5,19 @@
 
 .brand-logo, 
 h3,
-nav,
 h6,
+nav,
 label{
     font-family: "Cinzel", sans-serif;
     font-weight: 800;
+}
+
+nav .brand-logo{
+    position: relative;
+}
+
+.nav-wrapper{
+    padding: 5px 10px;
 }
 
 label{
@@ -37,6 +45,14 @@ label{
     border-radius: 10px;
 }
 
+.card-panel p{
+    font-size: 15px;
+}
+
+.card-panel strong{
+    font-family: "Cinzel", sans-serif;
+}
+
 .card-header{
     font-family: "Courgette", sans-serif;
 }
@@ -44,6 +60,7 @@ label{
 .card-panel-box{
     padding: 20px;
 }
+
 
 /*----------------------------- Character Gallery */
 

@@ -6,7 +6,7 @@
         <div class="col s12 m8 offset-m2">
             <div class="card-panel">
                 <h3 class="center-align">
-                    {{ username }}'s Profile
+                    {{ username }}
                 </h3>
             </div>
         </div>
@@ -14,7 +14,7 @@
     <div class="row">
         {% for character in characters %}
             {% if session["user"] in character.player_name %}
-                <div class="col s12 m4">
+                <div class="col s12 l4">
                     <div class="card-panel orange darken-2 white-text z-depth-2">
                         <h6 class="card-header">{{ character.character_name }}</h6>
                         <p>
@@ -28,17 +28,14 @@
                                 <div class="collapsible-header orange accent-2"><i class="right fas fa-caret-down"></i>More Details</div>
                                 <div class="collapsible-body orange accent-2">
                                     <div class="row">
-                                        <div class="col s4">
-                                            <h6>Class</h6>
-                                            {{ character.class_name }}
+                                        <div class="col s12">
+                                            <p><strong>Class:</strong> {{ character.class_name }}</p>     
                                         </div>
-                                        <div class="col s4">
-                                            <h6>Race</h6>
-                                            {{ character.race_name }}
+                                        <div class="col">
+                                            <p><strong>Race:</strong> {{ character.race_name }}</p>
                                         </div>
-                                        <div class="col s4">
-                                            <h6>Background</h6>
-                                            {{ character.background_name }}
+                                        <div class="col s12">
+                                            <p><strong>Background:</strong> {{ character.background_name }}</p>
                                         </div>
                                     </div>
                                     <div class="row">
@@ -138,15 +135,15 @@
                                         </div>
                                     </div>
                                     <a class="red accent-4 btn modal-trigger" href="#delete_character">Delete</a>
-                                    <a href="{{ url_for('edit_character', character_id=character._id) }}" class="btn red accent-4 btn-small">Edit</a>
+                                    <a href="{{ url_for('edit_character', character_id=character._id) }}" class="btn red accent-4">Edit</a>
                                     <div id="delete_character" class="modal">
                                         <div class="modal-content center">
                                             <h4>Vanquish this charater into the Void</h4>
                                             <p>Are you sure you want to delete this character?</p>
                                         </div>
-                                        <div class="modal-footer">
-                                            <a href="{{ url_for('delete_character', character_id=character._id) }}" class="center red accent-4 btn-small">Kick them off the edge!</a>
-                                            <a href="" class="center red accent-4 btn-small">No, let them live</a>
+                                        <div class="modal-footer center">
+                                            <a href="{{ url_for('delete_character', character_id=character._id) }}" class="red accent-4 btn-small">Kick them off the edge!</a>
+                                            <a href="" class="red accent-4 btn-small">No, let them live</a>
                                         </div>
                                     </div>
                                 </div>
