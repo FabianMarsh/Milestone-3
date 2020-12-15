@@ -98,7 +98,8 @@ def new_character():
                 session["race"] = {
                     "race_name": request.form.get("race_name_" + index),
                     "race_size": request.form.get("race_size_" + index),
-                    "race_speed": request.form.get("race_speed_" + index),
+                    "race_speed_num": request.form.get(
+                        "race_speed_num_" + index),
                     "race_languages": request.form.get(
                         "race_languages_" + index),
                     "race_language": request.form.get(

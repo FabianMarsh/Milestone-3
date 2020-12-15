@@ -128,6 +128,7 @@
                                     <input type="hidden" name="race_name_{{ race.race_index }}" value="{{ race.race_name }}">
                                     <input type="hidden" name="race_size_{{ race.race_index }}" value="{{ race.race_size }}">
                                     <input type="hidden" name="race_speed_{{ race.race_index }}" value="{{ race.race_speed }}">
+                                    <input type="hidden" name="race_speed_num_{{ race.race_index }}" value="{{ race.race_speed_num }}">
                                     <input type="hidden" name="race_languages_{{ race.race_index }}" value="{{ race.race_languages }}">
                                     <input type="hidden" name="race_language_{{ race.race_index }}" value="{{ race.race_language }}">
                                     <input type="hidden" name="race_feature_num_{{ race.race_index }}" value="{{ race.race_feature_num }}">
@@ -507,7 +508,7 @@
                     <p><strong></strong></p>
                 {% endif %}
                 <div class="center">
-                    <a class="btn red accent-4" href="{{ url_for('characters') }}">Cancel</a>
+                    <a class="btn red accent-4" href="{{ url_for('home') }}">Cancel</a>
                     <button class="btn red accent-4"  name="submit" type="submit">Create Character</button>
                 </div>  
             </div> 
