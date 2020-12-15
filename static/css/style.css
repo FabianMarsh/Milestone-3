@@ -12,12 +12,8 @@ label{
     font-weight: 800;
 }
 
-nav .brand-logo{
-    position: relative;
-}
-
-.nav-wrapper{
-    padding: 5px 10px;
+.brand-logo{
+    margin: 5px 10px;
 }
 
 label{
@@ -103,4 +99,16 @@ label{
 
 .submit strong{
     font-family: "Cinzel", sans-serif;
+}
+
+/*----------------------------- Media Queries0p */
+
+@media only screen and (max-width: 563px) {
+    nav.nav-extended .nav-wrapper {
+        min-height: 120px;
+    }
+
+    .fa, .far, .fas {
+    margin: 20px;
+    }
 }
