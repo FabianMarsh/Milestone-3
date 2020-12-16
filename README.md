@@ -85,7 +85,7 @@ All features within Character Forge are made to be simple and easy to use. To do
 * __Login:__ Allows user to login into their account, accessing their profile and the new character tab. Also has a link to the register page if a user doesn't already have an account.
 * __Register:__ Allows a new user to create an account if they don't already have one, links to the login page if they already have an account.
 * __User Profile:__ Similar to the character gallery with a handful of differences notably only characters the user has created appear here, and when more details is pressed there is an edit and delete button only accessible through the profile tab and only on the characters that user has created.
-* __Delete Button:__ Pressing this button opens an model to ask the user if they are sure they want to delete the current character in fashion fitting of fantasy setting.
+* __Delete Character:__ Pressing this button opens an model to ask the user if they are sure they want to delete the current character in fashion fitting of fantasy setting.
 * __Edit Button:__ Pressing this button opens the edit/detailed view screen of the selected character.
 * __Edit Character:__ On this screen the user can view a detailed character sheet of all the information of their character, on top of this they can edit any aspect of the character sheet and have it pushed to the database, updating any change made by the user.
 * __New Character:__ Allows users to create a new character.
@@ -261,7 +261,9 @@ All are present and correct except for the "Wisdom Modifier", which is calculate
     iii. Clicking on the "Delete" should open model to ensure the user is sure of the deletion.
     iv. Clicking "Throw Them Off the Edge" should remove the character from the database, and "No, Let Them Live" will cancel the operation.
 
-The modal displays as it should but only when the first card panel is open, it doesn't matter which card the delete button is pressed on it will delete the first character card.
+The modal displays as it should but only when the first card panel is open, it doesn't matter which card the delete button is pressed on it will delete the first character card. No fixed could be found so the modal has be scrapped for the time being.
+
+
 
 17. View/Edit Button:
     i. Go to "Profile" page.

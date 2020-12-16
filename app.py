@@ -560,7 +560,8 @@ def edit_character(character_id):
                 "ideals": request.form.get("ideals"),
                 "bonds": request.form.get("bonds"),
                 "flaws": request.form.get("flaws"),
-                "feature_traits": request.form.get("feature_traits")
+                "feature_traits": request.form.get("feature_traits"),
+                "character_description": request.form.get("character_description")
             }
 
             mongo.db.characters.update({"_id": ObjectId(character_id)}, submit)
