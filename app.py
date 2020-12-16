@@ -98,8 +98,8 @@ def new_character():
                 session["race"] = {
                     "race_name": request.form.get("race_name_" + index),
                     "race_size": request.form.get("race_size_" + index),
-                    "race_speed_num": request.form.get(
-                        "race_speed_num_" + index),
+                    "race_speed_num": int(request.form.get(
+                        "race_speed_num_" + index)),
                     "race_languages": request.form.get(
                         "race_languages_" + index),
                     "race_language": request.form.get(
@@ -226,17 +226,17 @@ def new_character():
                                 ] += "Poisoner's Kit, "
 
                         if "Thieves" in session["class"][
-                            "class_tool_prof"]:
+                                "class_tool_prof"]:
 
                             session["details"][
                                 "other_languages_proficiencies"
                                 ] += "Thieves' Tools, "
 
                         if "instrument" in session["class"][
-                            "class_tool_prof"]:
+                                "class_tool_prof"]:
 
                             for i in range(0, session["class"][
-                                "class_num_instruments"]):
+                                    "class_num_instruments"]):
 
                                 session["details"][
                                     "other_languages_proficiencies"
@@ -244,7 +244,7 @@ def new_character():
                                         "instrument_select_" + str(i)) + ", "
 
                         if "gaming" in session["class"][
-                            "class_tool_prof"]:
+                                "class_tool_prof"]:
 
                             session["details"][
                                 "other_languages_proficiencies"
@@ -252,48 +252,48 @@ def new_character():
                                     "gaming_select")
 
                 if "background_tool_prof" in session[
-                    "background"]:
+                        "background"]:
 
                     if "Disguise" in session["background"][
-                        "background_tool_prof"]:
+                            "background_tool_prof"]:
 
                         session["details"][
                             "other_languages_proficiencies"
                                 ] += "Disguise Kit, "
 
                     if "Forgery" in session["background"][
-                        "background_tool_prof"]:
+                            "background_tool_prof"]:
 
                         session["details"][
                                 "other_languages_proficiencies"
                                 ] += "Forgery Kit, "
 
                     if "Herbalism" in session[
-                        "background"]["background_tool_prof"]:
+                            "background"]["background_tool_prof"]:
 
                         session["details"][
                             "other_languages_proficiencies"
                                 ] += "Herbalism Kit, "
 
                     if "Navigator" in session["background"][
-                        "background_tool_prof"]:
+                            "background_tool_prof"]:
 
                         session["details"][
                             "other_languages_proficiencies"
                                 ] += "Navigator's Tools "
 
                     if "Thieves" in session["background"][
-                        "background_tool_prof"]:
+                            "background_tool_prof"]:
 
                         session["details"][
                             "other_languages_proficiencies"
                                 ] += "Thieves' Tools "
 
                     if "instrument" in session[
-                        "background"]["background_tool_prof"]:
+                            "background"]["background_tool_prof"]:
 
                         for i in range(0, session["background"][
-                            "background_num_instruments"]):
+                                "background_num_instruments"]):
 
                             session["details"][
                                 "other_languages_proficiencies"
@@ -301,11 +301,11 @@ def new_character():
                                         "instrument_select_" + str(i)) + ", "
 
                     if "gaming" in session["background"][
-                        "background_tool_prof"]:
+                            "background_tool_prof"]:
 
-                        session["details"]["other_languages_proficiencies"
-                            ] += request.form.get(
-                                "gaming_select")
+                        session["details"][
+                            "other_languages_proficiencies"
+                            ] += request.form.get("gaming_select")
 
                 if "class" in session:
 
@@ -321,11 +321,12 @@ def new_character():
                 if session["background"]["background_num_languages"] > 0:
 
                     for i in range(0, session["background"][
-                        "background_num_languages"]):
+                            "background_num_languages"]):
 
                         session["details"][
-                            "other_languages_proficiencies"] += request.form.get(
-                                "language_select_" + str(i)) + ", " 
+                            "other_languages_proficiencies"
+                                    ] += request.form.get(
+                                        "language_select_" + str(i)) + ", "
 
             if "ability_scores" in request.form:
                 session["ability"] = {
@@ -432,10 +433,10 @@ def new_character():
         tools = list(mongo.db.tools.find())
         alignments = list(mongo.db.alignments.find())
 
-        return render_template("new_character.html",
-            classes=classes, races=races, backgrounds=backgrounds,
-                skills=skills, languages=languages,
-                    tools=tools, alignments=alignments)
+        return render_template("new_character.html", classes=classes,
+            races=races, backgrounds=backgrounds, skills=skills,
+                languages=languages, tools=tools,
+                    alignments=alignments)
 
     return redirect(url_for("login"))
 
@@ -505,7 +506,7 @@ def edit_character(character_id):
                     "other_languages_proficiencies"),
                 "armor_class": int(request.form.get("armor_class")),
                 "intiative_bonus": int(intiative_bonus[1]),
-                "race_speed": request.form.get("race_speed"),
+                "race_speed_num": request.form.get("race_speed_num"),
                 "hit_point_maximum": int(request.form.get(
                     "hit_point_maximum")),
                 "current_hit_points": int(request.form.get(

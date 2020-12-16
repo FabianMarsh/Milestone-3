@@ -134,10 +134,10 @@
                                             <p>{{ character.hit_point_maximum }}</p>
                                         </div>
                                     </div>
-                                        <div class="center">
-                                            <a class="red accent-4 btn modal-trigger" href="#delete_character">Delete</a>
-                                            <a href="{{ url_for('edit_character', character_id=character._id) }}" class="btn red accent-4">Edit</a>
-                                        </div>
+                                    <div class="center">
+                                        <a class="red accent-4 btn modal-trigger" href="#delete_character">Delete</a>
+                                        <a href="{{ url_for('edit_character', character_id=character._id) }}" class="btn red accent-4">View/Edit</a>
+                                    </div>
                                     <div id="delete_character" class="modal">
                                         <div class="modal-content center">
                                             <h4>Vanquish this charater into the Void</h4>

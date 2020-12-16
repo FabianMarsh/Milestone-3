@@ -72,7 +72,7 @@
                                         {{ skill }} 
                                     {% endfor %}
                                 </p>
-                                <p><strong>Armor:</strong>{{ class.class_armor_prof }}</p>
+                                <p><strong>Armor:</strong> {{ class.class_armor_prof }}</p>
                                 <p><strong>Weapons:</strong> {{ class.class_weapon_prof }}</p>
                                 
                                 <!-- Materialise Button -->
@@ -207,14 +207,14 @@
                     {% endfor %}
                 </select>
                 <div>
-                <label for="personality_trait">Personality Trait</label>
-                    <input name="personality_traits" placeholder="Personality traits are small, simple ways to help you set your character apart." type="text">
+                    <input name="personality_traits" placeholder="Personality traits are small, simple ways to help you set your character apart." type="text" required>
+                    <label for="personality_traits">Personality Traits</label>
+                    <input name="ideals" placeholder="Your ideals are the things that you believe in most strongly." type="text" required>
                     <label for="ideals" >Ideals</label>
-                    <input name="ideals" placeholder="Your ideals are the things that you believe in most strongly." type="text">
+                    <input name="bonds" placeholder="Bonds represent a character’s connections to people, places, and events in the world." type="text" required>
                     <label for="bonds">Bonds</label>
-                    <input name="bonds" placeholder="Bonds represent a character’s connections to people, places, and events in the world." type="text">
+                    <input name="flaws" placeholder="Your character’s flaws represents some vice, compulsion, fear, or weakness." type="text" required>
                     <label for="flaws">Flaws</label>
-                    <input name="flaws" placeholder="Your character’s flaws represents some vice, compulsion, fear, or weakness." type="text">
                 </div>
 
                 <div class="col s12 center">
@@ -233,7 +233,7 @@
                             <p>Your background doesn't provide any additional languages</p>
                         {% endif %}    
                     {% else %}
-                        <p>You haven't picked a background yet! Come back when you have</p>
+                        <p>You haven't picked a background yet! Come back when you have!</p>
                     {% endif %}
                 </div>
                 <div class="input-field col s12 center">
@@ -253,7 +253,7 @@
                             </select>
                         {% endfor %}
                     {% else %}
-                        <p>You haven't picked a class or a background yet! Come back when you have</p>
+                        <p>You haven't picked a class or a background yet! Come back when you have!</p>
                     {% endif %}
                 </div>
                 <div class="input-field col s12 center">
@@ -263,7 +263,7 @@
                             {% if "instrument" in session["class"].class_tool_prof or "instrument" in session["background"].background_tool_prof %}
                                 {% for i in range(0, session["class"].class_num_instruments + session["background"].background_num_instruments) %}
                                     <select name="instrument_select_{{ i }}">
-                                        <option value="disabled selected">Musical Instruments</option>
+                                        <option value="" disabled selected>Musical Instruments</option>
                                         {% for instrument in tools[0].musical_instruments %}
                                             <option value="{{ instrument }}">{{ instrument }}</option>
                                         {% endfor %}
@@ -273,7 +273,7 @@
                             {% if "artisan" in session["class"].class_tool_prof or "artisan" in session["background"].background_tool_prof %}
                                 {% for i in range(0, session["class"].class_num_artisans + session["background"].background_num_artisans) %}
                                 <select name="tool_select_{{ i }}">
-                                    <option value="disabled selected">Artisans Tools</option>
+                                    <option value="" disabled selected>Artisans Tools</option>
                                     {% for tool in tools[0].artisans_tools %}
                                         <option value="{{ tool }}">{{ tool }}</option>
                                     {% endfor %}
@@ -282,7 +282,7 @@
                             {% endif %}
                             {% if "gaming" in session["class"].class_tool_prof or "gaming" in session["background"].background_tool_prof %}
                                 <select name="gaming_select">
-                                    <option value="disabled selected">Gaming Sets</option>
+                                    <option value="" disabled selected>Gaming Sets</option>
                                     {% for set in tools[0].gaming_sets %}
                                         <option value="{{ set }}">{{ set }}</option>
                                     {% endfor %}
@@ -311,7 +311,7 @@
                             {% endif %}
                         {% endif %}
                     {% else %}
-                            <p>You haven't picked your background or class yet! Come back when you have!</p>
+                            <p>You haven't picked a background or a class yet! Come back when you have!</p>
                     {% endif %}
                 </div>
                 <div class="center">
