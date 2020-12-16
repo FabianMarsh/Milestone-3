@@ -89,6 +89,10 @@ label{
     font-family: "Cinzel", sans-serif;
 }
 
+.collapsible-header i{
+    margin: 0;
+}
+
 .collapsible-body strong{
     font-family: "Cinzel", sans-serif;
 }

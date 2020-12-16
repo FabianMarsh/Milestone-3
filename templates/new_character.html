@@ -504,13 +504,14 @@
                         </div>
                     </div>
                 {% endif %}
-                {% if session["details"] %}
-                    <p><strong></strong></p>
-                {% endif %}
                 <div class="center">
-                    <a class="btn red accent-4" href="{{ url_for('home') }}">Cancel</a>
-                    <button class="btn red accent-4"  name="submit" type="submit">Create Character</button>
-                </div>  
+                    <div class="col s12 l6">
+                        <a class="btn red accent-4" href="{{ url_for('cancel') }}">Cancel</a>
+                    </div>
+                    <div class="col s12 l6">
+                        <button class="btn red accent-4"  name="submit" type="submit">Create Character</button>
+                    </div>
+                </div>
             </div> 
         </form>
     </div>

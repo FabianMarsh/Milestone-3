@@ -5,17 +5,43 @@ On top of this Character Forge allows users to share character ideas and concept
 
 ## UX
 
-Character Forge is made for new and experienced of players table top roleplaying games, the home page is clear and concise on what the site is and how to use it. The new character pages spent the most time in 
-deveopment. It was important to get this element right as old players have an expectation for the process of how a character should be made, as well as new players having little to no experience require a 
-easy to use user interface. The new character pages is split into tabs to walk users through the process. After the user picks a class they are taken to the next tab, and so on. This helps users to keep track
-of what they have already done and what is yet to be decided upon. This is also good for new players, as it's a subtle hand holding without thrusting it upon them. Users are able access any type in any order 
-some choices cannot be made before others, which is why the tabs are in the order that they are, if a user wishes to attempt a tab before another they may but some choices are unavaible which they are made 
-aware of before hand encourages the mostly required order. 
+### Project Goals
 
-When it comes to the character gallery it is kept simple, as not all the information of a single character can be shown in a concise manner. The solution to this was to display every character as a simplied 
-card view, showing their name, description, class, race, background, armor class, maximum hit points and their ability scores. Only the creator of the character is able to view the in depth character view, this is based on the fifth edition
-version of a character sheet. This is entirely editable on top of showing all of the information on the user's character. The card panels to not take up too much screen retail are all collasible so if the user
-is interested in a particular character they can expand the card reveiling more information on the character. 
+Character Forge is designed to make the character creation process of Dungeons and Dragons Fifth Edition charactes simpler, quicker and more accessiable. On top of this many players of the popular tabletop RPG 
+struggle with ideas for characters, so to quash this issue shared by the community Character Forge also has a Character Gallery feature which enable users to share and speard their ideas. The end goal being to have 
+more creative and interesting characters for all to enjoy.
+
+### User Goals
+
+The target audience for Character Forge are player's of tabletop role playing games new and old. Character Forge is designed to be easy to use and accessible.
+
+* Clear landing page explaining what the website is.
+* Way to access Character Gallery to seemless viewing of other users characters.
+* Step by step character creation.
+* Input important data for the user.
+* Have a clear editable character sheet to simulate a physical character sheet for when they would play.
+
+Character Forge Solves these issues by:
+
+* The landing page is simple welcoming the user to the site, giving instructions of how to use the site.
+* The Character Gallery feature is accessiable to all users not just members of the site. Allowing users that are just passingby to also be inspised. On top of this all characters are displayed in cards displaying the important information first, and after expanding shows more indepth information.
+* The character creation process is split into tabs, helping the user make one important decision at a time, classes, backgrounds and races are devided into collapsibles allowing the user to display tidbits of information at a time rather than being overwhelmed. The process is made easier by guiding the user to the next tab or step in the process one by one.
+* Once the character creation process is complete Character Forge does all the heavy lifting for the user. This includes calculating their armor class and passive perception for them, which is a confusion many new player's to the mediam have. 
+* The site also outputs the data in the form of a digital character sheet. This is to simulate that of a physical character sheet to aid the player if they were to copy the information over to a paper copy. On top getting them used to where the information is typically stored.
+
+### Developer and Business Goals
+
+* Outdo the competition by making standard content more accessiable to users.
+* Having an easier to use user interface.
+* Allow for sharing of character concepts.
+* Offering the standard presentation of character information.
+
+Character Forge achieves these by:
+
+* Making all content available within the player's handbook accessiable, rather than locking most content behind a paywall. Which can be frustrating to new player's as they lack the knowledge to substitute in any content they wish to include in their character.
+* Character Forge is very simple in how it needs to be used. To access the character creation the only requirement is that a user be logged into the website. After this the character creation walks them through the creation process, keeping aspects simple and concise so the user knows what they're doing. This is achieved by the tabs it lets the user know what choice they are making and when.
+* Other character creation websites are lacking a shared community feature most only allow for comments on various classes and races, but Character Forge will allow them to share their wonderful creations with eachother within the software itself rather than creating in one website and then taking it over to another. This keeps the process simpler for users.
+* Character Forge presents information once characters are created in the Wizards of the Coast Fifth Edition standard by outputting the detailed version of the character information into a digital character sheet rather than the websites own mockup of the character sheet which places information in different areas, this can confuse a player, especially those that are new to the game.
 
 ### User Stories 
 
@@ -23,6 +49,28 @@ is interested in a particular character they can expand the card reveiling more 
 * As a player with artistic block, I navigate to the character gallery I look over other creators' characters and after sometime had inspiration to make a new charcter. I noticed I could make a charcter on the site, as well and quickly made Marithoss. One complaint is that there is nowhere to upload an image of what my charcter would look like.
 * As an experienced player, I have become frustrated with the limit options of other character creators and decided to give this one a chance. Took a moment to get signed up but was delighted to see the amount of options for creating a character, as other creators lock most options behind a pay wall. After making a handful of characters I am very happy with how quick and easy it is to make characters. And how the character sheet is calculated and generated for you.
 * As an admin user, I want like to ensure all fields are being input into the database, going to the new character tab, everything seems to be in order until I get to the submit tab and notice the wisdom modifier isn't what it should be showing a +1 instead of a +3, other than this everything is pushing to the database as it should.
+
+### Design Choices
+
+Throughout the development process many design choices came and went this section goes into detail of the final product.
+
+* __Colour Pallete:__ The pallete is a combination of reds, oranges and yellows this to emphasis the forge aspect of Character Forge. The blazing orange iron get when it is being worked on and the fires of a forge are why these colours were chosne. To really send it home that the user is creating something great with this website.
+* __Type Face:__ The typeface chosen to represent dwarven runes, "Cinzel" from __Google Fonts__ gives this effect, the reason behind choosing dwarven runes is because within fantasy lore dwarves are always excellent craftsman. The other bespoke typeface chosen is "Courgette" this is used on top the character card panels to give the effect of a sophicated engraving, one that you would find on a fine blade. Giving the image of another piece of art is finished.
+* __Background Image:__ When the website first loads a great forge is presented to the user, this is the great Character Forge, the forge the user will use to create their very own character. It represents the amount of great works that were made here and the many more that they will create alongside other player's to be shared within the Character Gallery.
+* __Character Gallery:__ The Character Gallery is kept simple being more for praticality than design, again this is an aspect of dwarven architecture. The cards are left simple as it is assumed some users will spend a lot of time here, making the design too eyecatching can overwhelm or tire out a user after a time. Before the card is expanded It shows only the eyecatching information, this being the character name, character description and who created the character. These details can stop a scrolling user as certain aspects interest them.
+* __Character Creation:__ The creation process is split into six types to not overwhelm the user with the amount of choices they're going to be making. Creating a charactr isn't easy but that doesn't mean the tools can't be simple. As the user is guided through the first few types the colour of the collapsibles goes from a bright orange slowly progressing to a deep red. This is show the forge becoming hotter as they delve deeper into their creation and closer to the final product. The "Character Details" tab is left to be a simple form, as this information can be represented with dropdowns and text inputs quite easily. After this is the "Ability Scores" tab these allow the user to input a stat between 3 and 30 this is because by the rules of dnd a character cannot have a stat lower than 3 or higher than 30, so there is this limitation. Below this is the stat modifier table. New players tend to have a hard time figuring out their modifiers, though Character Forge calculates this for the user, it's good for the user to understand why there 20 is a +5. Finally is the "Submit" tab this collects the information the user has stored in cookies and ensures the user is sure they want to finalise their creation.
+* __Character Edit:__ This page recreates the character sheet from the player's handbook, this for older player's is a format that is familar to them. Whereas, for newer player it helps them get used to the format most dnd groups will be using.
+
+### Wireframes
+
+* [Home](wireframes/home.pdf)
+* [Character Gallery](wireframes/character_gallery.pdf)
+* [Login/Register](wireframes/login_register.pdf)
+* [New Character Class/Race/Background](wireframes/class_race_background.pdf)
+* [New Charcter Ability Scores](wireframes/ability_scores.pdf)
+* [New Character Submit](wireframes/submit.pdf)
+* [Profile](wireframes/profile.pdf)
+* [Edit Character](wireframes/view_edit.pdf)
 
 ## Features 
 
@@ -244,13 +292,18 @@ On the desktop view the "Character Sheet" is split into two rows and three main 
 
 ## Deployment
 
-The project is hosted using Heroku use code institute videos
+The project is hosted using Heroku, in order to deploy using Heroku first I needed to generate a requirements.txt, this was done using the pip3 freeze command to ensure all required softwares were within the file, 
+without these Heroku wouldn't know which softwares the project depended on to run, and therefore wouldn't be able to host the site. Secondly a Procfile is necessary, this file lets Heroku know that the app is a 
+python webapp this is so it knows how to interpret the code. After this I needed to create a new Heroku app, the slight issue with Heroku is every app contained within the hosting platform is that the name of the app 
+is bespoke not matching any other existing user's app name. After this step is complete it is important to make the environment variables these include the IP, PORT, SECRET_KEY, MONGO_URI and the MONGO_DBNAME. These 
+variable are the same within the in development and live versions of the site. Finally the code needs to be pushed to Heroku, after the first intial push all code that is pushed to Github will then be pushed to Heroku 
+keeping the live version up to date.
 
 ## Credits
 
 ### Content
 
-Text used for the "New Character" page and fields contained within the __MongoDB__ database were copied a PDF version of [The Wizards of the Coast Dungeons and Dragons 5th edition Player's Handbook](https://online.anyflip.com/ofsj/cxmj/mobile/index.html#p=8)
+Text used for the "New Character" page, all fields contained within the __MongoDB__ database and the recreation of the character sheet on the "Edit Character" page were copied a PDF version of [The Wizards of the Coast Dungeons and Dragons 5th edition Player's Handbook](https://online.anyflip.com/ofsj/cxmj/mobile/index.html#p=8)
 
 ### Media
 

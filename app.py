@@ -25,6 +25,27 @@ def home():
     return render_template("home.html")
 
 
+@app.route("/cancel")
+def cancel():
+
+    if "class" in session:
+        session.pop("class")
+
+    if "race" in session:
+        session.pop("race")
+
+    if "background" in session:
+        session.pop("background")
+
+    if "details" in session:
+        session.pop("details")
+
+    if "ability" in session:
+        session.pop("ability")
+
+    return redirect(url_for("profile", username=session['user']))
+
+
 @app.route("/get_modifier")
 def get_modifier(stat):
     if type(stat) is str:
