@@ -202,6 +202,7 @@
                     id="character_description" name="character_description" class="materialize-textarea validate" minlength="1" maxlength="300"></textarea>
                 <h6>Character Alignment</h6>
                 <select name="character_alignment">
+                    <option value="" disabled selected>Alignments</option>
                     {% for alignment in alignments[0].alignment_name %}
                         <option value="{{ alignment }}">{{ alignment }}</option>
                     {% endfor %}
@@ -223,7 +224,8 @@
                     <p>You already have {{ session["race"].race_language }} from your race</p>
                         {% if session["background"].background_num_languages > 0  %}
                             {% for i in range(0, session["background"].background_num_languages) %}
-                                <select name="language_select_{{ i }}">
+                                <select name="language_select_{{ i }}" required>
+                                    <option value="" disabled selected>Musical Languages</option>
                                     {% for language in languages[0].language_name %}
                                         <option value="{{ language }}">{{ language }}</option>
                                     {% endfor %}
@@ -242,7 +244,8 @@
                         <h6>Pick Your Skill Proficiences</h6>
                         <p>You already have {{ session["background"].background_skill_prof }} from your background</p>    
                         {% for i in range(0, session["class"].class_num_skills) %}
-                            <select name="skill_select_{{ i }}">
+                            <select name="skill_select_{{ i }}" required>
+                                <option value="" disabled selected>Skills</option>
                                 {% for skill in skills %}
                                     {% if "any" in session["skills"][0] %}
                                         <option value="{{ skill.skill_name }}">{{ skill.skill_name }}</option>
@@ -262,7 +265,7 @@
                             <h6>Pick Your Tool Proficiences</h6>
                             {% if "instrument" in session["class"].class_tool_prof or "instrument" in session["background"].background_tool_prof %}
                                 {% for i in range(0, session["class"].class_num_instruments + session["background"].background_num_instruments) %}
-                                    <select name="instrument_select_{{ i }}">
+                                    <select name="instrument_select_{{ i }}" required>
                                         <option value="" disabled selected>Musical Instruments</option>
                                         {% for instrument in tools[0].musical_instruments %}
                                             <option value="{{ instrument }}">{{ instrument }}</option>
@@ -272,7 +275,7 @@
                             {% endif %}
                             {% if "artisan" in session["class"].class_tool_prof or "artisan" in session["background"].background_tool_prof %}
                                 {% for i in range(0, session["class"].class_num_artisans + session["background"].background_num_artisans) %}
-                                <select name="tool_select_{{ i }}">
+                                <select name="tool_select_{{ i }}" required>
                                     <option value="" disabled selected>Artisans Tools</option>
                                     {% for tool in tools[0].artisans_tools %}
                                         <option value="{{ tool }}">{{ tool }}</option>
@@ -281,7 +284,7 @@
                                 {% endfor %}
                             {% endif %}
                             {% if "gaming" in session["class"].class_tool_prof or "gaming" in session["background"].background_tool_prof %}
-                                <select name="gaming_select">
+                                <select name="gaming_select" required>
                                     <option value="" disabled selected>Gaming Sets</option>
                                     {% for set in tools[0].gaming_sets %}
                                         <option value="{{ set }}">{{ set }}</option>
