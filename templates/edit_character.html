@@ -2,6 +2,7 @@
 {% block content %}
     <form method="POST" name="view_edit" action="{{ url_for('edit_character', character_id=character._id) }}">
         <div class="row">
+            <!--Character Details-->
             <div class="col s12 l3 input-field">
                 <div class="col s12">
                     <input name="character_name" type="text"  value="{{ character.character_name }}">
@@ -30,6 +31,7 @@
             </div>
         </div>
         <div class="row">
+            <!--Left most column containing stats, saving throws, passive perception, other languages and profiencies-->
             <div class="col s12 input-field">
                 <div class="col s12 l4">
                     <div class="col s12 l4">
@@ -107,6 +109,7 @@
                             <label for="proficiency_bonus">Proficiency Bonus</label>
                         </div>
                         <div class="col s12 l8">
+                            <!--Checks to see which saving throw profiencies the character has, and set them to checked-->
                             {% for saving_throw in saving_throws %}
                                 <div class="col s6 l12">
                                     <p>
@@ -126,6 +129,7 @@
                             </div> 
                         </div>
                         <div class="col s12 l8">
+                            <!--Checks to see which skill profiencies the character has, and set them to checked-->
                             {% for skill in skills %}
                                 <div class="col s6 l12">
                                     <p>
@@ -164,6 +168,8 @@
                             <label for="other_languages_profiencies">Other Proficiencies & Languages</label>
                         </div>
                 </div>
+                <!--Middle Column containing AC, Intiative, Speed, death saves-->
+                <!--Hit point fields, attacks & spellcasting, equipment -->
                 <div class="col s12 l4">
                     <div class="col s4">
                         <input type="number" name="armor_class" value="{{ character.armor_class }}" required>
@@ -314,6 +320,7 @@
                         </div>
                     </div>
                 </div>
+                <!--Left most column containing Role traits, features and character description-->
                 <div class="col s12 l4">
                     <div class="col s12">
                         <textarea name="personality_traits" class="materialize-textarea">{{- character.personality_traits -}}</textarea>

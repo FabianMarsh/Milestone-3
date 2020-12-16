@@ -19,12 +19,14 @@ app.secret_key = os.environ.get("SECRET_KEY")
 mongo = PyMongo(app)
 
 
+# Default app route
 @app.route("/")
 @app.route("/home")
 def home():
     return render_template("home.html")
 
 
+# Checks which cookies the user has put in session and deletes them
 @app.route("/cancel")
 def cancel():
 
@@ -46,6 +48,7 @@ def cancel():
     return redirect(url_for("profile", username=session['user']))
 
 
+# Gets stat from request.form.get and converts to 5th edition modifier
 @app.route("/get_modifier")
 def get_modifier(stat):
     if type(stat) is str:
@@ -60,17 +63,27 @@ def get_modifier(stat):
 @app.route("/new_character", methods=["GET", "POST"])
 def new_character():
 
+    # if user not in session cookies return user redirect to login
     if "user" in session:
 
         if request.method == "POST":
 
+            # Checks which form has been filled in
+            # and then saves session cookie
             if "class" in request.form:
 
+                # Take class_index from button input,
+                # attaches to end of input name
+                # This was the solution to the form
+                # taking first occurance of the name
+                # The class index is stored within the database and
+                # attached to the name when going through the for loop
                 index = request.form.get("class")
 
                 class_hit_die_int = request.form.get(
                     "class_hit_die_" + index).split("d")
 
+                # Get class values
                 session["class"] = {
                     "class_name": request.form.get("class_name_" + index),
                     "class_hit_die": request.form.get(
@@ -87,11 +100,17 @@ def new_character():
                     "character_experience": 0
                 }
 
+                # Not all classes have a tool prof field
+                # So checks if the class has one and updates cookie
+                # this is to see if a tool select needs to be
+                # generated on the character details tab
                 if "class_tool_prof_" + index in request.form:
                     session["class"].update({
                         "class_tool_prof": request.form.get(
                             "class_tool_prof_" + index)})
 
+                # Check to see if class has class_num_artisans field
+                # This is to see how many selects need generating later
                 if "class_num_artisans_" + index in request.form:
                     session["class"].update({
                         "class_num_artisans": int(request.form.get(
@@ -100,6 +119,8 @@ def new_character():
                     session["class"].update({
                         "class_num_artisans": 0})
 
+                # Check to see if class has class_num_instruments field
+                # This is to see how many selects need generating later
                 if "class_num_instruments_" + index in request.form:
                     session["class"].update({
                         "class_num_instruments": int(request.form.get(
@@ -108,14 +129,23 @@ def new_character():
                     session["class"].update({
                         "class_num_instruments": 0})
 
+                # The class skills are saved in a separate cookie
+                # To make generating skill selector simpler
                 session["skills"] = [
                     request.form.get("class_skill_prof_" + index)
                 ]
 
             if "race" in request.form:
 
+                # Take race_index from button input,
+                # attaches to end of input name
+                # This was the solution to the form
+                # taking first occurance of the name
+                # The race index is stored within the database and
+                # attached to the name when going through the for loop
                 index = request.form.get("race")
 
+                # Get race values
                 session["race"] = {
                     "race_name": request.form.get("race_name_" + index),
                     "race_size": request.form.get("race_size_" + index),
@@ -130,6 +160,9 @@ def new_character():
                     "race_features": " "
                 }
 
+                # Not all races have the same amount of features
+                # So the amount of features is saved as a value
+                # so they can all be saved within the cookie
                 for i in range(0, session["race"]["race_feature_num"]):
 
                     session["race"]["race_features"] += request.form.get(
@@ -137,6 +170,12 @@ def new_character():
 
             if "background" in request.form:
 
+                # Take background_index from button input,
+                # attaches to end of input name
+                # This was the solution to the form
+                # taking first occurance of the name
+                # The background index is stored within the database and
+                # attached to the name when going through the for loop
                 index = request.form.get("background")
 
                 background_feature = request.form.get(
@@ -144,6 +183,7 @@ def new_character():
                     ) + " " + request.form.get(
                         "background_feature_description_" + index)
 
+                # Gets background values
                 session["background"] = {
                     "background_name": request.form.get(
                         "background_name_" + index),
@@ -162,11 +202,17 @@ def new_character():
                     "background_feature": background_feature
                     }
 
+                # Not all backgrounds have a tool prof field
+                # So checks if the background has one and updates cookie
+                # this is to see if a tool select needs to be
+                # generated on the character details tab
                 if "background_tool_prof_" + index in request.form:
                     session["background"].update({
                         "background_tool_prof": request.form.get(
                             "background_tool_prof_" + index)})
 
+                # Check to see if background has background_num_artisans field
+                # This is to see how many selects need generating later
                 if "background_num_artisans_" + index in request.form:
                     session["background"].update({
                         "background_num_artisans": int(request.form.get(
@@ -175,6 +221,8 @@ def new_character():
                     session["background"].update({
                         "background_num_artisans": 0})
 
+                # Check to see if background has background_num_instruments field
+                # This is to see how many selects need generating later
                 if "background_num_instruments_" + index in request.form:
                     session["background"].update({
                         "background_num_instruments": int(request.form.get(
@@ -185,6 +233,7 @@ def new_character():
 
             if "details" in request.form:
 
+                # Get details values
                 session["details"] = {
                     "character_name": request.form.get("character_name"),
                     "character_description": request.form.get(
@@ -204,9 +253,12 @@ def new_character():
                 session["details"].update({
                     "other_languages_proficiencies": " "})
 
+                # Checks if both the class and background cookies exists
                 if "class" in session and "background" in session:
-                    if "class_tool_prof" in session["class"]:
 
+                    if "class_tool_prof" in session["class"]:
+                        
+                        # Combines all selected tools into a single variable
                         for i in range(0, session["class"][
                             "class_num_artisans"] + session[
                                 "background"]["background_num_artisans"]):
@@ -216,6 +268,9 @@ def new_character():
                                 ] += request.form.get(
                                     "tool_select_" + str(i)) + ", "
 
+                        # Checks to which single tool is contained with the characters
+                        # background or class profiencies. Single tool refers to a tool
+                        # not stored in an array
                         if "Disguise" in session["class"]["class_tool_prof"]:
 
                             session["details"][
@@ -253,6 +308,7 @@ def new_character():
                                 "other_languages_proficiencies"
                                 ] += "Thieves' Tools, "
 
+                        # Stores instruments in the combined variable of other_languages_profiencies
                         if "instrument" in session["class"][
                                 "class_tool_prof"]:
 
@@ -275,6 +331,9 @@ def new_character():
                 if "background_tool_prof" in session[
                         "background"]:
 
+                    # Checks to which single tool is contained with the characters
+                    # background or class profiencies. Single tool refers to a tool
+                    # not stored in an array
                     if "Disguise" in session["background"][
                             "background_tool_prof"]:
 
@@ -310,6 +369,7 @@ def new_character():
                             "other_languages_proficiencies"
                                 ] += "Thieves' Tools "
 
+                    # Stores instruments in the combined variable of other_languages_profiencies
                     if "instrument" in session[
                             "background"]["background_tool_prof"]:
 
@@ -321,6 +381,7 @@ def new_character():
                                     ] += request.form.get(
                                         "instrument_select_" + str(i)) + ", "
 
+                    # Stores gaming sets in the combined variable of other_languages_profiencies
                     if "gaming" in session["background"][
                             "background_tool_prof"]:
 
@@ -329,18 +390,20 @@ def new_character():
                             ] += request.form.get("gaming_select")
 
                 if "class" in session:
-
+                    
+                    # Get skills from skill selects
                     for i in range(0, session["class"]["class_num_skills"]):
                         session["details"][
                             "chosen_skills"] += request.form.get(
                                 "skill_select_" + str(i)) + ", "
-
+                # Gets background languaes and stores within the combined variable
                 session["details"][
                         "other_languages_proficiencies"] += session[
                             "race"]["race_language"]
 
                 if session["background"]["background_num_languages"] > 0:
 
+                    # Get selected background languages and puts in stored variable
                     for i in range(0, session["background"][
                             "background_num_languages"]):
 
@@ -350,6 +413,10 @@ def new_character():
                                         "language_select_" + str(i)) + ", "
 
             if "ability_scores" in request.form:
+                # Gets ability values
+                # Whole stat is pushed to the get_modifier function
+                # All values are forced into integers as cookies have a 
+                # Tendency to store everything as a string
                 session["ability"] = {
                     "strength": int(request.form.get("strength")),
                     "strength_modifier": get_modifier(
@@ -369,6 +436,7 @@ def new_character():
                     "charisma": int(request.form.get("charisma")),
                     "charisma_modifier": get_modifier(
                         int(request.form.get("charisma"))),
+                    # Calculate intiative bonus and armor class
                     "intiative_bonus": get_modifier(
                         int(request.form.get("dexterity"))),
                     "armor_class": get_modifier(
@@ -390,6 +458,7 @@ def new_character():
 
                 if "class" in session:
 
+                    # Calculates hit_point_maximum
                     hit_point_maximum = session["class"][
                         "class_hit_die_int"] + session[
                             "ability"]["constitution_modifier"]
@@ -399,7 +468,8 @@ def new_character():
                         "current_hit_points": hit_point_maximum})
 
                 if "background" in session:
-
+                    
+                    # Background equipment stored in details cookies
                     session["details"].update({"equipment": session[
                         "background"]["background_equipment"]})
 
@@ -435,6 +505,7 @@ def new_character():
                     **session.get("ability")
                  }
 
+                # Discards all cookies so process can start anew
                 session.pop("class")
                 session.pop("race")
                 session.pop("details")
@@ -474,25 +545,30 @@ def edit_character(character_id):
             class_saving_throws = " "
             chosen_skills = " "
 
+            # Checks to if which saving throws the character has profiency in
             for saving_throw in saving_throws:
                 check = request.form.get(saving_throw["saving_throw_name"])
                 if check == "on":
                     class_saving_throws = class_saving_throws + saving_throw[
                         "saving_throw_name"] + " "
+            # Checks to if which skills the character has profiency in
             for skill in skills:
                 check = request.form.get(skill["skill_name"])
                 if check == "on":
                     chosen_skills = chosen_skills + skill["skill_name"] + " "
 
+            # Removes + from intiative and profiency bonus
             intiative_bonus = request.form.get("intiative_bonus")
             if "+" in intiative_bonus:
                 intiative_bonus = intiative_bonus.split("+")
+                intiative_bonus = intiative_bonus[1]
 
             proficiency_bonus = request.form.get("proficiency_bonus")
             if "+" in proficiency_bonus:
                 proficiency_bonus = proficiency_bonus.split("+")
                 proficiency_bonus = proficiency_bonus[1]
 
+            # Takes all fields from edit form
             submit = {
                 "character_name": request.form.get("character_name"),
                 "class_name": request.form.get("class_name"),
@@ -528,7 +604,7 @@ def edit_character(character_id):
                 "other_languages_proficiencies": request.form.get(
                     "other_languages_proficiencies"),
                 "armor_class": int(request.form.get("armor_class")),
-                "intiative_bonus": int(intiative_bonus[1]),
+                "intiative_bonus": int(intiative_bonus),
                 "race_speed_num": request.form.get("race_speed_num"),
                 "hit_point_maximum": int(request.form.get(
                     "hit_point_maximum")),
@@ -660,7 +736,6 @@ def profile(username):
 def character_gallery():
 
     characters = mongo.db.characters.find()
-
     return render_template("character_gallery.html", characters=characters)
 
 

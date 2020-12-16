@@ -5,6 +5,7 @@
         <div class="row">
         {% for character in characters %}
                 <div class="col s12 m4">
+                    <!--Materialize card panel start-->
                     <div class="card-panel orange darken-2 white-text z-depth-2">
                         <h6 class="card-header">{{ character.character_name }}</h6>
                         <p>
@@ -15,6 +16,7 @@
                         </p>
                         <ul class="collapsible black-text">
                             <li>
+                                <!--Materialize collapisble start-->
                                 <div class="collapsible-header orange accent-2"><i class="right fas fa-caret-down"></i>More Details</div>
                                 <div class="collapsible-body orange accent-2">
                                     <div class="row">
@@ -125,9 +127,11 @@
                                         </div>
                                     </div>
                                 </div>
+                                <!--Materialize collaspible end-->
                             </li>
                         </ul>
                     </div>
+                    <!--Materialize card panel end-->
                 </div>
             {% endfor %}
         </div>

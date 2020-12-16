@@ -4,6 +4,7 @@
     <div class="row">
         <!-- Materialise Tabs -->
         <div class="col s12 center">
+            <!--Checks which cookies already exists and therefore what the user has already filled in, and sets the next tab as active-->
             <ul class="tabs">
                 {% if session["class"] %}
                     <li class="tab"><a href="#class">Class</a></li>
@@ -37,6 +38,7 @@
                 {% endif %}
             </ul>
         </div>
+        <!--Class Form-->
         <form method="POST" name="class" action="{{ url_for('new_character') }}">
             <div id="class" class="col s12">
                 <h3 class="center">Choose Your Class</h3>
@@ -100,7 +102,8 @@
                     {% endfor %}
                 </ul>
             </div>
-        </form >
+        </form>
+        <!--Race Form-->
         <form method="POST" name="race" action="{{ url_for('new_character') }}">
             <div id="race" class="col s12">
                 <h3 class="center">Choose Your Race</h3>
@@ -142,6 +145,7 @@
                 </ul>
             </div>
         </form>
+        <!--Background Form-->
         <form method="POST" name="background" action="{{ url_for('new_character') }}">
             <div id="background" class="col s12">
                 <h3 class="center">Choose Your Background</h3>
@@ -192,6 +196,7 @@
                 </ul>
             </div>
         </form>
+        <!--Details Form-->
         <form method="POST" name="details" action="{{ url_for('new_character') }}">
             <div id="details" class="col s12 input-field">
                 <h6>Character Name</h6>
@@ -219,6 +224,7 @@
                 </div>
 
                 <div class="col s12 center">
+                    <!--Checks to see if background cookies exists so can generate language selects-->
                     {% if session["background"] and session["race"]%}
                     <h6>Pick Your Languages</h6>
                     <p>You already have {{ session["race"].race_language }} from your race</p>
@@ -239,8 +245,8 @@
                     {% endif %}
                 </div>
                 <div class="input-field col s12 center">
+                    <!--Checks to see if class and background cookies exist so can generate combined skill selects-->
                     {% if session["class"] and session["background"]%}
-
                         <h6>Pick Your Skill Proficiences</h6>
                         <p>You already have {{ session["background"].background_skill_prof }} from your background</p>    
                         {% for i in range(0, session["class"].class_num_skills) %}
@@ -260,6 +266,7 @@
                     {% endif %}
                 </div>
                 <div class="input-field col s12 center">
+                    <!--Checks to see if class and background cookies exist so can generate combined tool selects-->
                     {% if session["class"] and session["background"] %}
                         {% if session["class"].class_tool_prof or session["background"].background_tool_prof %}
                             <h6>Pick Your Tool Proficiences</h6>
@@ -355,6 +362,7 @@
                     </div>
                     <div>
                         <div class="col s12 l6">
+                            <!--Ability Score table-->
                             <table>
                                 <thead>
                                     <tr>
@@ -436,7 +444,8 @@
         </form>
         <form method="POST" action="{{ url_for('new_character') }}">  
             <div class="col s12 submit center" id="submit">
-                <h3>Finshed?</h3>
+                <h3>Ready to Forge?</h3>
+                <!--Shows user all selected fields-->
                 {% if session["details"] %}
                     <p><strong>Character Name:</strong> {{ session["details"].character_name }}</p>
                 {% endif %}
@@ -520,5 +529,4 @@
     </div>
     <!-- Materialise Collapsible End-->
     <!-- Materialise Tabs End-->
-
 {% endblock %}
