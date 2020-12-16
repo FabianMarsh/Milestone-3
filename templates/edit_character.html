@@ -4,27 +4,27 @@
         <div class="row">
             <div class="col s12 l3 input-field">
                 <div class="col s12">
-                    <input name="character_name" type="text" class="validate" value="{{ character.character_name }}">
+                    <input name="character_name" type="text"  value="{{ character.character_name }}">
                     <label for="character_name">Character Name</label>
                 </div>
             </div>    
             <div class="col s12 l9">   
                 <div class="col s4">
-                    <input name="class_name" type="text" class="validate" value="{{ character.class_name }}">
+                    <input name="class_name" type="text"  value="{{ character.class_name }}">
                     <label for="class_name">Class</label>
-                    <input name="race_name" type="text" class="validate" value="{{ character.race_name }}">
+                    <input name="race_name" type="text"  value="{{ character.race_name }}">
                     <label for="race_name">Race</label>
                 </div>
                 <div class="col s4">
-                    <input name="background_name" type="text" class="validate" value="{{ character.background_name }}">
+                    <input name="background_name" type="text"  value="{{ character.background_name }}">
                     <label for="background_name">Background</label>
-                    <input name="character_alignment" type="text" class="validate" value="{{ character.character_alignment }}">
+                    <input name="character_alignment" type="text"  value="{{ character.character_alignment }}">
                     <label for="character_alignment">Alignment</label>
                 </div>
                 <div class="col s4">
-                    <input name="player_name" type="text" class="validate" value="{{ character.player_name }}">
+                    <input name="player_name" type="text"  value="{{ character.player_name }}">
                     <label for="player_name">Name</label>
-                    <input name="character_experience" type="text" class="validate" value="{{ character.character_experience }}">
+                    <input name="character_experience" type="number"  value="{{ character.character_experience }}">
                     <label for="character_experience">Experience</label>
                 </div>
             </div>
@@ -35,74 +35,75 @@
                     <div class="col s12 l4">
                         <div class="col s4 l12">
                             <label for="strength">Str</label>
-                            <input name="strength" type="number" class="validate" value="{{ character.strength }}" required>
+                            <input name="strength" type="number"  value="{{ character.strength }}" required>
                             <div>
                                 {% if character.strength_modifier > 0 %}
-                                    <input name="strength_modifier" type="text" class="validate" value=" +{{ character.strength_modifier }}">
+                                    <input name="strength_modifier" type="text"  value=" +{{ character.strength_modifier }}">
                                 {% else %}
-                                    <input name="strength_modifier" type="text" class="validate" value="{{ character.strength_modifier }}">
+                                    <input name="strength_modifier" type="text"  value="{{ character.strength_modifier }}">
                                 {% endif %}
                             </div>
                         </div>
                         <div class="col s4 l12">
                             <label for="dexterity">Dex</label>
-                            <input name="dexterity" type="number" class="validate" value="{{ character.dexterity }}" required>
+                            <input name="dexterity" type="number"  value="{{ character.dexterity }}" required>
                             <div>
                             {% if character.dexterity_modifier > 0 %}
-                                <input name="dexterity_modifier" type="text" class="validate" value=" +{{ character.dexterity_modifier }}">
+                                <input name="dexterity_modifier" type="text"  value=" +{{ character.dexterity_modifier }}">
                             {% else %}
-                                <input name="dexterity_modifier" type="text" class="validate" value="{{ character.dexterity_modifier }}">
+                                <input name="dexterity_modifier" type="text"  value="{{ character.dexterity_modifier }}">
                             {% endif %}
                             </div>
                         </div>
                         <div class="col s4 l12">
                             <label for="constitution">Con</label>
-                            <input name="constitution" type="number" class="validate" value="{{ character.constitution }}" required>
+                            <input name="constitution" type="number"  value="{{ character.constitution }}" required>
                             <div>
                                 {% if character.constitution_modifier > 0 %}
-                                    <input name="constitution_modifier" type="text" class="validate" value=" +{{ character.constitution_modifier }}">
+                                    <input name="constitution_modifier" type="text"  value=" +{{ character.constitution_modifier }}">
                                 {% else %}
-                                    <input name="constitution_modifier" type="text" class="validate" value="{{ character.constitution_modifier }}">
+                                    <input name="constitution_modifier" type="text"  value="{{ character.constitution_modifier }}">
                                 {% endif %}
                             </div>
                         </div>
                         <div class="col s4 l12">
                             <label for="intelligence">Int</label>
-                            <input name="intelligence" type="number" class="validate" value="{{ character.intelligence }}" required>
+                            <input name="intelligence" type="number"  value="{{ character.intelligence }}" required>
                             <div>
                                 {% if character.intelligence_modifier > 0 %}
-                                    <input name="intelligence_modifier" type="text" class="validate" value=" +{{ character.intelligence_modifier }}">
+                                    <input name="intelligence_modifier" type="text"  value=" +{{ character.intelligence_modifier }}">
                                 {% else %}
-                                    <input name="intelligence_modifier" type="text" class="validate" value="{{ character.intelligence_modifier }}">
+                                    <input name="intelligence_modifier" type="text"  value="{{ character.intelligence_modifier }}">
                                 {% endif %}
                             </div>
                         </div>
                         <div class="col s4 l12">
                             <label for="wisdom">Wis</label>
-                            <input name="wisdom" type="number" class="validate" value="{{ character.wisdom }}" required>
+                            <input name="wisdom" type="number"  value="{{ character.wisdom }}" required>
                             <div>
                                 {% if character.wisdom_modifier > 0 %}
-                                    <input name="wisdom_modifier" type="text" class="validate" value=" +{{ character.wisdom_modifier }}">
+                                    <input name="wisdom_modifier" type="text"  value=" +{{ character.wisdom_modifier }}">
                                 {% else %}
-                                    <input name="wisdom_modifier" type="text" class="validate" value="{{ character.wisdom_modifier }}">
+                                    <input name="wisdom_modifier" type="text"  value="{{ character.wisdom_modifier }}">
                                 {% endif %}
                             </div>
                         </div>
                         <div class="col s4 l12">
                             <label for="charisma">Cha</label>
-                            <input name="charisma" type="number" class="validate" value="{{ character.charisma }}" required>
+                            <input name="charisma" type="number"  value="{{ character.charisma }}" required>
                             <div>
                                 {% if character.charisma_modifier > 0 %}
-                                    <input name="charisma_modifier" type="text" class="validate" value=" +{{ character.charisma_modifier }}">
+                                    <input name="charisma_modifier" type="text"  value=" +{{ character.charisma_modifier }}">
                                 {% else %}
-                                    <input name="charisma_modifier" type="text" class="validate" value="{{ character.charisma_modifier }}">
+                                    <input name="charisma_modifier" type="text"  value="{{ character.charisma_modifier }}">
                                 {% endif %}
                             </div>
                         </div>
                     </div>
                     <div>
                         <div class="col s12 l8">
-                            <input name="proficiency_bonus" class="validate" type="text" value="+{{ character.proficiency_bonus }}" required>
+                            <input name="proficiency_bonus"  type="text" pattern="[+][0-9]" maxlength="3" value="+{{ character.proficiency_bonus }}" 
+                            placeholder="+ number" required>
                             <label for="proficiency_bonus">Proficiency Bonus</label>
                         </div>
                         <div class="col s12 l8">
@@ -169,7 +170,8 @@
                         <label for="armor_class">Armor Class</label>
                     </div>
                     <div class="col s4">
-                        <input type="text" name="intiative_bonus" value="+{{ character.intiative_bonus }}" required>
+                        <input type="text" name="intiative_bonus"  pattern="[-+][0-9]" maxlength="3" value="+{{ character.intiative_bonus }}" 
+                        placeholder="+/- number" required>
                         <label for="intiative_bonus">Intiative</label>
                     </div>
                     <div class="col s4">

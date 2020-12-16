@@ -487,9 +487,11 @@ def edit_character(character_id):
             intiative_bonus = request.form.get("intiative_bonus")
             if "+" in intiative_bonus:
                 intiative_bonus = intiative_bonus.split("+")
+
             proficiency_bonus = request.form.get("proficiency_bonus")
             if "+" in proficiency_bonus:
                 proficiency_bonus = proficiency_bonus.split("+")
+                proficiency_bonus = proficiency_bonus[1]
 
             submit = {
                 "character_name": request.form.get("character_name"),
@@ -500,7 +502,7 @@ def edit_character(character_id):
                 "character_alignment": request.form.get("character_alignment"),
                 "character_experience": int(request.form.get(
                     "character_experience")),
-                "proficiency_bonus": int(proficiency_bonus[1]),
+                "proficiency_bonus": int(proficiency_bonus),
                 "strength": int(request.form.get("strength")),
                 "strength_modifier": get_modifier(int(request.form.get(
                     "strength"))),
@@ -561,7 +563,8 @@ def edit_character(character_id):
                 "bonds": request.form.get("bonds"),
                 "flaws": request.form.get("flaws"),
                 "feature_traits": request.form.get("feature_traits"),
-                "character_description": request.form.get("character_description")
+                "character_description": request.form.get(
+                    "character_description")
             }
 
             mongo.db.characters.update({"_id": ObjectId(character_id)}, submit)
